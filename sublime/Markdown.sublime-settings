@@ -1,0 +1,12 @@
+/*
+    Markdown settings
+*/
+{
+  "color_scheme": "Packages/Monokai Extended/Monokai Extended.tmTheme",
+  "highlight_line": false,
+  "caret_style": "smooth",
+  "caret_extra_width": "1",
+  "caret_extra_top": 2,
+  "caret_extra_bottom": 2,
+  "mde.match_header_hashes": true
+}

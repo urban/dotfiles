@@ -18,3 +18,10 @@ Thumbs.db
 
 # Node modules directory
 node_modules/
+
+# Ignore all Sublime user files except settings, snippets, key maps and themes
+sublime/*
+!sublime/*.sublime-settings
+!sublime/*.sublime-snippets
+!sublime/*.sublime-keymap
+!sublime/*.tmTheme
