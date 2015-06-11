@@ -95,6 +95,7 @@ CASKS=(
   heroku-toolbelt
   iterm2
   macvim
+  mongodb
   sublime-text3
   transmission
   transmit
