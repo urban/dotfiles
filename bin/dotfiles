@@ -8,7 +8,7 @@
 #  - Symlinks all files in ~/.dotfiles/link to ~/
 #
 # More info:
-#  - https://github.com/cowboy/dotfiles
+#  - https://github.com/urban/dotfiles
 #
 # Author:
 #  - Urban Faubion (urban.faubion@gmail.com)
@@ -33,6 +33,11 @@ HELP
 exit;
 fi
 
+# exit on error
+set -o errexit
+# exit when trying to use undeclared variables
+set -o nounset
+
 ### Constants, Variables and Functions
 #####################################################################
 
@@ -44,6 +49,19 @@ function log_error()    { echo -e " \033[1;31m✖\033[0m  $@"; }
 
 ### Main
 #####################################################################
+
+# Finish.
+function finish() {
+  # Cleanup.
+  local status=$?
+  echo "exit code: $?"
+  if [ $status != 0 ]; then
+    echo -e "\033[1;31mError!"
+  else
+  echo -e "\033[1;32mFinished!"
+  fi
+}
+trap finish EXIT
 
 # Link functions.
 function link_message() { log_message "Linking files into home directory"; }
@@ -75,7 +93,7 @@ function do_stuff() {
   local base dest skip
   local files=($DOTFILES/$1/*)
   # No files? abort.
-  if (( ${#files[@]} == 0 )); then return; fi
+  if (( ${#files[@]} = 0 )); then return; fi
   # Run _message function only if declared.
   [[ $(declare -f "$1_message") ]] && "$1_message"
   # Iterate over files.
@@ -95,14 +113,6 @@ function do_stuff() {
     [[ $(declare -f "$1_do") ]] && "$1_do" "$base" "$file"
   done
 }
-
-
-# exit on error
-# set -o errexit
-# exit when trying to use undeclared variables
-# set -o nounset
-
-# declare $1
 
 # Ensure that we can actually compile anything.
 if [[ ! "$(type -P gcc)" ]] && is_osx; then
@@ -145,6 +155,3 @@ shopt -s nullglob
 # Copy, Link, etc.
 do_stuff "link"
 do_stuff "copy"
-
-# Finished
-log_message "Finished!"
