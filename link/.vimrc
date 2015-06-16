@@ -1,6 +1,7 @@
 " Use the Molokai theme
 colorscheme molokai
 let g:rehash256 = 1
+let g:molokai_original = 1
 
 " Make Vim more useful
 set nocompatible
