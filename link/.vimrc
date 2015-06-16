@@ -1,6 +1,6 @@
-" Use the Solarized Dark theme
-set background=dark
-colorscheme solarized
+" Use the Molokai theme
+colorscheme molokai
+let g:rehash256 = 1
 
 " Make Vim more useful
 set nocompatible
