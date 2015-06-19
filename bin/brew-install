@@ -117,6 +117,7 @@ CASKS=(
   hipchat
   sketch
   sketch-beta
+  slack
 )
 
 # quick look plugins (https://github.com/sindresorhus/quick-look-plugins)
