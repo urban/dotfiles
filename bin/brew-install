@@ -115,6 +115,7 @@ CASKS=(
   calibre
   gitter
   hipchat
+  mapbox-studio
   sketch
   sketch-beta
   slack
