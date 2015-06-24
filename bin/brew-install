@@ -66,6 +66,7 @@ FORMULAS=(
   git
   git-extras
   md5sha1sum
+	nmap
   rename
   tmux
   tree
