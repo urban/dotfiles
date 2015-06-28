@@ -25,3 +25,6 @@ sublime/*
 !sublime/*.sublime-snippets
 !sublime/*.sublime-keymap
 !sublime/*.tmTheme
+
+# Ignore Vim bundles
+link/.vim/bundle/
