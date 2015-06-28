@@ -78,6 +78,7 @@ FORMULAS=(
   nvm
   phantomjs
   ruby-install
+  watchman
   # Install Cask
   caskroom/cask/brew-cask
 )
