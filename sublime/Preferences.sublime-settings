@@ -4,7 +4,8 @@
 	"draw_white_space": "selection",
 	"ensure_newline_at_eof_on_save": true,
 	"font_face": "Monaco",
-	"font_options": [
+	"font_options":
+	[
 		"gray_antialias"
 	],
 	"font_size": 14,
@@ -12,8 +13,8 @@
 	"hot_exit": false,
 	"ignored_packages":
 	[
-		"Markdown",
-		"Vintage"
+		"Vintage",
+		"Markdown"
 	],
 	"line_padding_bottom": 2,
 	"line_padding_top": 2,
