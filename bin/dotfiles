@@ -58,7 +58,7 @@ function finish() {
   if [ $status != 0 ]; then
     echo -e "\033[1;31mError!"
   else
-  echo -e "\033[1;32mFinished!"
+    echo -e "\033[1;32mFinished!"
   fi
 }
 trap finish EXIT
@@ -136,7 +136,7 @@ elif [[ "${1-}" != "restart" ]]; then
   log_message "Updating dotfiles"
   cd $DOTFILES
   prev_head="$(git rev-parse HEAD)"
-  # git pull
+  git pull
   # Restart script if new version
   if [[ "$(git rev-parse HEAD)" != "$prev_head" ]]; then
     log_message "Changes detected, restarting script"
