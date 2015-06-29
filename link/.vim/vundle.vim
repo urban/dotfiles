@@ -42,6 +42,9 @@ Plugin 'scrooloose/syntastic'
 " JavaScript syntax
 Plugin 'pangloss/vim-javascript'
 
+" Enchanced JavaScript Syntax
+Plugin 'jelera/vim-javascript-syntax'
+
 " Expand abbreviations similar to emmit.
 Plugin 'mattn/emmet-vim'
 
