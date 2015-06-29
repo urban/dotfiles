@@ -24,6 +24,9 @@ Plugin 'kien/ctrlp.vim'
 " Surroundings for parentheses, brackets, quotes and more.
 Plugin 'tpope/vim-surround'
 
+" Multiple selections.
+Plugin 'terryma/vim-multiple-cursors'
+
 " Text filtering and alignment.
 Plugin 'godlygeek/tabular'
 
