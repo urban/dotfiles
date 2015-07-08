@@ -71,6 +71,7 @@ FORMULAS=(
   tmux
   tree
   webkit2png
+  youtube-dl
   z
   # Install development tools
   chruby
