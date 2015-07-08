@@ -96,6 +96,7 @@ CASKS=(
   atom
   charles
   heroku-toolbelt
+  imageoptim
   iterm2
   macvim
   mongodb
