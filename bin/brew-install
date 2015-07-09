@@ -106,6 +106,7 @@ CASKS=(
   vagrant
   virtualbox
   # utils
+  bittorrent-sync
   divvy
   rightzoom
 	sdformatter
