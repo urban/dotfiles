@@ -108,6 +108,7 @@ CASKS=(
   # utils
   bittorrent-sync
   divvy
+  handbrake
   rightzoom
 	sdformatter
   the-unarchiver
