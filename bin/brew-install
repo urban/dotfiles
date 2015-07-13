@@ -105,6 +105,7 @@ CASKS=(
   transmit
   vagrant
   virtualbox
+  real-vnc
   # utils
   bittorrent-sync
   divvy
