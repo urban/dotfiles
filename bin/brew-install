@@ -95,6 +95,7 @@ CASKS=(
   arduino
   atom
   charles
+  framer-studio
   heroku-toolbelt
   imageoptim
   iterm2
