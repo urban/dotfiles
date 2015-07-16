@@ -1,4 +1,18 @@
 {
+	"added_words":
+	[
+		"Workflow",
+		"workflow",
+		"Performant",
+		"performant",
+		"Composable",
+		"composable",
+		"Unmounting",
+		"unmounting",
+		"Tweens",
+		"tween",
+		"internet"
+	],
 	"color_scheme": "Packages/Monokai Extended/Monokai Extended.tmTheme",
 	"detect_indentation": true,
 	"draw_white_space": "selection",
