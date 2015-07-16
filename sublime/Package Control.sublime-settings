@@ -5,11 +5,13 @@
 	"installed_packages":
 	[
 		"Babel",
+		"Better CoffeeScript",
 		"Color Highlighter",
 		"DocBlockr",
 		"GitGutter",
 		"Handlebars",
 		"LESS",
+		"Markdown Preview",
 		"MarkdownEditing",
 		"MarkdownTOC",
 		"Monokai Extended",
