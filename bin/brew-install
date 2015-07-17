@@ -128,6 +128,7 @@ CASKS=(
   sketch
   sketch-beta
   slack
+  time-out
 )
 
 # quick look plugins (https://github.com/sindresorhus/quick-look-plugins)
