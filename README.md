@@ -8,9 +8,11 @@ You need to have [XCode][0] or the [XCode Command Line Tools][1] installed for t
 
 Once installed, type the following into Terminal.
 
-```sh
+```shell
 bash -c "$(curl -fsSL http://bit.ly/urban-dotfiles)" && source ~/.bashrc
 ```
+
+`./bin/sublime-install` script requires you to open Sublie Text 3 twice. The first time caused Package Controll to download all the packages. You then need to re-launch Sublime Text 3 because some installed packages require a re-start to work.
 
 ## What did that do?
 
@@ -48,6 +50,7 @@ export PATH
 - [mathiasbynens/dotfiles](https://github.com/mathiasbynens/dotfiles)
 - [cowboy/dotfiles](https://github.com/cowboy/dotfiles)
 - [holman/dotfiles](https://github.com/holman/dotfiles)
+- [mattbrictson/dotfiles](https://github.com/mattbrictson/dotfiles)
 - [Writing Shell Scripts](http://linuxcommand.org/lc3_writing_shell_scripts.php)
 
 [0]: https://developer.apple.com/downloads/index.action?=xcode
