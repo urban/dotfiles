@@ -61,6 +61,7 @@ set wildignore+=*.o,*.obj,*.exe,*.so,*.dll,*.pyc,.svn,.hg,.bzr,.git,
   \rake-pipeline-*
 
 " Visual
+set guifont=Monaco:h15  " Set the font and font size
 set number              " Enable line numbers.
 set showmatch           " Show matching brackets.
 set nolist              " Display unprintable characters f12 - switches
