@@ -11,7 +11,13 @@
 		"unmounting",
 		"Tweens",
 		"tween",
-		"internet"
+		"internet",
+		"Inlines",
+		"minification",
+		"transpile",
+		"transpiling",
+		"npm",
+		"addon"
 	],
 	"color_scheme": "Packages/Monokai Extended/Monokai Extended.tmTheme",
 	"detect_indentation": true,
@@ -30,6 +36,7 @@
 		"Vintage",
 		"Markdown"
 	],
+	"ignored_words": [],
 	"line_padding_bottom": 2,
 	"line_padding_top": 2,
 	"match_brackets": true,
