@@ -58,7 +58,6 @@ function log_error()    { echo -e " \033[1;31m✖\033[0m  $@"; }
 function finish() {
   # Cleanup.
   local status=$?
-  echo "exit code: $?"
   if [ $status != 0 ]; then
     echo -e "\033[1;31mError!"
   else
@@ -95,26 +94,28 @@ function copy_do() {
 # Copy, Link and etc.
 function do_stuff() {
   local base dest skip
-  local files=($DOTFILES/$1/*)
+  local action=$1
+  local path="${2:-$DOTFILES/$action}"
+  local files=($path/*)
   # No files? abort.
   if (( ${#files[@]} == 0 )); then return; fi
   # Run _message function only if declared.
-  [[ $(declare -f "$1_message") ]] && "$1_message"
+  [[ $(declare -f $action'_message') ]] && $action'_message'
   # Iterate over files.
   for file in "${files[@]}"; do
     base="$(basename $file)"
     dest="$HOME/$base"
     # Run _test function only if declared.
-    if [[ $(declare -f "$1_test") ]]; then
+    if [[ $(declare -f $action'_test') ]]; then
       # If link_test function returns a string, skip file and print that message.
-      skip="$($1"_test" "$file" "$dest")"
+      skip="$($action'_test' "$file" "$dest")"
       if [[ "$skip" ]]; then
         log_error "Skipping ~/$base, $skip."
         continue
       fi
     fi
     # Run _do function only if declared
-    [[ $(declare -f "$1_do") ]] && "$1_do" "$base" "$file"
+    [[ $(declare -f $action'_do') ]] && $action'_do' "$base" "$file"
   done
 }
 
