@@ -2,12 +2,22 @@
 export PATH="$HOME/bin:$PATH";
 
 # Load the shell dotfiles, and then some:
-# * ~/.path can be used to extend `$PATH`.
-# * ~/.extra can be used for other settings you don’t want to commit.
-for file in ~/.{path,bash_prompt,exports,aliases,functions,extra}; do
-  [ -r "$file" ] && [ -f "$file" ] && source "$file";
-done;
-unset file;
+function load_file() {
+  [ -r "$1" ] && [ -f "$1" ] && source "$1";
+}
+function load_dir() {
+  for file in $1/*; do
+    load_file $file
+  done;
+  unset file;
+}
+
+load_file ~/.path # Can be used to extend `$PATH`
+load_file ~/.bash_prompt
+load_dir ~/.bash
+load_file ~/.extra # Can be used for other settings you don't want to commit.
+unset -f load_file
+unset -f load_dir
 
 # Case-insensitive globbing (used in pathname expansion)
 shopt -s nocaseglob;
@@ -48,9 +58,9 @@ complete -W "NSGlobalDomain" defaults;
 complete -o "nospace" -W "Contacts Calendar Dock Finder Mail Safari iTunes SystemUIServer Terminal Twitter" killall;
 
 # init z https://github.com/rupa/z
-if hash brew 2> /dev/null && [ -f "$(brew --prefix)/etc/profile.d/z.sh" ]; then
-  source `brew --prefix`/etc/profile.d/z.sh
-fi;
+# if hash brew 2> /dev/null && [ -f "$(brew --prefix)/etc/profile.d/z.sh" ]; then
+#   source "$(brew --prefix)/etc/profile.d/z.sh"
+# fi;
 
 # for Node Version Management
 if hash brew 2> /dev/null && [ -f "$(brew --prefix nvm)/nvm.sh" ]; then
@@ -62,9 +72,9 @@ if hash brew 2> /dev/null && [ -f "$(brew --prefix nvm)/nvm.sh" ]; then
 fi;
 
 # for chruby, a program to manage Ruby versions
-if [ -f /usr/local/opt/chruby/share/chruby/chruby.sh ]; then
-  # this loads chruby
-  source /usr/local/opt/chruby/share/chruby/chruby.sh
-  # this enables auto-switching of Rubies specified by .ruby-version files
-  source /usr/local/opt/chruby/share/chruby/auto.sh
-fi;
+# if [ -f /usr/local/opt/chruby/share/chruby/chruby.sh ]; then
+#   # this loads chruby
+#   source /usr/local/opt/chruby/share/chruby/chruby.sh
+#   # this enables auto-switching of Rubies specified by .ruby-version files
+#   source /usr/local/opt/chruby/share/chruby/auto.sh
+# fi;
