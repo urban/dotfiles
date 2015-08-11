@@ -244,3 +244,32 @@ function o() {
 function tre() {
   tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
 }
+
+# `tmux-open` attaches to a `tmux` session with a specific name
+function tmux-open() {
+  tmux attach -t $1
+}
+
+# `tmux-new` creates a new tmux session with a specific name
+function tmux-new() {
+  tmux new -s $1
+}
+
+# `tmux-kill` deletes a `tmux` session with a specific name
+function tmux-kill() {
+  tmux kill-session -t $1
+}
+
+# `tmux-init` will attach if session exists or create a new one baed on the 
+# current directory name
+function tmux-init() {
+  tmux new-session -As $(basename "$PWD" | tr . -)
+}
+
+# `tmux-killall` deletes all `tmux` sessions
+function tmux-killall() {
+  tmux ls | cut -d : -f 1 | xargs -I {} tmux kill-session -t {}
+}
+
+# Makes 
+
