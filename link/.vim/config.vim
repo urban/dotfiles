@@ -71,6 +71,8 @@ set listchars+=trail:·  " Show trailing spaces.
 set listchars+=eol:¬    " Show end of line.
 set listchars+=nbsp:_   " Show non-breaking spaces.
 set list                " Show invisible characters
+set splitbelow          " Open new split panes to the bottom
+set splitright          " Open new split panes to the right
 
 " Mouse
 set mousehide           " Hide mouse after chars typed.
