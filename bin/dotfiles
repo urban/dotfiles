@@ -20,7 +20,7 @@
 ### Configuration
 #####################################################################
 
-if [[ "$1" != "" ]]; then cat <<HELP
+if [[ "${1:-}" != "" ]]; then cat <<HELP
 
 Usage: $(basename "$0")
 
@@ -34,9 +34,13 @@ exit;
 fi
 
 # exit on error
-set -o errexit
+set -e
 # exit when trying to use undeclared variables
-set -o nounset
+set -u
+# exit on errors in pipeline
+set -o pipefail
+# set Internal Field Separator for word splitting
+IFS=$'\n\t'
 
 ### Constants, Variables and Functions
 #####################################################################
@@ -93,7 +97,7 @@ function do_stuff() {
   local base dest skip
   local files=($DOTFILES/$1/*)
   # No files? abort.
-  if (( ${#files[@]} = 0 )); then return; fi
+  if (( ${#files[@]} == 0 )); then return; fi
   # Run _message function only if declared.
   [[ $(declare -f "$1_message") ]] && "$1_message"
   # Iterate over files.
@@ -103,7 +107,7 @@ function do_stuff() {
     # Run _test function only if declared.
     if [[ $(declare -f "$1_test") ]]; then
       # If link_test function returns a string, skip file and print that message.
-      skip="$("$1_test" "$file" "$dest")"
+      skip="$($1"_test" "$file" "$dest")"
       if [[ "$skip" ]]; then
         log_error "Skipping ~/$base, $skip."
         continue
