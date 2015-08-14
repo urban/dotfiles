@@ -9,8 +9,8 @@ call vundle#begin()
 " Let Vundle manage itself.
 Plugin 'gmarik/vundle'
 
-" Monokai theme
-Plugin 'crusoexia/vim-monokai'
+" Solarized theme
+Plugin 'altercation/vim-colors-solarized'
 
 " Better status line
 Plugin 'bling/vim-airline'

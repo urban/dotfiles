@@ -1,7 +1,10 @@
-
-" Colors
-colorscheme molokai
-let g:monokai_italic = 1
+" Solarized Dark theme
+let g:solarized_termtrans=1
+let g:solarized_termcolors=256
+"let g:solarized_visibility="high"
+let g:solarized_contrast="high"
+colorscheme solarized
+set background=dark
 
 " File Locations
 set backupdir=~/.vim/backups// " Double // causes backups to use full file path
@@ -26,6 +29,8 @@ endif
 
 " Behaviors
 syntax enable           " Enable syntax highlighting.
+filetype plugin on      " Enable filetype specific plugin rules
+filetype indent on      " Enable filetype specific indenting rules
 set nocompatible        " Disable vi compatibility.
 set backup              " Turn on backups.
 set autoread            " Automatically reload changes if detected.
@@ -61,7 +66,7 @@ set wildignore+=*.o,*.obj,*.exe,*.so,*.dll,*.pyc,.svn,.hg,.bzr,.git,
   \rake-pipeline-*
 
 " Visual
-set guifont=Monaco:h15  " Set the font and font size
+set guifont=Monaco:h14  " Set the font and font size
 set number              " Enable line numbers.
 set showmatch           " Show matching brackets.
 set nolist              " Display unprintable characters f12 - switches

@@ -14,4 +14,6 @@ filetype plugin indent on   " Automatically detect file types.
 
 source ~/.vim/config.vim    " Regular Vim configuration (no plugins needed).
 source ~/.vim/mappings.vim  " All hotkeys, not dependant on plugins.
+source ~/.vim/filetypes.vim " Load filetypes.
 source ~/.vim/plugins.vim   " Load plugin specific configurations.
+source ~/.vim/vimrcex.vim   " Load auto commands.
