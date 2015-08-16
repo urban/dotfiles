@@ -57,4 +57,7 @@ Plugin 'leshill/vim-json'
 " Inline git status
 Plugin 'airblade/vim-gitgutter'
 
+" JSX syntax
+Plugin 'mxw/vim-jsx'
+
 call vundle#end()
