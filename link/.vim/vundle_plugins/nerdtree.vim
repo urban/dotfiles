@@ -1,4 +1,3 @@
-map <C-n> :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1 " Show hidden files by default.
 
 " Open NERDTree automatically when vim starts if no files were specified.
