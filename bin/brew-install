@@ -123,7 +123,8 @@ CASKS=(
   # others
   skype
   calibre
-  gitter
+	github-desktop
+	gitter
   hipchat
   mapbox-studio
   sketch
