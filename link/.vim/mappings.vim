@@ -15,6 +15,20 @@ let maplocalleader = "\\"
 nnoremap ; :
 vnoremap ; :
 
+" Disable highlight when <leader><cr> is pressed
+map <silent> <leader><cr> :noh<cr>
+
+" Easier split navigation
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+" Close current buffer
+nnoremap <leader>bd :Bclose<cr>
+" Close all buffers
+nnoremap <leader>ba :1,1000 bd!<cr>
+
 " ---------------
 " Insert Mode Mappings
 " ---------------
@@ -25,16 +39,27 @@ inoremap KJ <Esc>
 inoremap Kj <Esc>
 inoremap kJ <Esc>
 
-" Easier split navigation
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
-
 " Map auto complete of (, ", ', [, {
 inoremap $1 ()<esc>i
 inoremap $2 []<esc>i
 inoremap $3 {}<esc>i
+inoremap $4 {<esc>o}<esc>O
 inoremap $q ''<esc>i
 inoremap $e ""<esc>i
-inoremap $t <><esc>i
+inoremap $3 {}<esc>i
+
+" ---------------
+" Visual Mode Mappings
+" ---------------
+
+" Search for the current selection
+vnoremap <silent> * :call VisualSelection('f')<CR>
+vnoremap <silent> # :call VisualSelection('b')<CR>
+
+" Map auto complete of (, ", ', [, {
+vnoremap $1 <esc>`>a)<esc>`<i(<esc>
+vnoremap [ <esc>`>a]<esc>`<i[<esc>
+vnoremap { <esc>`>a}<esc>`<i{<esc>
+vnoremap $$ <esc>`>a"<esc>`<i"<esc>
+vnoremap ' <esc>`>a'<esc>`<i'<esc>
+vnoremap " <esc>`>a"<esc>`<i"<esc>
