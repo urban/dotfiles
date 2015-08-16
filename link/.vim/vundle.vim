@@ -27,6 +27,9 @@ Plugin 'tpope/vim-surround'
 " Multiple selections.
 Plugin 'terryma/vim-multiple-cursors'
 
+" A Git wrapper so awesome, it should be illegal.
+Plugin 'tpope/vim-fugitive'
+
 " Text filtering and alignment.
 Plugin 'godlygeek/tabular'
 
