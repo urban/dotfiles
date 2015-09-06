@@ -130,6 +130,7 @@ CASKS=(
   sketch
   sketch-beta
   slack
+	spotify
   time-out
 )
 
