@@ -111,6 +111,7 @@ CASKS=(
   bittorrent-sync
   divvy
   handbrake
+	keycastr
   miro-video-converter
   rightzoom
 	sdformatter
