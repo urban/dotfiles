@@ -33,10 +33,12 @@
 	"hot_exit": false,
 	"ignored_packages":
 	[
-		"Vintage",
-		"Markdown"
+		"Markdown",
+		"Vintage"
 	],
-	"ignored_words": [],
+	"ignored_words":
+	[
+	],
 	"line_padding_bottom": 2,
 	"line_padding_top": 2,
 	"match_brackets": true,
@@ -50,6 +52,5 @@
 	"tab_size": 2,
 	"translate_tabs_to_spaces": true,
 	"trim_trailing_white_space_on_save": true,
-	"vintage_start_in_command_mode": true,
 	"word_wrap": true
 }
