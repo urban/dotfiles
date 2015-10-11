@@ -24,6 +24,9 @@ Plugin 'kien/ctrlp.vim'
 " Surroundings for parentheses, brackets, quotes and more.
 Plugin 'tpope/vim-surround'
 
+" Commenting.
+Plugin 'scrooloose/nerdcommenter'
+
 " Multiple selections.
 Plugin 'terryma/vim-multiple-cursors'
 
@@ -32,9 +35,6 @@ Plugin 'tpope/vim-fugitive'
 
 " Text filtering and alignment.
 Plugin 'godlygeek/tabular'
-
-" Markdown syntax
-Plugin 'tpope/vim-markdown'
 
 " Add support for github-style fenced codeblocks in markdown
 Plugin 'jtratner/vim-flavored-markdown'

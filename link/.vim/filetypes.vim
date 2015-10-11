@@ -1,9 +1,9 @@
 augroup filetypes
-  au!
+  autocmd!
 
-  au BufRead,BufNewFile *.mkd setlocal filetype=markdown
-  au BufRead,BufNewFile *.md setlocal filetype=markdown
-  au BufRead,BufNewFile *.csx setlocal filetype=cs
-  au BufRead,BufNewFile *.txt setlocal filetype=text
+  autocmd BufReadPost,BufNewFile *.mkd set filetype=markdown
+  autocmd BufReadPost,BufNewFile *.md set filetype=markdown
+  autocmd BufReadPost,BufNewFile *.csx set filetype=cs
+  autocmd BufReadPost,BufNewFile *.txt set filetype=text
 
 augroup END
