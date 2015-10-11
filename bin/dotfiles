@@ -69,7 +69,9 @@ trap finish EXIT
 # Link functions.
 function link_message() { log_message "Linking files into home directory"; }
 function link_test() {
-  [[ "$1" -ef "$2" ]] && echo "same file"
+	if cmp "$1" "$2" >/dev/null 2>&1; then
+		echo "same file"
+	fi
 }
 function link_do() {
   log_message "Link $1"
@@ -112,6 +114,8 @@ function do_stuff() {
       if [[ "$skip" ]]; then
         log_error "Skipping ~/$base, $skip."
         continue
+      else
+        echo "Backup?"
       fi
     fi
     # Run _do function only if declared
