@@ -74,7 +74,6 @@ function link_test() {
 	fi
 }
 function link_do() {
-  log_message "Link $1"
   log_success "Linking ~/$1"
   ln -sf ${2#$HOME/} ~/
 }
@@ -114,8 +113,6 @@ function do_stuff() {
       if [[ "$skip" ]]; then
         log_error "Skipping ~/$base, $skip."
         continue
-      else
-        echo "Backup?"
       fi
     fi
     # Run _do function only if declared
