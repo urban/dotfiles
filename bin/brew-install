@@ -199,6 +199,7 @@ brew install ${FORMULAS[@]}
 # Setup info
 echo "Don't forget to add \`/usr/local/bin/bash to /etc/shells\` before running \`chsh\`."
 echo "Don't forget to add \`\$(brew --prefix coreutils)/libexec/gnubin\` to \`\$PATH\`."
+echo "Don't forget to run \`git config --global core.excludesfile ~/.gitignore_global\`."
 
 # Install casks
 brew cask install ${CASKS[@]}
