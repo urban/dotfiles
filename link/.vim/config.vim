@@ -6,7 +6,6 @@ let g:solarized_contrast="high"
 colorscheme solarized
 set background=dark
 
-" UI
 set ruler               " Ruler on.
 set number              " Line numbers on.
 set nowrap              " Line wrapping off.
@@ -37,6 +36,7 @@ set timeoutlen=250      " Time to wait after ESC
 set nofoldenable        " Disable folding entirely.
 set scrolloff=3         " Keep three lines below the last line when
 set gdefault            " Makes search/replace global by default.
+set virtualedit=block   " Enable rectangular selections.
 
 " Text Format
 set tabstop=2           " Set the default tabstop.
