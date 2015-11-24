@@ -37,6 +37,7 @@ set nofoldenable        " Disable folding entirely.
 set scrolloff=3         " Keep three lines below the last line when
 set gdefault            " Makes search/replace global by default.
 set virtualedit=block   " Enable rectangular selections.
+set nospell             " Disable spell checking.
 
 " Text Format
 set tabstop=2           " Set the default tabstop.
