@@ -6,14 +6,6 @@ let g:solarized_contrast="high"
 colorscheme solarized
 set background=dark
 
-" File Locations
-set backupdir=~/.vim/backups// " Double // causes backups to use full file path
-set directory=~/.vim/swaps//
-if exists("&undodir")
-  set undodir=~/.vim/undo
-endif
-set backupskip=/tmp/*,/private/tmp/* " Don’t create backups when editing files in certain directories.
-
 " UI
 set ruler               " Ruler on.
 set number              " Line numbers on.
@@ -32,7 +24,9 @@ syntax enable           " Enable syntax highlighting.
 filetype plugin on      " Enable filetype specific plugin rules
 filetype indent on      " Enable filetype specific indenting rules
 set nocompatible        " Disable vi compatibility.
-set backup              " Turn on backups.
+set noswapfile          " Disable swaps.
+set nowritebackup       " Even if you did make a backup, don't keep it around.
+set nobackup            " Disable backups.
 set autoread            " Automatically reload changes if detected.
 set wildmenu            " Turn on Wild menu.
 set hidden              " Change buffer - without saving.
