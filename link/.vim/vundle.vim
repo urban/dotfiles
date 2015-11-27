@@ -24,6 +24,9 @@ Plugin 'kien/ctrlp.vim'
 " Surroundings for parentheses, brackets, quotes and more.
 Plugin 'tpope/vim-surround'
 
+" Insert or delete brackets, parens, quotes in pair.
+Plugin 'jiangmiao/auto-pairs'
+
 " Commenting.
 Plugin 'scrooloose/nerdcommenter'
 
