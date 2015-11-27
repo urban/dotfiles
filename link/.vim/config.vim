@@ -77,3 +77,7 @@ set splitright          " Open new split panes to the right
 " Mouse
 set mousehide           " Hide mouse after chars typed.
 set mouse=a             " Enable mouse in all modes.
+
+" Mac support bootstrap
+set wildignore+=*.DS_Store
+set wildignore+=*/_build**
