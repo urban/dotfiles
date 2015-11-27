@@ -1,8 +1,9 @@
 " Solarized Dark theme
-let g:solarized_termtrans=1
-let g:solarized_termcolors=256
-"let g:solarized_visibility="high"
-let g:solarized_contrast="high"
+let g:solarized_underline=0       " default value is 1
+let g:solarized_termtrans=1       " default value is 0
+let g:solarized_termcolors=256    " default value is 16
+let g:solarized_contrast="high"   " default value is normal
+let g:solarized_visibility="high" " default value is normal
 colorscheme solarized
 set background=dark
 
