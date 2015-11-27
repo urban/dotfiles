@@ -39,6 +39,8 @@ set scrolloff=3         " Keep three lines below the last line when
 set gdefault            " Makes search/replace global by default.
 set virtualedit=block   " Enable rectangular selections.
 set nospell             " Disable spell checking.
+set visualbell          " Don't beep.
+set noerrorbells        " Don't beep.
 
 " Text Format
 set tabstop=2           " Set the default tabstop.
@@ -47,7 +49,8 @@ set backspace=indent,eol,start " Delete everything with backspace
 set shiftwidth=2        " Set the default shift width for indents.
 set expandtab           " Make tabs into spaces (set by tabstop).
 set smarttab            " Smarter tab levels.
-set autoindent
+set autoindent          " Always autoindent.
+set copyindent          " Copy the previous indentation on autoindenting.
 set cindent
 set cinoptions=:s,ps,ts,cs
 set cinwords=if,else,while,do,for,switch,case
