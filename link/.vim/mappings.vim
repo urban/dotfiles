@@ -55,11 +55,3 @@ inoremap $3 {}<esc>i
 " Search for the current selection
 vnoremap <silent> * :call VisualSelection('f')<CR>
 vnoremap <silent> # :call VisualSelection('b')<CR>
-
-" Map auto complete of (, ", ', [, {
-vnoremap $1 <esc>`>a)<esc>`<i(<esc>
-vnoremap [ <esc>`>a]<esc>`<i[<esc>
-vnoremap { <esc>`>a}<esc>`<i{<esc>
-vnoremap $$ <esc>`>a"<esc>`<i"<esc>
-vnoremap ' <esc>`>a'<esc>`<i'<esc>
-vnoremap " <esc>`>a"<esc>`<i"<esc>
