@@ -2,8 +2,8 @@
 let g:solarized_underline=0       " default value is 1
 let g:solarized_termtrans=1       " default value is 0
 let g:solarized_termcolors=256    " default value is 16
-let g:solarized_contrast="high"   " default value is normal
-"let g:solarized_visibility="high" " default value is normal
+" let g:solarized_contrast="high"   " default value is normal
+" let g:solarized_visibility="high" " default value is normal
 colorscheme solarized
 set background=dark
 
@@ -65,7 +65,8 @@ set wildignore+=*.o,*.obj,*.exe,*.so,*.dll,*.pyc,.svn,.hg,.bzr,.git,
   \rake-pipeline-*
 
 " Visual
-set guifont=Monaco:h14  " Set the font and font size
+" set guifont=Source:h14  " Set the font and font size
+set guifont=Sauce\ Code\ Powerline\ Plus\ Nerd\ File\ Types\ Mono:h11
 set number              " Enable line numbers.
 set showmatch           " Show matching brackets.
 set nolist              " Display unprintable characters f12 - switches

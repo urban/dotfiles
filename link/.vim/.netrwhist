@@ -1,0 +1,10 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =8
+let g:netrw_dirhist_1='/Users/urban.faubion/Work/Active/Equatex/development/platform-transformation-sim/src/containers'
+let g:netrw_dirhist_2='/Users/urban.faubion/Work/Active/Equatex/development/platform-transformation-sim/src/helpers'
+let g:netrw_dirhist_3='/Users/urban.faubion/Work/Active/Equatex/development/platform-transformation-sim/src'
+let g:netrw_dirhist_4='/Users/urban.faubion/Work/Active/Equatex/development/platform-transformation-sim/src/helpers'
+let g:netrw_dirhist_5='/Users/urban.faubion/Work/Active/Equatex/development/platform-transformation-sim/src/containers/App'
+let g:netrw_dirhist_6='/Users/urban.faubion/Work/Active/Equatex/development/platform-transformation-sim/src/containers'
+let g:netrw_dirhist_7='/Users/urban.faubion/GitHub/urban/webpack-config/src'
+let g:netrw_dirhist_8='/Users/urban.faubion/GitHub/urban/prompt/test'
