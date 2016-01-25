@@ -71,6 +71,11 @@ if hash brew 2> /dev/null && [ -f "$(brew --prefix nvm)/nvm.sh" ]; then
   [[ -r $NVM_DIR/bash_completion ]] && . $NVM_DIR/bash_completion
 fi;
 
+# for Autoenv
+if hash brew 2> /dev/null && [ -f "$(brew --prefix autoenv)/activate.sh" ]; then
+  source $(brew --prefix autoenv)/activate.sh
+fi;
+
 # for chruby, a program to manage Ruby versions
 # if [ -f /usr/local/opt/chruby/share/chruby/chruby.sh ]; then
 #   # this loads chruby

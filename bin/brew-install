@@ -63,6 +63,7 @@ FORMULAS=(
   vim --override-system-vi
   homebrew/dupes/grep
   # Install other useful binaries
+  autoenv
   git
   git-extras
   md5sha1sum
