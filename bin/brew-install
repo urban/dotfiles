@@ -41,7 +41,7 @@ set -o nounset
 TAPS=(
   homebrew/versions
   # Cask
-  caskroom/versions
+  caskroom/cask
 )
 
 # Homebrew formulas
@@ -102,7 +102,6 @@ CASKS=(
   iterm2
   macvim
   mongodb
-  sublime-text3
   transmission
   transmit
   vagrant
@@ -121,11 +120,9 @@ CASKS=(
   # browsers
   firefox
   google-chrome
-  google-chrome-canary
   # others
   skype
   calibre
-  github-desktop
   gitter
   hipchat
   mapbox-studio
