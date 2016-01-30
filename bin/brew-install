@@ -99,14 +99,13 @@ CASKS=(
   framer-studio
   heroku-toolbelt
   imageoptim
-  iterm2
   macvim
   mongodb
+  sublime-text3
   transmission
   transmit
   vagrant
   virtualbox
-  real-vnc
   # utils
   bittorrent-sync
   divvy
