@@ -40,8 +40,6 @@ set -o nounset
 # Homebrew taps
 TAPS=(
   homebrew/versions
-  # Cask
-  caskroom/cask
 )
 
 # Homebrew formulas
@@ -101,7 +99,7 @@ CASKS=(
   imageoptim
   macvim
   mongodb
-  sublime-text3
+  # sublime-text3
   transmission
   transmit
   vagrant
@@ -124,9 +122,9 @@ CASKS=(
   calibre
   gitter
   hipchat
+  macdown
   mapbox-studio
   sketch
-  sketch-beta
   slack
   spotify
   time-out
@@ -197,6 +195,9 @@ brew install ${FORMULAS[@]}
 echo "Don't forget to add \`/usr/local/bin/bash to /etc/shells\` before running \`chsh\`."
 echo "Don't forget to add \`\$(brew --prefix coreutils)/libexec/gnubin\` to \`\$PATH\`."
 echo "Don't forget to run \`git config --global core.excludesfile ~/.gitignore_global\`."
+
+# Rremove any outdated versions
+brew cask cleanup
 
 # Install casks
 brew cask install ${CASKS[@]}
