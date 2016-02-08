@@ -95,6 +95,7 @@ CASKS=(
   atom
   charles
   framer-studio
+  fontprep
   heroku-toolbelt
   imageoptim
   macvim
