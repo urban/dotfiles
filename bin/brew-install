@@ -73,14 +73,14 @@ FORMULAS=(
   youtube-dl
   z
   # Install development tools
+  android-sdk
   chruby
   flow
+  gradle
   nvm
   phantomjs
   ruby-install
   watchman
-  # Install Cask
-  caskroom/cask/brew-cask
 )
 
 # Homebrew casks
@@ -94,8 +94,9 @@ CASKS=(
   arduino
   atom
   charles
-  framer-studio
   fontprep
+  genymotion
+  java
   heroku-toolbelt
   imageoptim
   macvim
@@ -196,9 +197,10 @@ brew install ${FORMULAS[@]}
 echo "Don't forget to add \`/usr/local/bin/bash to /etc/shells\` before running \`chsh\`."
 echo "Don't forget to add \`\$(brew --prefix coreutils)/libexec/gnubin\` to \`\$PATH\`."
 echo "Don't forget to run \`git config --global core.excludesfile ~/.gitignore_global\`."
+echo "Don't forget to run \`touch ~/.gradle/gradle.properties && echo \"org.gradle.daemon=true\" >> ~/.gradle/gradle.properties\`"
 
-# Rremove any outdated versions
-brew cask cleanup
+# # Rremove any outdated versions
+# brew cask cleanup
 
 # Install casks
 brew cask install ${CASKS[@]}
