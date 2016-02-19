@@ -44,5 +44,6 @@ Plugin 'terryma/vim-multiple-cursors' " Multiple selections.
 Plugin 'matze/vim-move' " Plugin to move lines and selections up and down
 Plugin 'christoomey/vim-tmux-navigator' "Seamless navigation between tmux panes and vim splits
 Plugin 'Chiel92/vim-autoformat' "Provide easy code formatting in Vim by integrating existing code formatters
+Plugin 'tmux-plugins/vim-tmux-focus-events' "Make terminal vim and tmux work better together.
 
 call vundle#end()
