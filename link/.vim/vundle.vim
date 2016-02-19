@@ -36,6 +36,7 @@ Plugin 'Xuyuanp/nerdtree-git-plugin' " A plugin of NERDTree showing git status
 
 " Utils
 Plugin 'bling/vim-airline' " Better status line
+Plugin 'mileszs/ack.vim' " Search
 Plugin 'scrooloose/nerdtree' " A sidebar buffer for navigating and manipulating files.
 Plugin 'kien/ctrlp.vim' " Full path fuzzy file, buffer, mru, tag, ... finder for Vim.
 Plugin 'tpope/vim-surround' " Surroundings for parentheses, brackets, quotes and more.
@@ -43,8 +44,8 @@ Plugin 'tomtom/tcomment_vim' " Commenting.
 Plugin 'terryma/vim-multiple-cursors' " Multiple selections.
 Plugin 'matze/vim-move' " Plugin to move lines and selections up and down
 Plugin 'christoomey/vim-tmux-navigator' "Seamless navigation between tmux panes and vim splits
-Plugin 'Chiel92/vim-autoformat' "Provide easy code formatting in Vim by integrating existing code formatters
-Plugin 'tmux-plugins/vim-tmux-focus-events' "Make terminal vim and tmux work better together.
-Plugin 'tpope/vim-obsession' "Continuously updated session files.
+Plugin 'Chiel92/vim-autoformat' " Provide easy code formatting in Vim by integrating existing code formatters
+Plugin 'tmux-plugins/vim-tmux-focus-events' " Make terminal vim and tmux work better together.
+Plugin 'tpope/vim-obsession' " Continuously updated session files.
 
 call vundle#end()

@@ -61,7 +61,9 @@ FORMULAS=(
   vim --override-system-vi
   homebrew/dupes/grep
   # Install other useful binaries
+  ack
   autoenv
+  ctags
   git
   git-extras
   md5sha1sum
@@ -77,6 +79,7 @@ FORMULAS=(
   chruby
   flow
   gradle
+  ngrok
   nvm
   phantomjs
   ruby-install
@@ -183,9 +186,6 @@ brew cleanup --force
 
 # Make sure we’re using the latest Homebrew
 brew update
-
-# Upgrade any already-installed formulae
-brew upgrade --all
 
 # Add additional formulae lookup repos
 brew tap ${TAPS[@]}
