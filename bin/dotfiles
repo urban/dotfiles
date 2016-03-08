@@ -135,7 +135,7 @@ fi
 # Initialize dotfiles repo
 if [[ ! -d $DOTFILES ]]; then
   log_message "Creating ~/.dotfiles directory."
-  git clone --recursie git://github.com/${github_user:-urban}/dotfiles.git $DOTFILES
+  git clone --recursive git://github.com/${github_user:-urban}/dotfiles.git $DOTFILES
   cd $DOTFILES
   git submodule init
   git submodule update
