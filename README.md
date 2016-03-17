@@ -12,7 +12,24 @@ Once installed, type the following into Terminal.
 bash -c "$(curl -fsSL http://bit.ly/urban-dotfiles)" && source ~/.bashrc
 ```
 
-`./bin/sublime-install` script requires you to open Sublie Text 3 twice. The first time caused Package Controll to download all the packages. You then need to re-launch Sublime Text 3 because some installed packages require a re-start to work.
+To install all applications, run the following in Terminal.
+
+```shell
+brew-install
+```
+To install all vim plugins, type the following into Terminal.
+
+```shell
+vim +PluginInstall +qall
+```
+
+In order to get vim airline to look correct, you need to install the [powerline font](https://github.com/powerline/fonts). Once installed, set you font in terminal to one that was just installed. I use "Droid Sans Mono Dotted for Powerline" at 12 pt.
+
+Install the latest version of `node`.
+
+```shell
+nvm install node
+```
 
 ## What did that do?
 

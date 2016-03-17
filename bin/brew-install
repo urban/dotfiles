@@ -58,7 +58,6 @@ FORMULAS=(
   # Install wget with IRI support
   wget --enable-iri
   # Install more recent versions of some OS X tools
-  vim --override-system-vi
   homebrew/dupes/grep
   # Install other useful binaries
   ack
@@ -76,13 +75,12 @@ FORMULAS=(
   z
   # Install development tools
   android-sdk
-  chruby
   flow
   gradle
   ngrok
   nvm
   phantomjs
-  ruby-install
+  ruby
   watchman
 )
 
@@ -93,6 +91,10 @@ CASKS=(
   caffeine
   dropbox
   1password
+  # design
+  adobe-photoshop-cc
+  omnigraffle
+  sketch
   # dev
   arduino
   atom
@@ -102,7 +104,6 @@ CASKS=(
   java
   heroku-toolbelt
   imageoptim
-  macvim
   mongodb
   # sublime-text3
   transmission
@@ -126,10 +127,11 @@ CASKS=(
   skype
   calibre
   gitter
+  google-drive
   hipchat
   macdown
   mapbox-studio
-  sketch
+  microsoft-office
   slack
   spotify
   time-out
