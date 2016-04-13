@@ -36,6 +36,7 @@ Plugin 'Xuyuanp/nerdtree-git-plugin' " A plugin of NERDTree showing git status
 
 " Utils
 Plugin 'bling/vim-airline' " Better status line
+Plugin 'vim-airline/vim-airline-themes' " Status line theme support
 Plugin 'mileszs/ack.vim' " Search
 Plugin 'scrooloose/nerdtree' " A sidebar buffer for navigating and manipulating files.
 Plugin 'kien/ctrlp.vim' " Full path fuzzy file, buffer, mru, tag, ... finder for Vim.

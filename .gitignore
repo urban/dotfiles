@@ -28,5 +28,5 @@ sublime/*
 
 # Ignore Vim bundles
 link/.vim/bundle/*
-!link/.vim/bundle/Vundle
+!link/.vim/bundle/Vundle.vim
 link/.vim/swaps/

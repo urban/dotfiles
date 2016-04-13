@@ -65,6 +65,7 @@ FORMULAS=(
   ctags
   git
   git-extras
+  git-lfs
   md5sha1sum
   nmap
   rename
