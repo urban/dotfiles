@@ -71,6 +71,7 @@ FORMULAS=(
   rename
   tmux
   tree
+  vim
   webkit2png
   youtube-dl
   z
@@ -78,7 +79,8 @@ FORMULAS=(
   android-sdk
   flow
   gradle
-  ngrok
+  yarn
+  # ngrok
   nvm
   phantomjs
   ruby
@@ -96,9 +98,11 @@ CASKS=(
   adobe-photoshop-cc
   omnigraffle
   sketch
+  zeplin
   # dev
   arduino
   atom
+  dockertoolbox
   charles
   fontprep
   genymotion

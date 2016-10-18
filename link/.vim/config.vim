@@ -7,6 +7,7 @@ let g:solarized_termcolors=256    " default value is 16
 colorscheme solarized
 set background=dark
 
+set shell=/bin/bash
 set ruler               " Ruler on.
 set number              " Line numbers on.
 set nowrap              " Line wrapping off.
@@ -41,6 +42,15 @@ set virtualedit=block   " Enable rectangular selections.
 set nospell             " Disable spell checking.
 set visualbell          " Don't beep.
 set noerrorbells        " Don't beep.
+" leave insert mode quickly
+if ! has('gui_running')
+  set ttimeoutlen=10
+  augroup FastEscape
+    autocmd!
+    au InsertEnter * set timeoutlen=0
+    au InsertLeave * set timeoutlen=1000
+  augroup END
+endif
 
 " Text Format
 set tabstop=2           " Set the default tabstop.

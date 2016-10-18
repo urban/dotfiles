@@ -1,4 +1,5 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =2
-let g:netrw_dirhist_1='/Users/urban/Work/Development/ui-library/packages'
-let g:netrw_dirhist_2='.'
+let g:netrw_dirhist_cnt =3
+let g:netrw_dirhist_1='/Users/urban/Work/Development/matrix/app'
+let g:netrw_dirhist_2='/Users/urban/Work/Development/matrix/app/scenes'
+let g:netrw_dirhist_3='/Users/urban/Work/Development/matrix/app/scenes/Login'
