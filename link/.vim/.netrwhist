@@ -1,5 +1,11 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =3
-let g:netrw_dirhist_1='/Users/urban/Work/Development/matrix/app'
-let g:netrw_dirhist_2='/Users/urban/Work/Development/matrix/app/scenes'
-let g:netrw_dirhist_3='/Users/urban/Work/Development/matrix/app/scenes/Login'
+let g:netrw_dirhist_cnt =9
+let g:netrw_dirhist_1='/Users/urban/Work/Development/matrix/app/components/H1'
+let g:netrw_dirhist_2='/Users/urban/Work/Development/matrix/ui/sidebar'
+let g:netrw_dirhist_3='/Users/urban/Work/Development/matrix/ui'
+let g:netrw_dirhist_4='/Users/urban/Work/Development/matrix'
+let g:netrw_dirhist_5='/Users/urban/Work/Development/matrix/app'
+let g:netrw_dirhist_6='/Users/urban/Work/Development/matrix/app/components'
+let g:netrw_dirhist_7='/Users/urban/Work/Development/matrix/app/components/H1'
+let g:netrw_dirhist_8='/Users/urban/Work/Development/matrix/app/components'
+let g:netrw_dirhist_9='/Users/urban/Work/Development/matrix/app/ui/multi-dropdown'
