@@ -40,6 +40,11 @@ let g:syntastic_style_warning_symbol = '!'
 
 noremap <leader>t :SyntasticToggleMode<CR>
 
+" Point syntastic checker at locally installed `eslint` if it exists.
+if executable('node_modules/.bin/eslint')
+  let b:syntastic_javascript_eslint_exec = 'node_modules/.bin/eslint'
+endif
+
 augroup syntasticjs
   autocmd!
   autocmd BufNewFile,BufReadPre *.js let b:syntastic_checkers = HasConfigJs()
