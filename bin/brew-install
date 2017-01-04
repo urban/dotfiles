@@ -70,8 +70,10 @@ FORMULAS=(
   nmap
   rename
   tmux
+  reattach-to-user-namespace
   tree
-  vim
+  # vim
+  neovim/neovim/neovim
   webkit2png
   youtube-dl
   z
