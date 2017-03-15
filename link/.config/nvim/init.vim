@@ -16,9 +16,8 @@ if empty(glob('~/.config/nvim/autoload/plug.vim'))
 endif
 
 source ~/.config/nvim/vim-plug.vim  " Install plugins
-" source ~/.vim/vundle.vim    " Install Vundle plugins.
-source ~/.vim/config.vim    " Regular Vim configuration (no plugins needed).
+source ~/.config/nvim/config.vim    " Regular Vim configuration (no plugins needed).
 source ~/.vim/mappings.vim  " All hotkeys, not dependant on plugins.
-source ~/.vim/filetypes.vim " Load filetypes.
+source ~/.config/nvim/filetypes.vim " Load filetypes.
 source ~/.config/nvim/plugins.vim   " Load plugin specific configurations.
 source ~/.vim/vimrcex.vim   " Load auto commands.

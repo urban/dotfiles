@@ -30,6 +30,10 @@ sublime/*
 link/.vim/plugged/
 link/.vim/swaps/
 
+# Ignore all .config files except neovim
+link/.config/*
+!link/.config/nvim/*/**
+
 # Ignore neovim plugins
 link/.config/nvim/plugged/*
 link/.config/nvim/.netrwhist

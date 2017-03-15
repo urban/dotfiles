@@ -85,6 +85,7 @@ FORMULAS=(
   # ngrok
   nvm
   phantomjs
+  python3
   ruby
   watchman
 )
@@ -176,14 +177,14 @@ function finish() {
 }
 trap finish EXIT
 
-# Start.
-log_message "Installing Homebrew and Cask"
-
 # Install Homebrew if it doesn't exist
 if ! hash brew 2>/dev/null; then
   echo "Installing Homebrew"
   ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 fi
+
+# Start.
+log_message "Installing Formulas"
 
 # Manually remove the brew cache, since that is the only way to force
 # `brew cask install` to grab the latest versions of its recipes.
@@ -206,13 +207,17 @@ brew install ${FORMULAS[@]}
 echo "Don't forget to add \`/usr/local/bin/bash to /etc/shells\` before running \`chsh\`."
 echo "Don't forget to add \`\$(brew --prefix coreutils)/libexec/gnubin\` to \`\$PATH\`."
 echo "Don't forget to run \`git config --global core.excludesfile ~/.gitignore_global\`."
-echo "Don't forget to run \`touch ~/.gradle/gradle.properties && echo \"org.gradle.daemon=true\" >> ~/.gradle/gradle.properties\`"
+echo "Don't forget to run \`touch ~/.gradle/gradle.properties && echo \"org.gradle.daemon=true\" >> ~/.gradle/gradle.properties\`."
+echo "Don't forget to run \`pip3 install neovim\`."
 
-# # Rremove any outdated versions
-# brew cask cleanup
+# Start Casks
+log_message "Installing Casks"
 
 # Install casks
 brew cask install ${CASKS[@]}
+
+# Start Casks
+log_message "Installing Quicklook plugins"
 
 # Install Quicklook plugins
 brew cask install ${QUICKLOOK[@]}

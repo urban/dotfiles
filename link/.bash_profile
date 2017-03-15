@@ -83,3 +83,4 @@ fi;
 #   # this enables auto-switching of Rubies specified by .ruby-version files
 #   source /usr/local/opt/chruby/share/chruby/auto.sh
 # fi;
+eval $(/usr/libexec/path_helper -s)

@@ -19,6 +19,8 @@ brew-install
 ```
 To install all vim plugins, type the following into Terminal.
 
+**TODO:** Fix early abort error in brew-install script.
+
 ```shell
 vim +PluginInstall +qall
 ```
