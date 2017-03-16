@@ -44,6 +44,8 @@ TAPS=(
 
 # Homebrew formulas
 FORMULAS=(
+  # Install cask
+  cask
   # Install GNU core utilities (those that come with OS X are outdated)
   coreutils
   # Install some other useful utilities like `sponge`
@@ -95,37 +97,37 @@ CASKS=(
   # essential
   adium
   caffeine
-  dropbox
-  1password
+  # dropbox
+  # 1password
   # design
-  adobe-photoshop-cc
-  omnigraffle
+  # adobe-photoshop-cc
+  # omnigraffle
   sketch
   zeplin
   # dev
-  arduino
-  atom
+  # arduino
+  # atom
   dockertoolbox
   charles
-  fontprep
-  genymotion
+  # fontprep
+  # genymotion
   java
-  heroku-toolbelt
-  imageoptim
+  # heroku-toolbelt
+  # imageoptim
   mongodb
   # sublime-text3
-  transmission
+  # transmission
   transmit
   vagrant
   virtualbox
   # utils
-  bittorrent-sync
+  # bittorrent-sync
   divvy
-  handbrake
-  keycastr
-  miro-video-converter
-  rightzoom
-  sdformatter
+  # handbrake
+  # keycastr
+  # miro-video-converter
+  # rightzoom
+  # sdformatter
   the-unarchiver
   vlc
   # browsers
@@ -133,16 +135,16 @@ CASKS=(
   google-chrome
   # others
   skype
-  calibre
-  gitter
+  # calibre
+  # gitter
   google-drive
-  hipchat
-  macdown
-  mapbox-studio
-  microsoft-office
+  # hipchat
+  # macdown
+  # mapbox-studio
+  # microsoft-office
   slack
   spotify
-  time-out
+  # time-out
 )
 
 # quick look plugins (https://github.com/sindresorhus/quick-look-plugins)
