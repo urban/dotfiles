@@ -1,8 +1,0 @@
-{
-  "parser": "github",
-  "enable_highlight": true,
-  "enable_pygments": false,
-  "enabled_parsers": ["github"],
-  "github_mode": "gfm",
-  "github_inject_header_ids": true
-}
