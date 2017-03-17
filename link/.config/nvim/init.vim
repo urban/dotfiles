@@ -17,7 +17,7 @@ endif
 
 source ~/.config/nvim/vim-plug.vim  " Install plugins
 source ~/.config/nvim/config.vim    " Regular Vim configuration (no plugins needed).
-source ~/.vim/mappings.vim  " All hotkeys, not dependant on plugins.
+source ~/.config/nvim/mappings.vim  " All hotkeys, not dependant on plugins.
 source ~/.config/nvim/filetypes.vim " Load filetypes.
 source ~/.config/nvim/plugins.vim   " Load plugin specific configurations.
 source ~/.vim/vimrcex.vim   " Load auto commands.

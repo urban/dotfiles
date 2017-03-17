@@ -36,13 +36,6 @@ Plug 'elzr/vim-json'
 " Utils
 " ========================================================================
 
-" Inline git status
-Plug 'airblade/vim-gitgutter'
-
-" A plugin of NERDTree showing git status
-Plug 'Xuyuanp/nerdtree-git-plugin'
-
-
 " Better status line
 Plug 'bling/vim-airline'
 
@@ -52,10 +45,16 @@ Plug 'vim-airline/vim-airline-themes'
 " A sidebar buffer for navigating and manipulating files.
 Plug 'scrooloose/nerdtree'
 
+" Inline git status
+Plug 'airblade/vim-gitgutter'
+
+" A plugin of NERDTree showing git status
+Plug 'Xuyuanp/nerdtree-git-plugin'
+
 "Commenting.
 Plug 'scrooloose/nerdcommenter'
 
-"Seamless navigation between tmux panes and vim splits
+" Seamless navigation between tmux panes and vim splits
 Plug 'christoomey/vim-tmux-navigator'
 
 " Make terminal vim and tmux work better together.
