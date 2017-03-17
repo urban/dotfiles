@@ -24,9 +24,12 @@ link/.vim/plugged/
 link/.vim/swaps/
 
 # Ignore all .config files except neovim
-link/.config/*
-!link/.config/nvim/*/**
-
+link/.config/*/*
+!link/.convig/nvim/
+!link/.config/nvim/*
+# Ignore netrwist
+link/.config/nvim/.netrwhist
 # Ignore neovim plugins
 link/.config/nvim/plugged/*
-link/.config/nvim/.netrwhist
+!link/.config/nvim/*/*
+
