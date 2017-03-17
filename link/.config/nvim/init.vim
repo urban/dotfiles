@@ -20,4 +20,4 @@ source ~/.config/nvim/config.vim    " Regular Vim configuration (no plugins need
 source ~/.config/nvim/mappings.vim  " All hotkeys, not dependant on plugins.
 source ~/.config/nvim/filetypes.vim " Load filetypes.
 source ~/.config/nvim/plugins.vim   " Load plugin specific configurations.
-source ~/.vim/vimrcex.vim   " Load auto commands.
+source ~/.config/nvim/vimrcex.vim   " Load auto commands.
