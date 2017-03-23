@@ -23,6 +23,10 @@ node_modules/
 link/.vim/plugged/
 link/.vim/swaps/
 
+# Ignore tmux plugins
+link/.tmux/plugins/
+link/.tmux/resurrect/
+
 # Ignore all .config files except neovim
 link/.config/*/*
 !link/.convig/nvim/

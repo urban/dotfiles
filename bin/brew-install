@@ -101,6 +101,7 @@ CASKS=(
   # 1password
   # design
   # adobe-photoshop-cc
+  iterm2
   # omnigraffle
   sketch
   zeplin
