@@ -76,6 +76,11 @@ if hash brew 2> /dev/null && [ -f "$(brew --prefix autoenv)/activate.sh" ]; then
   source $(brew --prefix autoenv)/activate.sh
 fi;
 
+# Use NeoVim instead of Vim
+if type nvim > /dev/null 2>&1; then
+  alias vim='nvim'
+fi
+
 # for chruby, a program to manage Ruby versions
 # if [ -f /usr/local/opt/chruby/share/chruby/chruby.sh ]; then
 #   # this loads chruby
