@@ -79,6 +79,8 @@ fi;
 # Use NeoVim instead of Vim
 if type nvim > /dev/null 2>&1; then
   alias vim='nvim'
+  export VISUAL=nvim
+  export EDITOR="$VISUAL"
 fi
 
 # for chruby, a program to manage Ruby versions

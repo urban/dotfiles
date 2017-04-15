@@ -29,6 +29,21 @@ nnoremap <leader>bd :Bclose<cr>
 " Close all buffers
 nnoremap <leader>ba :1,1000 bd!<cr>
 
+" Don't yank to default register when changing something
+nnoremap c "xc
+xnoremap c "xc
+
+" After block yank and paste, move cursor to the end of operated text and don't override register
+vnoremap y y`]
+vnoremap p "_dP`]
+nnoremap p p`]
+
+" Yank and paste from clipboard
+nnoremap ,y "+y
+vnoremap ,y "+y
+nnoremap ,yy "+yy
+nnoremap ,p "+p
+
 " ---------------
 " NeoVim Hacks
 " ---------------
@@ -48,13 +63,13 @@ inoremap Kj <Esc>
 inoremap kJ <Esc>
 
 " Map auto complete of (, ", ', [, {
-inoremap $1 ()<esc>i
-inoremap $2 []<esc>i
-inoremap $3 {}<esc>i
-inoremap $4 {<esc>o}<esc>O
-inoremap $q ''<esc>i
-inoremap $e ""<esc>i
-inoremap $3 {}<esc>i
+inoremap $1 ()<Esc>i
+inoremap $2 []<Esc>i
+inoremap $3 {}<Esc>i
+inoremap $4 {<Esc>o}<Esc>O
+inoremap $q ''<Esc>i
+inoremap $e ""<Esc>i
+inoremap $3 {}<Esc>i
 
 " ---------------
 " Visual Mode Mappings

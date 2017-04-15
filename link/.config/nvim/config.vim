@@ -8,18 +8,6 @@ colorscheme solarized
 set background=dark
 
 set shell=/bin/bash
-set ruler               " Ruler on.
-set number              " Line numbers on.
-set nowrap              " Line wrapping off.
-set laststatus=2        " Always show statusline.
-set cmdheight=2         " Make the command area two lines high.
-set encoding=utf-8
-set noshowmode          " Don't show the mode since Powerline shows it.
-set title               " Set the title of the window in Terminal to the file.
-if exists('+colorcolumn')
-  set colorcolumn=80    " Color the 80th column differently as a wrapping guide.
-endif
-
 " Behaviors
 set nocompatible        " Disable vi compatibility.
 set noswapfile          " Disable swaps.
@@ -29,10 +17,9 @@ set autoread            " Automatically reload changes if detected.
 set wildmenu            " Turn on Wild menu.
 set hidden              " Change buffer - without saving.
 set history=256         " Number of things to remember in history.
-set clipboard=unnamed   " Use the OS clipboard by default.
+set clipboard=unnamed  " Use the OS clipboard by default.
 set autowrite           " Writes on make/shell commands
 set timeoutlen=250      " Time to wait after ESC
-set nofoldenable        " Disable folding entirely.
 " set scrolloff=3         " Keep three lines below the last line when
 set gdefault            " Makes search/replace global by default.
 set virtualedit=block   " Enable rectangular selections.
@@ -48,6 +35,16 @@ if ! has('gui_running')
     au InsertLeave * set timeoutlen=1000
   augroup END
 endif
+
+" Folding
+" set nofoldenable        " Disable folding entirely.
+set foldmethod=marker     " Markers are used to specify folds.
+set foldlevel=2           " Start folding automatically from level 2
+set fillchars="fold: "    " Characters to fill the statuslines and vertical separators
+" Stay down after creating fold
+vnoremap zf mzzf`zzz
+" Easier fold toggling
+nnoremap ,z za
 
 " Text Format
 set tabstop=2           " Set the default tabstop.
@@ -75,6 +72,16 @@ set wildignore+=*.o,*.obj,*.exe,*.so,*.dll,*.pyc,.svn,.hg,.bzr,.git,
 " set guifont=Source:h14  " Set the font and font size
 set guifont=Sauce\ Code\ Powerline\ Plus\ Nerd\ File\ Types\ Mono:h11
 set number              " Enable line numbers.
+set ruler               " Ruler on.
+set nowrap              " Line wrapping off.
+set laststatus=2        " Always show statusline.
+set cmdheight=2         " Make the command area two lines high.
+set encoding=utf-8
+set noshowmode          " Don't show the mode since Powerline shows it.
+set title               " Set the title of the window in Terminal to the file.
+if exists('+colorcolumn')
+  set colorcolumn=80    " Color the 80th column differently as a wrapping guide.
+endif
 set showmatch           " Show matching brackets.
 set nolist              " Display unprintable characters f12 - switches
 set listchars=""        " Reset the listchars.
