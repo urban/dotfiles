@@ -13,12 +13,24 @@ Plug 'altercation/vim-colors-solarized' " Solarized theme
 " Languages agnostic
 " ========================================================================
 
-" highlight matching html tag
+" Asynchronous maker and linter (needs linters to work)
+Plug 'neomake/neomake', { 'on': ['Neomake'] }
+" Autocomplete
+Plug 'Shougo/deoplete.nvim'
+" Automatically closing pair stuff
+Plug 'cohama/lexima.vim'
+" Snippet support (C-j)
+Plug 'SirVer/ultisnips'
+" Commenting support (gc)
+Plug 'tpope/vim-commentary'
+" CamelCase and snake_case motions
+Plug 'bkad/CamelCaseMotion'
+" Heuristically set indent settings
+Plug 'tpope/vim-sleuth'
+" highlight matching tag
 Plug 'gregsexton/MatchTag'
 " add gS to smart split lines like comma lists and html tags
 Plug 'AndrewRadev/splitjoin.vim'
-" Async make and linting framework
-Plug 'neomake/neomake'
 
 " ========================================================================
 " JS (ES6, React)
@@ -58,32 +70,54 @@ Plug 'lilydjwg/colorizer', { 'for': ['css', 'sass', 'scss', 'less', 'html', 'xde
 Plug 'Shougo/neoyank.vim'
 
 " ========================================================================
-" Utils
+" Interface improving
 " ========================================================================
 
-" Better status line
-Plug 'bling/vim-airline'
-
-" Status line theme support
-Plug 'vim-airline/vim-airline-themes'
-
+" Lightline (simple status line)
+Plug 'itchyny/lightline.vim'
+" Buffers tabline
+Plug 'ap/vim-buftabline'
 " A sidebar buffer for navigating and manipulating files.
 Plug 'scrooloose/nerdtree'
-
-" Inline git status
-Plug 'airblade/vim-gitgutter'
-
 " A plugin of NERDTree showing git status
 Plug 'Xuyuanp/nerdtree-git-plugin'
 
-"Commenting.
-Plug 'scrooloose/nerdcommenter'
-
+" ========================================================================
+" External tools integration plugins
+" ========================================================================
+" Fugitive
+Plug 'tpope/vim-fugitive'
+" Git log viewer (Gitv! for file mode)
+Plug 'gregsexton/gitv', { 'on': 'Gitv' }
+" Git changes showed on line numbers
+Plug 'airblade/vim-gitgutter'
+" REST Console
+Plug 'diepm/vim-rest-console', { 'for': 'rest' }
+" Color picker
+Plug 'KabbAmine/vCoolor.vim', { 'on': ['VCoolor', 'VCase'] }
 " Seamless navigation between tmux panes and vim splits
 Plug 'christoomey/vim-tmux-navigator'
-
 " Make terminal vim and tmux work better together.
 Plug 'tmux-plugins/vim-tmux-focus-events'
+
+" ========================================================================
+" Text insertion/manipulation
+" ========================================================================
+"
+" Surround (cs"')
+Plug 'tpope/vim-surround'
+" Easy alignment
+Plug 'godlygeek/tabular', { 'on':  'Tabularize' }
+" Safely editing in isolation
+Plug 'ferranpm/vim-isolate', { 'on':  ['Isolate', 'UnIsolate'] }
+" Cycling related words via C-a C-x (i.e. true/false)
+Plug 'zef/vim-cycle'
+" Titlecase motion (gt)
+Plug 'christoomey/vim-titlecase'
+
+" ========================================================================
+" Utils
+" ========================================================================
 
 " Creates dir if new file in new dir
 Plug 'dockyard/vim-easydir'
