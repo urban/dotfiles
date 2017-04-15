@@ -34,6 +34,6 @@ link/.config/*/*
 # Ignore netrwist
 link/.config/nvim/.netrwhist
 # Ignore neovim plugins
-link/.config/nvim/plugged/*
+link/.config/nvim/plugged
 !link/.config/nvim/*/*
 

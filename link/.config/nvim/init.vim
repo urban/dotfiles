@@ -15,9 +15,8 @@ if empty(glob('~/.config/nvim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source ~/.config/nvim/init.vim
 endif
 
-source ~/.config/nvim/vim-plug.vim  " Install plugins
+source ~/.config/nvim/plugins.vim   " Load plugin specific configurations.
 source ~/.config/nvim/config.vim    " Regular Vim configuration (no plugins needed).
 source ~/.config/nvim/mappings.vim  " All hotkeys, not dependant on plugins.
 source ~/.config/nvim/filetypes.vim " Load filetypes.
-source ~/.config/nvim/plugins.vim   " Load plugin specific configurations.
 source ~/.config/nvim/vimrcex.vim   " Load auto commands.
