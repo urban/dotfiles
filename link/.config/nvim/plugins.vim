@@ -31,6 +31,8 @@ Plug 'tpope/vim-sleuth'
 Plug 'gregsexton/MatchTag'
 " add gS to smart split lines like comma lists and html tags
 Plug 'AndrewRadev/splitjoin.vim'
+" multiple selections
+Plug 'terryma/vim-multiple-cursors'
 
 " ========================================================================
 " JS (ES6, React)
@@ -66,8 +68,12 @@ Plug 'lilydjwg/colorizer', { 'for': ['css', 'sass', 'scss', 'less', 'html', 'xde
 " Unite fuzzy searcher
 " ========================================================================
 
+" Unite files, buffers, etc. sources
+Plug 'Shougo/denite.nvim'
 " History/yank source
 Plug 'Shougo/neoyank.vim'
+" Ag wrapper (Unite grep alternative) search and edit
+Plug 'dyng/ctrlsf.vim', { 'on': ['CtrlSF', 'CtrlSFToggle'] }
 
 " ========================================================================
 " Interface improving
@@ -122,9 +128,13 @@ Plug 'christoomey/vim-titlecase'
 " Creates dir if new file in new dir
 Plug 'dockyard/vim-easydir'
 
-call plug#end()
 
-" Source all the plugin files again, this time loading their configuration.
-for file in split(glob('~/.config/nvim/plugins/*.vim'), '\n')
-  exe 'source' file
-endfor
+" ========================================================================
+" Other
+" ========================================================================
+
+" Intelligent buffer closing
+Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
+" Delete all but current buffer
+Plug 'vim-scripts/BufOnly.vim', { 'on': 'Bonly' }
+call plug#end()

@@ -1,5 +1,5 @@
 let g:lightline = {
-      \ 'colorscheme': 'solorized',
+      \ 'colorscheme': 'solarized',
       \ 'tab': {
       \   'active': [ 'filename' ],
       \   'inactive': [ 'filename' ]

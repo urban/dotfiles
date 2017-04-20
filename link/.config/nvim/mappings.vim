@@ -24,10 +24,14 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-" Close current buffer
-nnoremap <leader>bd :Bclose<cr>
-" Close all buffers
-nnoremap <leader>ba :1,1000 bd!<cr>
+" Buffers navigation and management
+nnoremap <silent> + :bn<CR>
+nnoremap <silent> _ :bp<CR>
+
+" Quick save and close buffer
+nnoremap <leader>w :w<CR>
+nnoremap <silent> <leader>c :Sayonara!<CR>
+nnoremap <silent> <leader>q :Sayonara<CR>
 
 " Don't yank to default register when changing something
 nnoremap c "xc

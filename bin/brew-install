@@ -78,7 +78,7 @@ FORMULAS=(
   neovim/neovim/neovim
   webkit2png
   youtube-dl
-  z
+  # z
   # Install development tools
   android-sdk
   flow
@@ -89,6 +89,7 @@ FORMULAS=(
   phantomjs
   python3
   ruby
+  fontforge
   watchman
 )
 
