@@ -89,7 +89,8 @@ FORMULAS=(
   phantomjs
   python3
   ruby
-  fontforge
+  shellcheck
+  tidy-html5
   watchman
 )
 

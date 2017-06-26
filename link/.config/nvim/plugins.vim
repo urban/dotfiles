@@ -14,7 +14,8 @@ Plug 'altercation/vim-colors-solarized' " Solarized theme
 " ========================================================================
 
 " Asynchronous maker and linter (needs linters to work)
-Plug 'neomake/neomake', { 'on': ['Neomake'] }
+Plug 'w0rp/ale'
+" Plug 'neomake/neomake', { 'on': ['Neomake'] }
 " Autocomplete
 Plug 'Shougo/deoplete.nvim'
 " Automatically closing pair stuff
@@ -33,25 +34,40 @@ Plug 'gregsexton/MatchTag'
 Plug 'AndrewRadev/splitjoin.vim'
 " multiple selections
 Plug 'terryma/vim-multiple-cursors'
+" indenting
+Plug 'nathanaelkane/vim-indent-guides'
 
 " ========================================================================
 " JS (ES6, React)
 " ========================================================================
 
 " Moder JS support (indent, syntax, etc)
-Plug 'pangloss/vim-javascript'
+Plug 'sheerun/vim-polyglot'
+" Template string highlighting
+Plug 'Quramy/vim-js-pretty-template'
+" Plug 'pangloss/vim-javascript'
 " JSX syntax
-Plug 'mxw/vim-jsx'
+" Plug 'mxw/vim-jsx'
+" " JS Documentation comments
+" Plug 'heavenshell/vim-jsdoc', { 'on': ['JsDoc'] }
+" JSON syntax
+" Plug 'sheerun/vim-json'
+" Plug 'elzr/vim-json'
+
+" Plug 'othree/yajs.vim', { 'for': 'javascript' }
+" ES Next
+" Plug 'othree/es.next.syntax.vim'
+" Syntax highlighting for common JS libraries
+" Plug 'othree/javascript-libraries-syntax.vim'
+
 " Typescript syntax
 Plug 'leafgarland/typescript-vim'
-" JSON syntax
-Plug 'sheerun/vim-json'
 " Autocomplete (npm install -g tern)
-Plug 'carlitux/deoplete-ternjs'
+Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install' }
 " Autocomplete using flow (npm install -g flow-bin)
 Plug 'steelsojka/deoplete-flow'
-" JS Documentation comments
-Plug 'heavenshell/vim-jsdoc', { 'on': ['JsDoc'] }
+" Node.js tools
+Plug 'moll/vim-node'
 
 " ========================================================================
 " HTML, CSS
@@ -74,6 +90,8 @@ Plug 'Shougo/denite.nvim'
 Plug 'Shougo/neoyank.vim'
 " Ag wrapper (Unite grep alternative) search and edit
 Plug 'dyng/ctrlsf.vim', { 'on': ['CtrlSF', 'CtrlSFToggle'] }
+" Fuzzy file, buffer, mru, tag, etc finder
+" Pulg 'ctrlpvim/ctrlp.vim'
 
 " ========================================================================
 " Interface improving
@@ -105,6 +123,8 @@ Plug 'KabbAmine/vCoolor.vim', { 'on': ['VCoolor', 'VCase'] }
 Plug 'christoomey/vim-tmux-navigator'
 " Make terminal vim and tmux work better together.
 Plug 'tmux-plugins/vim-tmux-focus-events'
+" Code Formatter
+Plug 'sbdchd/neoformat'
 
 " ========================================================================
 " Text insertion/manipulation
@@ -128,7 +148,6 @@ Plug 'christoomey/vim-titlecase'
 " Creates dir if new file in new dir
 Plug 'dockyard/vim-easydir'
 
-
 " ========================================================================
 " Other
 " ========================================================================
@@ -137,4 +156,5 @@ Plug 'dockyard/vim-easydir'
 Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
 " Delete all but current buffer
 Plug 'vim-scripts/BufOnly.vim', { 'on': 'Bonly' }
+
 call plug#end()

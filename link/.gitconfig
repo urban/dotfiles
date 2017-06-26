@@ -150,3 +150,8 @@
 [user]
 	email = urban.faubion@gmail.com
 	name = Urban Faubion
+
+[credential]
+  helper = !aws codecommit credential-helper $@
+  UseHttpPath = true
+

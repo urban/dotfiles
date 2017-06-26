@@ -64,9 +64,8 @@ set ignorecase          " Ignore case of searches.
 set smartcase           " Be sensitive when there's a capital letter.
 set hlsearch            " Highlight search.
 set incsearch           " Highlight dynamically as pattern is typed.
-set wildignore+=*.o,*.obj,*.exe,*.so,*.dll,*.pyc,.svn,.hg,.bzr,.git,
-  \.sass-cache,*.class,*.scssc,*.cssc,sprockets%*,*.lessc,*/node_modules/*,
-  \rake-pipeline-*
+set wildignore+=*.o,*.obj,*.exe,*.so,*.dll,*.pyc,.svn,.hg,.bzr,.git,.DS-Store,
+  \.sass-cache,*.class,*.scssc,*.cssc,sprockets%*,*.lessc,rake-pipeline-*
 
 " Visual
 " set guifont=Source:h14  " Set the font and font size
