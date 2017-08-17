@@ -74,7 +74,6 @@ FORMULAS=(
   tmux
   reattach-to-user-namespace
   tree
-  # vim
   neovim/neovim/neovim
   webkit2png
   youtube-dl
@@ -86,6 +85,7 @@ FORMULAS=(
   yarn
   # ngrok
   nvm
+  rbenv
   phantomjs
   python3
   ruby

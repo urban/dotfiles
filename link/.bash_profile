@@ -83,6 +83,11 @@ if type nvim > /dev/null 2>&1; then
   export EDITOR="$VISUAL"
 fi
 
+# for rbenv
+if type rbenv > /dev/null 2>&1; then
+  eval "$(rbenv init -)"
+fi
+
 # for chruby, a program to manage Ruby versions
 # if [ -f /usr/local/opt/chruby/share/chruby/chruby.sh ]; then
 #   # this loads chruby
