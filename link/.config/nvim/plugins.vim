@@ -16,8 +16,6 @@ Plug 'altercation/vim-colors-solarized' " Solarized theme
 " Asynchronous maker and linter (needs linters to work)
 Plug 'w0rp/ale'
 " Plug 'neomake/neomake', { 'on': ['Neomake'] }
-" Autocomplete
-Plug 'Shougo/deoplete.nvim'
 " Automatically closing pair stuff
 Plug 'cohama/lexima.vim'
 " Snippet support (C-j)
@@ -62,6 +60,8 @@ Plug 'Quramy/vim-js-pretty-template'
 
 " Typescript syntax
 Plug 'leafgarland/typescript-vim'
+" Styled JSX
+Plug 'alampros/vim-styled-jsx'
 " Autocomplete (npm install -g tern)
 Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install' }
 " Autocomplete using flow (npm install -g flow-bin)
@@ -79,6 +79,18 @@ Plug 'othree/html5.vim'
 Plug 'cakebaker/scss-syntax.vim'
 " Color highlighter
 Plug 'lilydjwg/colorizer', { 'for': ['css', 'sass', 'scss', 'less', 'html', 'xdefaults', 'javascript', 'javascript.jsx'] }
+
+" ========================================================================
+" Autocomplete
+" ========================================================================
+
+" Autocomplete
+Plug 'Shougo/deoplete.nvim', { 'do': 'UpdateRemotePlugins' }
+" Flow
+Plug 'wokalski/autocomplete-flow'
+" For func argument completion
+Plug 'Shougo/neosnippet'
+Plug 'Shougo/neosnippet-snippets'
 
 " ========================================================================
 " Unite fuzzy searcher
@@ -124,7 +136,7 @@ Plug 'christoomey/vim-tmux-navigator'
 " Make terminal vim and tmux work better together.
 Plug 'tmux-plugins/vim-tmux-focus-events'
 " Code Formatter
-Plug 'sbdchd/neoformat'
+" Plug 'sbdchd/neoformat'
 
 " ========================================================================
 " Text insertion/manipulation
