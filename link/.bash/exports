@@ -27,4 +27,9 @@ export MANPAGER="less -X";
 export HOMEBREW_CASK_OPTS="--appdir=/Applications";
 
 # Android SDK via Homebrew
-export ANDROID_HOME=/usr/local/opt/android-sdk
+# export ANDROID_HOME=/usr/local/opt/android-sdk
+
+# Android SDK via React Native instructions
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/platform-tools

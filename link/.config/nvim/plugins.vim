@@ -43,7 +43,6 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'sheerun/vim-polyglot'
 " Template string highlighting
 Plug 'Quramy/vim-js-pretty-template'
-" Plug 'pangloss/vim-javascript'
 " JSX syntax
 " Plug 'mxw/vim-jsx'
 " " JS Documentation comments
@@ -57,6 +56,8 @@ Plug 'Quramy/vim-js-pretty-template'
 " Plug 'othree/es.next.syntax.vim'
 " Syntax highlighting for common JS libraries
 " Plug 'othree/javascript-libraries-syntax.vim'
+" GraphQL syntax highlighting
+Plug 'jparise/vim-graphql'
 
 " Typescript syntax
 Plug 'leafgarland/typescript-vim'

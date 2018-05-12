@@ -44,7 +44,7 @@ fi;
 
 # Enable tab completion for `g` by marking it as an alias for `git`
 if type _git &> /dev/null && [ -f /usr/local/etc/bash_completion.d/git-completion.bash ]; then
-	complete -o default -o nospace -F _git g;
+  complete -o default -o nospace -F _git g;
 fi;
 
 # Add tab completion for SSH hostnames based on ~/.ssh/config, ignoring wildcards
@@ -68,8 +68,13 @@ if hash brew 2> /dev/null && [ -f "$(brew --prefix nvm)/nvm.sh" ]; then
   # this loads nvm
   source $(brew --prefix nvm)/nvm.sh
   # for bash completion
-  [[ -r $NVM_DIR/bash_completion ]] && . $NVM_DIR/bash_completion
+  [[ -r $NVM_DIR/bash_completion ]] && source $NVM_DIR/bash_completion
 fi;
+
+# for yarn
+# if hash brew 2> /dev/null && [ -f "$(brew --prefix yarn)/bin/yarn" ]; then
+#  export PATH="$PATH:$(yarn global bin)"
+# fi;
 
 # for Autoenv
 if hash brew 2> /dev/null && [ -f "$(brew --prefix autoenv)/activate.sh" ]; then
