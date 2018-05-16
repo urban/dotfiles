@@ -1,4 +1,0 @@
-PATH=~/.dotfiles/bin:$PATH
-
-# Android SDK via Homebrew
-export ANDROID_HOME=/usr/local/opt/android-sdk

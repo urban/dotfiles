@@ -1,3 +1,9 @@
+https://spacevim.org/documentation/
+https://www.bretfisher.com/shell/
+https://github.com/gpakosz/.tmux
+https://medium.com/@caulfieldOwen/youre-missing-out-on-a-better-mac-terminal-experience-d73647abf6d7
+
+
 # My Dotfiles
 
 This is my dotfiles repo and something I will continually be working on.

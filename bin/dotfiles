@@ -163,4 +163,3 @@ shopt -s nullglob
 
 # Copy, Link, etc.
 do_stuff "link"
-do_stuff "copy"
