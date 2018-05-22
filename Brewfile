@@ -45,77 +45,30 @@ TAPS=(
 FORMULAS=(
   # Install cask
   cask
-  # Install GNU core utilities (those that come with OS X are outdated)
-  # coreutils
-  # # Install some other useful utilities like `sponge`
-  # moreutils
-  # # Install GNU `find`, `locate`, `updatedb`, and `xargs`, `g`-prefixed
-  # findutils
-  # # Install GNU `sed`, overwriting the built-in `sed`
-  # gnu-sed --default-names
-  # # Install Bash 4
-  bash
-  bash-completion
-  # Install wget with IRI support
-  # wget --enable-iri
-  # Install more recent versions of some OS X tools
-  # homebrew/dupes/grep
-  # Install other useful binaries
-  # fzf
-  # ack
-  # autoenv
-  # ctags
   git
   git-extras
-  # git-lfs
-  # md5sha1sum
-  # nmap
-  # rename
   tmux
   reattach-to-user-namespace
-  # tree
   neovim
-  # webkit2png
-  # youtube-dl
-  # z
-  # Install development tools
   flow
   haskell-stack
-  # gradle
   yarn --without-node
-  # ngrok
   nvm
-  # rbenv
-  # phantomjs
   python3
-  # ruby
-  # shellcheck
-  # tidy-html5
-  # watchman
+  watchman
 )
 
 # Homebrew casks
 CASKS=(
   caffeine
-  # charles
   divvy
   firefox
-  # java
-  # google-drive
   google-chrome
   iterm2
-  # mongodb
-  # oni
   react-native-debugger
   sketch
-  # skype
-  # slack
   the-unarchiver
   transmit
-  # vagrant
-  # virtualbox
-  # vlc
-  # zeplin
 )
 
 # quick look plugins (https://github.com/sindresorhus/quick-look-plugins)
