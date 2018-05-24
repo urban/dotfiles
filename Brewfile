@@ -1,158 +1,26 @@
-#!/usr/bin/env bash
-#
-# Brew and Cask shell script
-#
-# This file:
-#
-# More info:
-#  - https://github.com/urban/dotfiles
-#
-# Author:
-#  - Urban Faubion (urban.faubion@gmail.com)
-#
-# Licensed under MIT
-# Copyright (c) 2015 Urban Faubion (urban.faubion@gmail.com)
+cask_args appdir: "/Applications"
+tap "caskroom/cask"
 
-### Configuration
-#####################################################################
+brew "antigen"
+brew "flow"
+brew "git"
+brew "git-extras"
+brew "haskell-stack"
+brew "neovim"
+brew "nvm"
+brew "python3"
+brew "reattach-to-user-namespace"
+brew "tmux"
+brew "watchman"
+brew "yarn", args: ["without-node"]
+brew "zsh"
+brew "zsh-completions"
 
-if [[ "$1" != "" ]]; then cat <<HELP
-
-Usage: $(basename "$0")
-
-See the README for documentation.
-https://github.com/urban/dotfiles
-
-Copyright (c) 2015 Urban Faubion
-Licensed under the MIT license.
-HELP
-exit;
-fi
-
-# exit on error
-set -o errexit
-# exit when trying to use undeclared variables
-set -o nounset
-
-### Constants, Variables and Functions
-#####################################################################
-
-# Homebrew taps
-TAPS=(
-)
-
-# Homebrew formulas
-FORMULAS=(
-  # Install cask
-  cask
-  git
-  git-extras
-  tmux
-  reattach-to-user-namespace
-  neovim
-  flow
-  haskell-stack
-  yarn --without-node
-  nvm
-  python3
-  watchman
-)
-
-# Homebrew casks
-CASKS=(
-  caffeine
-  divvy
-  firefox
-  google-chrome
-  iterm2
-  react-native-debugger
-  sketch
-  the-unarchiver
-  transmit
-)
-
-# quick look plugins (https://github.com/sindresorhus/quick-look-plugins)
-QUICKLOOK=(
-  qlcolorcode
-  qlstephen
-  qlmarkdown
-  quicklook-json
-  qlprettypatch
-  quicklook-csv
-  betterzipql
-  webpquicklook
-  suspicious-package
-)
-
-function log_message()  { echo -e "\n\033[1m$@\033[0m"; }
-function log_success()  { echo -e " \033[1;32m✔\033[0m  $@"; }
-function log_error()    { echo -e " \033[1;31m✖\033[0m  $@"; }
-
-### Main
-#####################################################################
-
-# Finish.
-function finish() {
-  # Cleanup.
-  local status=$?
-  if [ $status != 0 ]; then
-    echo -e "\033[1;31mError!"
-  else
-  echo -e "\033[1;32mFinished!"
-  fi
-}
-trap finish EXIT
-
-# Install Homebrew if it doesn't exist
-if ! hash brew 2>/dev/null; then
-  echo "Installing Homebrew"
-  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-fi
-
-# Start.
-log_message "Installing Formulas"
-
-# Manually remove the brew cache, since that is the only way to force
-# `brew cask install` to grab the latest versions of its recipes.
-# https://github.com/phinze/homebrew-cask/issues/309#issuecomment-32470815
-rm -rf "$(brew --cache)" && mkdir -p "$(brew --cache)"
-
-# Remove any outdated versions from the cellar
-brew cleanup --force
-
-# Make sure we’re using the latest Homebrew
-brew update
-
-# Add additional formulae lookup repos
-brew tap ${TAPS[@]}
-
-# Install formulas
-brew install ${FORMULAS[@]}
-
-# Setup info
-echo "Don't forget to add \`/usr/local/bin/bash to /etc/shells\` before running \`chsh\`."
-echo "Don't forget to add \`\$(brew --prefix coreutils)/libexec/gnubin\` to \`\$PATH\`."
-echo "Don't forget to run \`git config --global core.excludesfile ~/.gitignore_global\`."
-echo "Don't forget to run \`touch ~/.gradle/gradle.properties && echo \"org.gradle.daemon=true\" >> ~/.gradle/gradle.properties\`."
-echo "Don't forget to run \`pip3 install neovim\`."
-
-# Start Casks
-log_message "Installing Casks"
-
-# Install casks
-brew cask install ${CASKS[@]}
-
-# Start Casks
-log_message "Installing Quicklook plugins"
-
-# Install Quicklook plugins
-brew cask install ${QUICKLOOK[@]}
-
-# Force `qlmanage` to relaod Generators list
-qlmanage -r
-
-# Remove outdated versions from the cellar
-brew cleanup
-
-# Symlink all installed "application" packages for into /Applications.
-brew linkapps
+cask "caffeine"
+cask "divvy"
+cask "firefox"
+cask "google-chrome"
+cask "iterm2"
+cask "react-native-debugger"
+cask "sketch"
+cask "transmit"

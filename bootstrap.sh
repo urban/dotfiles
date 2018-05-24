@@ -1,28 +1,67 @@
 #!/usr/bin/env bash
 
-cd "$(dirname "${BASH_SOURCE}")";
-
-git pull origin master;
-
-function doIt() {
-	rsync --exclude ".git/" \
-		--exclude ".DS_Store" \
-		--exclude "link" \
-		--exclude "Brewfile" \
-		--exclude "bootstrap.sh" \
-		--exclude "README.md" \
-		--exclude "LICENSE-MIT.txt" \
-		-avh --no-perms . ~;
-	source ~/.bash_profile;
+command_exists() {
+    type "$1" > /dev/null 2>&1
 }
 
-if [ "$1" == "--force" -o "$1" == "-f" ]; then
-	doIt;
+echo "Installing dotfiles."
+
+cd "$(dirname "${BASH_SOURCE}")" || exit;
+
+echo "Updating dotfiles from repository"
+git pull origin spring-cleaning;
+
+if test ! "$(which brew)"; then
+  echo "Installing Homebrew"
+  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+fi
+
+echo "Update Homebrew"
+brew update
+
+echo "Install all dependencies with bundle (See Brewfile)"
+brew tap homebrew/bundle
+brew bundle
+
+if ! [[ -d "~/.tmux/plugins/tpm" ]]; then
+    echo "Installing Tmux Plugin Manager"
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+fi
+
+if ! command_exists zsh; then
+    echo "zsh not found. Please install and then re-run installation scripts"
+    exit 1
+elif ! [[ $SHELL =~ .*zsh.* ]]; then
+    echo "Configuring zsh as default shell"
+    chsh -s "$(which zsh)"
+fi
+
+function doIt() {
+  echo "Syncing dotfiles with rsync"
+  rsync --exclude ".git/" \
+    --exclude ".DS_Store" \
+    --exclude "Brewfile" \
+    --exclude "bootstrap.sh" \
+    --exclude "README.md" \
+    --exclude "LICENSE-MIT.txt" \
+    -avh --no-perms . ~;
+}
+
+if [[ $1 == --force || $1 == -f ]]; then
+  doIt;
 else
-	read -p "This may overwrite existing files in your home directory. Are you sure? (y/n) " -n 1;
-	echo "";
-	if [[ $REPLY =~ ^[Yy]$ ]]; then
-		doIt;
-	fi;
+  read "REPLY?This may overwrite existing files in your home directory. Are you sure? (y/n) ";
+  echo "";
+  if [[ "$REPLY" =~ ^[Yy]$ ]]; then
+    doIt;
+  fi;
 fi;
 unset doIt;
+
+echo "Load shell config"
+source ~/.zshrc;
+
+echo "Load Tmux config"
+tmux source ~/.tmux.conf;
+
+echo "Done. Please reload your terminal."

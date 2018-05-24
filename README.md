@@ -1,86 +1,46 @@
-https://spacevim.org/documentation/
-https://www.bretfisher.com/shell/
-https://github.com/gpakosz/.tmux
-https://medium.com/@caulfieldOwen/youre-missing-out-on-a-better-mac-terminal-experience-d73647abf6d7
-
-
-# My Dotfiles
+# dotfiles
 
 This is my dotfiles repo and something I will continually be working on.
 
+Shown with [Solarized Dark colorscheme](http://ethanschoonover.com/solarized) and Powerline-patched [Fira Code](https://github.com/tonsky/FiraCode) 14pt in [iTerm 2](http://www.iterm2.com/).
+
+## Requirements
+
+Set `zsh` as your login shell:
+
+```
+chsh -s $(which zsh)
+```
+
 ## Installation
 
-You need to have [XCode][0] or the [XCode Command Line Tools][1] installed for this script to run. The easiest way to install the XCode Command Line Tools is to open Terminal and type `xcode-select --install` and follow the prompts.
+Clone the repository onto your laptop:
 
-Once installed, type the following into Terminal.
-
-```shell
-bash -c "$(curl -fsSL http://bit.ly/urban-dotfiles)" && source ~/.bashrc
+```
+git clone https://github.com/urban/dotfiles.git ~/dotfiles
 ```
 
-To install all applications, run the following in Terminal.
+Install the dotfiles by running the bootstrap script. This will pull the latest version and copy the files to your home folder excluding the `README.md`, `bootstrap.sh` and `LICENSE` files.
 
-```shell
-brew-install
 ```
-To install all vim plugins, type the following into Terminal.
-
-**TODO:** Fix early abort error in brew-install script.
-
-```shell
-vim +PluginInstall +qall
+source bootstrap.sh
 ```
 
-In order to get vim airline to look correct, you need to install the [powerline font](https://github.com/powerline/fonts). Once installed, set you font in terminal to one that was just installed. I use "Droid Sans Mono Dotted for Powerline" at 12 pt.
+## Update
 
-Install the latest version of `node`.
+To update, `cd` into your local `dotfiles` repository, and run:
 
-```shell
-nvm install node
+```
+source bootstrap.sh
 ```
 
-## What did that do?
+### Installing Homebrew formulae
 
-...
+When setting up a new Mac, you will want to install [Homebrew](https://brew.sh/) and some formulae.
 
-## How to update
+After installing Homebrew, run the following from within your local `dotfiles` repository:
 
-You should only need to update when:
-
-- You want to make changes to `~/.dotfiles/copy/.gitconfig` (the only file that is copied rather than symlinked)
-- You want to update Homebrew or Cask
-- You want to update Vagrant plugins
-
-## Private, custom commands
-
-If `~/.extra` exists, it will be sourced along with the other shell environment files. This is where custom commands and additional private info can be stored and it will not be committed to this repo.
-
-## Paths
-
-The `~/.path` file is where your `PATH` can be set up:
-
-```shell
-# ...
-PATH=/opt/local/bin
-PATH=$PATH:/opt/local/sbin
-PATH=$PATH:/bin
-PATH=$PATH:~/.rvm/bin
-# ...
-
-export PATH
+```
+brew bundle
 ```
 
-## Insperation
-
-- [mathiasbynens/dotfiles](https://github.com/mathiasbynens/dotfiles)
-- [cowboy/dotfiles](https://github.com/cowboy/dotfiles)
-- [holman/dotfiles](https://github.com/holman/dotfiles)
-- [mattbrictson/dotfiles](https://github.com/mattbrictson/dotfiles)
-- [Writing Shell Scripts](http://linuxcommand.org/lc3_writing_shell_scripts.php)
-
-[0]: https://developer.apple.com/downloads/index.action?=xcode
-[1]: https://developer.apple.com/downloads/index.action?=command%20line%20tools
-[2]: http://net.tutsplus.com/tutorials/tools-and-tips/setting-up-a-mac-dev-machine-from-zero-to-hero-with-dotfiles/
-[3]: http://brew.sh/
-[4]: http://caskroom.io/
-[5]: https://github.com/xdissent/ievms
