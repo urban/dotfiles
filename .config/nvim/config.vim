@@ -7,7 +7,7 @@ let g:solarized_termcolors=256    " default value is 16
 colorscheme solarized
 set background=dark
 
-set shell=/bin/bash
+set shell=/bin/zsh
 " Behaviors
 set nocompatible        " Disable vi compatibility.
 set noswapfile          " Disable swaps.

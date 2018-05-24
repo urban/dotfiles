@@ -23,6 +23,17 @@ echo "Install all dependencies with bundle (See Brewfile)"
 brew tap homebrew/bundle
 brew bundle
 
+echo "Install Global Yarn Packages"
+yarn global add \
+  babel-cli \
+  babel-eslint \
+  eslint \
+  eslint_d \
+  eslint-config-pretter \
+  eslint-plugin-prettier \
+  prettier \
+  trash-cli
+
 if ! [[ -d "~/.tmux/plugins/tpm" ]]; then
     echo "Installing Tmux Plugin Manager"
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
