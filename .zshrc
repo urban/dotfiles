@@ -5,9 +5,14 @@ antigen use oh-my-zsh
 
 # Bundles from the default repo (robbyrussell's oh-my-zsh).
 antigen bundle git
-antigen bundle nvm
+
+export NVM_AUTO_USE=true
+antigen bundle lukechilds/zsh-nvm
+
 antigen bundle ssh-agent
+
 antigen bundle tmux
+
 antigen bundle yarn
 
 # Syntax highlighting bundle.
@@ -22,6 +27,14 @@ antigen apply
 ZSH_THEME="spaceship"
 
 source $HOME/.aliases
+
+# for Node Version Management
+if hash brew 2> /dev/null && [ -f "$(brew --prefix nvm)/nvm.sh" ]; then
+  export NVM_DIR=~/.nvm
+  # this loads nvm
+  source $(brew --prefix nvm)/nvm.sh
+  # for bash completion
+fi;
 
 export TERM='xterm-256color'
 export EDITOR='nvim'

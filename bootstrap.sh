@@ -26,17 +26,6 @@ brew bundle
 echo "Update neovim-python client"
 pip3 install neovim --upgrade
 
-echo "Install Global Yarn Packages"
-yarn global add \
-  babel-cli \
-  babel-eslint \
-  eslint \
-  eslint_d \
-  eslint-config-pretter \
-  eslint-plugin-prettier \
-  prettier \
-  trash-cli
-
 if ! [[ -d "~/.tmux/plugins/tpm" ]]; then
     echo "Installing Tmux Plugin Manager"
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
@@ -59,6 +48,7 @@ function doIt() {
     --exclude "README.md" \
     --exclude "LICENSE-MIT.txt" \
     -avh --no-perms . ~;
+  mkdir -p ~/.nvm
 }
 
 if [[ $1 == --force || $1 == -f ]]; then
@@ -74,6 +64,17 @@ unset doIt;
 
 echo "Load shell config"
 source ~/.zshrc;
+
+echo "Install Global Yarn Packages"
+yarn global add \
+  babel-cli \
+  babel-eslint \
+  eslint \
+  eslint_d \
+  eslint-config-prettier \
+  eslint-plugin-prettier \
+  prettier \
+  trash-cli
 
 echo "Load Tmux config"
 tmux source ~/.tmux.conf;
