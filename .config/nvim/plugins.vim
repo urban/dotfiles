@@ -22,6 +22,10 @@ Plug 'altercation/vim-colors-solarized' " Solarized theme
 Plug 'w0rp/ale'
 " Language support (indent, syntax, etc)
 Plug 'sheerun/vim-polyglot'
+" Template string highlighting
+Plug 'Quramy/vim-js-pretty-template'
+" Markdown
+Plug 'plasticboy/vim-markdown'
 
 " ========================================================================
 " Autocomplete
@@ -52,6 +56,8 @@ Plug 'itchyny/lightline.vim'
 Plug 'scrooloose/nerdtree'
 " A plugin of NERDTree showing git status
 Plug 'Xuyuanp/nerdtree-git-plugin'
+" indenting
+Plug 'nathanaelkane/vim-indent-guides'
 
 " ========================================================================
 " External tools integration plugins
@@ -71,6 +77,8 @@ Plug 'tmux-plugins/vim-tmux-focus-events'
 
 " Surround (cs"')
 Plug 'tpope/vim-surround'
+" Commenting support (gc)
+Plug 'tpope/vim-commentary'
 " Easy alignment
 Plug 'godlygeek/tabular', { 'on':  'Tabularize' }
 " Creates dir if new file in new dir

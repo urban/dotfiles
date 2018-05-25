@@ -23,6 +23,9 @@ echo "Install all dependencies with bundle (See Brewfile)"
 brew tap homebrew/bundle
 brew bundle
 
+echo "Update neovim-python client"
+pip3 install neovim --upgrade
+
 echo "Install Global Yarn Packages"
 yarn global add \
   babel-cli \
