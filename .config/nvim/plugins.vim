@@ -26,17 +26,19 @@ Plug 'sheerun/vim-polyglot'
 Plug 'Quramy/vim-js-pretty-template'
 " Markdown
 Plug 'plasticboy/vim-markdown'
+" ReasonML
+Plug 'reasonml-editor/vim-reason-plus'
 
 " ========================================================================
 " Autocomplete
 " ========================================================================
 
 " Autocomplete
-Plug 'Shougo/deoplete.nvim', { 'do': 'UpdateRemotePlugins' }
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
     \ }
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
 " ========================================================================
 " Unite fuzzy searcher

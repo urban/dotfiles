@@ -48,7 +48,7 @@ nnoremap ,z za
 
 " Text Format
 set tabstop=2           " Set the default tabstop.
-set softtabstop=2
+set softtabstop=0
 set backspace=indent,eol,start " Delete everything with backspace
 set shiftwidth=2        " Set the default shift width for indents.
 set expandtab           " Make tabs into spaces (set by tabstop).

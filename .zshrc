@@ -1,3 +1,18 @@
+# Load the shell dot files, and then some:
+for file in "$HOME/.{path,aliases}"; do
+  [ -r "$file" ] && [ -f "$file" ] && source "$file"
+done;
+
+export PATH=/usr/local/bin:$PATH
+
+# add /usr/local/sbin
+if [[ -d /usr/local/sbin ]]; then
+    export PATH=/usr/local/sbin:$PATH
+fi
+
+# add Yarn bin to path
+export PATH="$(yarn global bin):$PATH"
+
 source /usr/local/share/antigen/antigen.zsh
 
 # Load the oh-my-zsh's library.
@@ -7,6 +22,7 @@ antigen use oh-my-zsh
 antigen bundle git
 
 export NVM_AUTO_USE=true
+
 antigen bundle lukechilds/zsh-nvm
 
 antigen bundle ssh-agent
@@ -26,8 +42,6 @@ antigen apply
 
 ZSH_THEME="spaceship"
 
-source $HOME/.aliases
-
 # for Node Version Management
 if hash brew 2> /dev/null && [ -f "$(brew --prefix nvm)/nvm.sh" ]; then
   export NVM_DIR=~/.nvm
@@ -39,10 +53,3 @@ fi;
 export TERM='xterm-256color'
 export EDITOR='nvim'
 export GIT_EDITOR='nvim'
-
-export PATH=/usr/local/bin:$PATH
-
-# add /usr/local/sbin
-if [[ -d /usr/local/sbin ]]; then
-    export PATH=/usr/local/sbin:$PATH
-fi

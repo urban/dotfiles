@@ -27,16 +27,16 @@ echo "Update neovim-python client"
 pip3 install neovim --upgrade
 
 if ! [[ -d "~/.tmux/plugins/tpm" ]]; then
-    echo "Installing Tmux Plugin Manager"
-    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+   echo "Installing Tmux Plugin Manager"
+   git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 fi
 
 if ! command_exists zsh; then
     echo "zsh not found. Please install and then re-run installation scripts"
-    exit 1
+   exit 1
 elif ! [[ $SHELL =~ .*zsh.* ]]; then
     echo "Configuring zsh as default shell"
-    chsh -s "$(which zsh)"
+   chsh -s "$(which zsh)"
 fi
 
 function doIt() {
@@ -63,10 +63,14 @@ fi;
 unset doIt;
 
 echo "Load shell config"
-source ~/.zshrc;
+# source ~/.zshrc;
 
 echo "Install Global Yarn Packages"
-yarn global add \
+# config global executables location
+yarn config set prefix ~/.yarn
+
+echo "Install Global NPM Packages"
+npm install -g \
   babel-cli \
   babel-eslint \
   eslint \
@@ -74,7 +78,10 @@ yarn global add \
   eslint-config-prettier \
   eslint-plugin-prettier \
   prettier \
+  neovim \
+  javascript-typescript-langserver \
   trash-cli
+
 
 echo "Load Tmux config"
 tmux source ~/.tmux.conf;
