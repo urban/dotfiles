@@ -26,7 +26,7 @@ Install the dotfiles by running the bootstrap script. This will pull the latest 
 source bootstrap.sh
 ```
 
-To install NeoVim plugins, by open the editor in terminal and type `:PlugInstall`.
+To install Neovim plugins, by running the `:PlugInstall` command. Then run the `:UpdateRemotePlugins` command and restart Neovim.
 
 ## Update
 
