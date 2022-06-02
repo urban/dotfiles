@@ -9,7 +9,7 @@ echo "Installing dotfiles."
 cd "$(dirname "${BASH_SOURCE}")" || exit;
 
 echo "Updating dotfiles from repository"
-git pull origin spring-cleaning;
+git pull origin master;
 
 if test ! "$(which brew)"; then
   echo "Installing Homebrew"
@@ -22,22 +22,6 @@ brew update
 echo "Install all dependencies with bundle (See Brewfile)"
 brew tap homebrew/bundle
 brew bundle
-
-echo "Update neovim-python client"
-pip3 install neovim --upgrade
-
-if ! [[ -d "~/.tmux/plugins/tpm" ]]; then
-    echo "Installing Tmux Plugin Manager"
-    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-fi
-
-if ! command_exists zsh; then
-    echo "zsh not found. Please install and then re-run installation scripts"
-    exit 1
-elif ! [[ $SHELL =~ .*zsh.* ]]; then
-    echo "Configuring zsh as default shell"
-    chsh -s "$(which zsh)"
-fi
 
 function doIt() {
   echo "Syncing dotfiles with rsync"
@@ -67,16 +51,6 @@ source ~/.zshrc;
 
 echo "Install Global Yarn Packages"
 yarn global add \
-  babel-cli \
-  babel-eslint \
-  eslint \
-  eslint_d \
-  eslint-config-prettier \
-  eslint-plugin-prettier \
-  prettier \
-  trash-cli
-
-echo "Load Tmux config"
-tmux source ~/.tmux.conf;
+  prettier
 
 echo "Done. Please reload your terminal."
