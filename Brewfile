@@ -7,6 +7,6 @@ brew "git-extras"
 brew "yarn", args: ["without-node"]
 brew "zsh-completions"
 
-cask "divvy"
-cask "google-chrome"
-cask "transmit"
+# cask "divvy"
+# cask "google-chrome"
+# cask "transmit"
