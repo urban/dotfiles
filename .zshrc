@@ -1,4 +1,4 @@
-source $(brew --prefix)/share/antigen.zsh
+source $(brew --prefix)/share/antigen/antigen.zsh
 
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh
