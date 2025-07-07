@@ -16,10 +16,11 @@ brew "ollama"
 brew "rsync"
 
 # Language ####################################################################
-brew "n"                                              # Node version manager
-brew "oven-sh/bun/bun"                                # Incredibly fast JavaScript runtime, bundler, transpiler and package manager.
+# brew "rust"                                           # Safe, concurrent, practical language
+# brew "oven-sh/bun/bun"                                # Incredibly fast JavaScript runtime, bundler, transpiler and package manager.
 
 # Utils #######################################################################
+brew "fnm"                                            # Node version manager built in Rust
 brew "youtube-dl"                                     # Youtube Download Cli
 brew "cloc"                                           # Statistics utility to count lines of code
 cask "keycastr"                                       # Keystroke visualizer

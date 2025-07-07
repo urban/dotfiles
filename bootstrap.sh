@@ -23,7 +23,7 @@ DOTFILES_DIR="$DEV_DIR/dotfiles"
 # ===== ~/dev directory
 if [ ! -d "$DEV_DIR" ]; then
   echo "Make ~/dev directory"
-  mkdir -p $DEV_DIR
+  mkdir -p "$DEV_DIR"
 fi
 
 # ===== Spotlight
@@ -110,6 +110,23 @@ FISH_PATH=$(which fish)
 chsh -s "$FISH_PATH"
 fish_add_path "$FISH_PATH"
 unset FISH_PATH
+
+# ===== Node version manager
+FISH_CONFIG_DIR="$HOME/.config/fish/conf.d"
+FNM_FISH_CONFIG="$FISH_CONFIG_DIR/fnm.fish"
+echo ""
+echo_header "===== Fast Node Manager (fnm) ====="
+if [ -f "$FNM_FISH_CONFIG" ]; then
+  echo "Fish shell already set up for FNM. Skipping..."
+else
+  # Shell setup
+  echo "Setup Fish shell for FNM."
+  mkdir -p "$FISH_CONFIG_DIR"
+  touch "$FNM_FISH_CONFIG"
+  fnm env --use-on-cd --shell fish | source
+  # Completions
+  fnm completions --shell fish
+fi
 
 # ===== Git
 echo ""
