@@ -15,6 +15,15 @@ This is my dotfiles repo and something I will continually be working on.
 /bin/bash -c "$(curl -fsSL --noproxy '*' https://raw.githubusercontent.com/urban/dotfiles/refs/heads/master/bootstrap.sh)"
 ```
 
+Once setup, follow the instructions on [Generating a new SSH key and adding it to the ssh-agent](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) and [Adding a new SSH key to your GitHub account](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account) to gain access to your private Github repositories.
+
+Then change the `dotfile` repo remote from HTTPS to SSH.
+
+```bash
+cd ~/dev/dotfiles
+git remote set-url origin git@github.com:urban/dotfiles.git
+```
+
 ## Update
 
 To update, and run following in a Terminal:

@@ -96,68 +96,8 @@ echo ""
 echo_header "===== Install all dependencies with bundle (See Brewfile) ====="
 brew bundle --file="$DOTFILES_DIR/Brewfile"
 
-# ===== Git
-echo ""
-echo_header "===== GIT config ====="
-read -p "This may overwrite existing .gitconfig in your home directory. Are you sure? (y/n) " REPLY_GIT;
-echo "";
-if [[ "$REPLY_GIT" =~ ^[Yy]$ ]]; then
-  echo 'Enter your git user.name (e.g. "First Last" without quotes).'
-  echo "This value will be set as your git config's user.name."
-  read -p "Git username: " GIT_USERNAME
-  if [ -z "$GIT_USERNAME" ]; then
-    echo "Git username cannot be empty. Skipping..."
-  else
-    git config --global user.name "$GIT_USERNAME"
-    echo "user.name: $GIT_USERNAME"
-  fi
-  unset GIT_USERNAME
-
-  echo ""
-  echo 'Enter your git email (e.g. "first.last@gmail.com" without quotes).'
-  echo "This value will be set as your git config's user.email."
-  read -p "Git email: " GIT_EMAIL
-  if [ -z "$GIT_EMAIL" ]; then
-    echo "Git email cannot be empty. Skipping..."
-  else
-    git config --global user.email "$GIT_EMAIL"
-    echo "user.email: $GIT_EMAIL"
-  fi
-  unset GIT_EMAIL
-
-  # SSH key
-  echo ""
-  echo_header "===== Generating SSH Keys for Git ====="
-  SSH_KEY_NAME="id_ed25519" # Default key name, so that a config file is not necessary
-  read -p "This may overwrite any existing $HOME/.ssh/$SSH_KEY_NAME. Are you sure? (y/n) " REPLY_SSH;
-  echo "";
-  if [[ "$REPLY_SSH" =~ ^[Yy]$ ]]; then
-    ssh-keygen -o -a 100 -t ed25519 -N "" -f $HOME/.ssh/$SSH_KEY_NAME -C "$GIT_EMAIL" -q
-    echo "DONE. Keys are at ~/.ssh/$SSH_KEY_NAME"
-    # SSH_KEY_NAME is unset at the end of the script
-  fi
-  # REPLY_SSH is unset at the end of the script
-fi;
-unset REPLY_GIT
-
 echo ""
 echo_emphasis "DONE"
-
-# Provide additional instructions if an SSH key for GIT was created
-if [[ "$REPLY_SSH" =~ ^[Yy]$ ]]; then
-  echo ""
-  echo_header "===== Git final setup ====="
-  echo "    1. Copy your PUBLIC key to clipboard (contents of $HOME/.ssh/$SSH_KEY_NAME.pub)."
-  echo "       You can manually do this or use pbcopy to copy the contents to clipboard by running:"
-  echo
-  echo "cat $HOME/.ssh/$SSH_KEY_NAME.pub | pbcopy"
-  echo
-  echo "    2. Go to you GitHub account,navigate to your account settings, then go to \"SSH and GPG keys\", and click on \"New SSH key\". Paste your public key into the \"Key\" field, give it a descriptive title, and click \"Add SSH key\""
-  echo ""
-
-  unset SSH_KEY_NAME
-fi
-unset REPLY_SSH
 
 # ===== Cleanup
 unset DOTFILES_DIR
