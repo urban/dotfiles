@@ -29,34 +29,29 @@ fi
 # ===== Spotlight
 echo ""
 echo_header "===== Exclude ~/dev from Spotlight indexing ====="
-
+echo "(Enter your password if prompted)"
 SPOTLIGHT_PLIST="/System/Volumes/Data/.Spotlight-V100/VolumeConfiguration.plist"
 IS_SPOTLIGHT_PLIST_MODIFIED=false
+if ! (sudo /usr/libexec/PlistBuddy -c "Print :Exclusions" $SPOTLIGHT_PLIST | grep -Fq "$DEV_DIR"); then
+  echo "Excluding $DEV_DIR from Spotlight indexing..."
+  sudo /usr/libexec/PlistBuddy -c "Add :Exclusions: string $DEV_DIR" $SPOTLIGHT_PLIST
+  IS_SPOTLIGHT_PLIST_MODIFIED=true
+else
+  echo "$DEV_DIR is already excluded"
+fi
 
-exclude_dir_from_spotlight() {
-  if ! (sudo /usr/libexec/PlistBuddy -c "Print :Exclusions" $1 | grep -Fq "$2"); then
-    echo "Excluding $2 from Spotlight indexing..."
-    sudo /usr/libexec/PlistBuddy -c "Add :Exclusions: string $2" $1
-    IS_SPOTLIGHT_PLIST_MODIFIED=true
-  else
-    echo "$2 is already excluded"
-  fi
-}
-
-echo "(Enter your password if prompted)"
-exclude_dir_from_spotlight $SPOTLIGHT_PLIST $DEV_DIR
 if [ "$IS_SPOTLIGHT_PLIST_MODIFIED" = true ]; then
   echo "Restarting 'mds' process..."
   # restart spotlight
   sudo launchctl stop com.apple.metadata.mds && sudo launchctl start com.apple.metadata.mds
 fi
-unset exclude_dir_from_spotlight
 unset IS_SPOTLIGHT_PLIST_MODIFIED
 unset SPOTLIGHT_PLIST
 
 # ===== Homebrew 
 echo ""
 echo_header "===== Install Homebrew and Xcode Command Line Tools ====="
+echo "(Enter your password if prompted)"
 if brew -v &>/dev/null; then
   echo "Homebrew is already installed"
 else
@@ -103,10 +98,10 @@ fish_add_path "$FISH_PATH"
 unset FISH_PATH
 
 # ===== Node version manager
-FISH_CONFIG_DIR="$HOME/.config/fish/conf.d"
-FNM_FISH_CONFIG="$FISH_CONFIG_DIR/fnm.fish"
 echo ""
 echo_header "===== Fast Node Manager (fnm) ====="
+FISH_CONFIG_DIR="$HOME/.config/fish/conf.d"
+FNM_FISH_CONFIG="$FISH_CONFIG_DIR/fnm.fish"
 if [ -f "$FNM_FISH_CONFIG" ]; then
   echo "Fish shell already set up for FNM. Skipping..."
 else
@@ -151,15 +146,15 @@ if [[ "$REPLY_GIT" =~ ^[Yy]$ ]]; then
   # SSH key
   echo ""
   echo_header "===== Generating SSH Keys for Git ====="
-  read -p "This may overwrite existing .gitconfig in your home directory. Are you sure? (y/n) " REPLY_SSH;
+  SSH_KEY_NAME="id_ed25519" # Default key name, so that a config file is not necessary
+  read -p "This may overwrite any existing $HOME/.ssh/$SSH_KEY_NAME. Are you sure? (y/n) " REPLY_SSH;
   echo "";
   if [[ "$REPLY_SSH" =~ ^[Yy]$ ]]; then
-    SSH_KEY_NAME="id_ed25519" # Default key name, so that a config file is not necessary
     ssh-keygen -o -a 100 -t ed25519 -N "" -f $HOME/.ssh/$SSH_KEY_NAME -C "$GIT_EMAIL" -q
     echo "DONE. Keys are at ~/.ssh/$SSH_KEY_NAME"
     # SSH_KEY_NAME is unset at the end of the script
   fi
-  unset REPLY_SSH
+  # REPLY_SSH is unset at the end of the script
 fi;
 unset REPLY_GIT
 
@@ -167,7 +162,7 @@ echo ""
 echo_emphasis "DONE"
 
 # Provide additional instructions if an SSH key for GIT was created
-if [ -z "$SSH_KEY_NAME" ]; then
+if [[ "$REPLY_SSH" =~ ^[Yy]$ ]]; then
   echo ""
   echo_header "===== Git final setup ====="
   echo "    1. Copy your PUBLIC key to clipboard (contents of $HOME/.ssh/$SSH_KEY_NAME.pub)."
@@ -180,6 +175,7 @@ if [ -z "$SSH_KEY_NAME" ]; then
 
   unset SSH_KEY_NAME
 fi
+unset REPLY_SSH
 
 # ===== Cleanup
 unset DOTFILES_DIR
@@ -188,4 +184,4 @@ unset HEADER_COLOR
 unset EMPHASIS_COLOR
 unset END_COLOR
 unset echo_header
-unsset echo_emphasis
+unset echo_emphasis
