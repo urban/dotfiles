@@ -24,29 +24,29 @@ DOTFILES_DIR="$DEV_DIR/dotfiles"
 if [ ! -d "$DEV_DIR" ]; then
   echo "Make ~/dev directory"
   mkdir -p "$DEV_DIR"
-fi
 
-# ===== Spotlight
-echo ""
-echo_header "===== Exclude ~/dev from Spotlight indexing ====="
-echo "(Enter your password if prompted)"
-SPOTLIGHT_PLIST="/System/Volumes/Data/.Spotlight-V100/VolumeConfiguration.plist"
-IS_SPOTLIGHT_PLIST_MODIFIED=false
-if ! (sudo /usr/libexec/PlistBuddy -c "Print :Exclusions" $SPOTLIGHT_PLIST | grep -Fq "$DEV_DIR"); then
-  echo "Excluding $DEV_DIR from Spotlight indexing..."
-  sudo /usr/libexec/PlistBuddy -c "Add :Exclusions: string $DEV_DIR" $SPOTLIGHT_PLIST
-  IS_SPOTLIGHT_PLIST_MODIFIED=true
-else
-  echo "$DEV_DIR is already excluded"
-fi
+  # ===== Spotlight
+  echo ""
+  echo_header "===== Exclude ~/dev from Spotlight indexing ====="
+  echo "(Enter your password if prompted)"
+  SPOTLIGHT_PLIST="/System/Volumes/Data/.Spotlight-V100/VolumeConfiguration.plist"
+  IS_SPOTLIGHT_PLIST_MODIFIED=false
+  if ! (sudo /usr/libexec/PlistBuddy -c "Print :Exclusions" $SPOTLIGHT_PLIST | grep -Fq "$DEV_DIR"); then
+    echo "Excluding $DEV_DIR from Spotlight indexing..."
+    sudo /usr/libexec/PlistBuddy -c "Add :Exclusions: string $DEV_DIR" $SPOTLIGHT_PLIST
+    IS_SPOTLIGHT_PLIST_MODIFIED=true
+  else
+    echo "$DEV_DIR is already excluded"
+  fi
 
-if [ "$IS_SPOTLIGHT_PLIST_MODIFIED" = true ]; then
-  echo "Restarting 'mds' process..."
-  # restart spotlight
-  sudo launchctl stop com.apple.metadata.mds && sudo launchctl start com.apple.metadata.mds
+  if [ "$IS_SPOTLIGHT_PLIST_MODIFIED" = true ]; then
+    echo "Restarting 'mds' process..."
+    # restart spotlight
+    sudo launchctl stop com.apple.metadata.mds && sudo launchctl start com.apple.metadata.mds
+  fi
+  unset IS_SPOTLIGHT_PLIST_MODIFIED
+  unset SPOTLIGHT_PLIST
 fi
-unset IS_SPOTLIGHT_PLIST_MODIFIED
-unset SPOTLIGHT_PLIST
 
 # ===== Homebrew 
 echo ""
@@ -77,42 +77,24 @@ fi
 read -p "This may overwrite existing files in your home directory. Are you sure? (y/n) " REPLY_SYNC;
 echo "";
 if [[ "$REPLY_SYNC" =~ ^[Yy]$ ]]; then
-  echo "Syncing dotfiles with rsync"
+  echo "Syncing dotfiles with rsync."
   rsync -avh --no-perms --no-owner --no-group \
-    --exclude={'.git/','.DS_Store','Brewfile','bootstrap.sh','README.md','LICENSE-MIT.txt'} \
-    "$DOTFILES_DIR" "$HOME";
+    --exclude ".git/" \
+    --exclude ".DS_Store" \
+    --exclude "Brewfile" \
+    --exclude "bootstrap.sh" \
+    --exclude "README.md" \
+    --exclude "LICENSE-MIT.txt" \
+    "$DOTFILES_DIR/" "$HOME/";
+else 
+  echo "Skipped syncing."
 fi
-unset sync_dot_files;
+unset REPLY_SYNC;
 
 # ===== Install dependencies
 echo ""
 echo_header "===== Install all dependencies with bundle (See Brewfile) ====="
 brew bundle --file="$DOTFILES_DIR/Brewfile"
-
-# ===== Command shell
-echo ""
-echo_header "===== Fish command line shell ====="
-FISH_PATH=$(which fish)
-chsh -s "$FISH_PATH"
-fish_add_path "$FISH_PATH"
-unset FISH_PATH
-
-# ===== Node version manager
-echo ""
-echo_header "===== Fast Node Manager (fnm) ====="
-FISH_CONFIG_DIR="$HOME/.config/fish/conf.d"
-FNM_FISH_CONFIG="$FISH_CONFIG_DIR/fnm.fish"
-if [ -f "$FNM_FISH_CONFIG" ]; then
-  echo "Fish shell already set up for FNM. Skipping..."
-else
-  # Shell setup
-  echo "Setup Fish shell for FNM."
-  mkdir -p "$FISH_CONFIG_DIR"
-  touch "$FNM_FISH_CONFIG"
-  fnm env --use-on-cd --shell fish | source
-  # Completions
-  fnm completions --shell fish
-fi
 
 # ===== Git
 echo ""

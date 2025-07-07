@@ -3,12 +3,13 @@ cask_args appdir: "/Applications"
 
 # Binaries/Libraries ##########################################################
 
-brew "fish"
 brew "git"
 brew "git-lfs"
 brew "git-extras"
+brew "oh-my-posh"
 brew "ollama"
 brew "rsync"
+brew "zsh"
 
 # Language ####################################################################
 # brew "rust"                                           # Safe, concurrent, practical language
