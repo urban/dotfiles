@@ -61,6 +61,9 @@ if brew -v &>/dev/null; then
   echo "Homebrew is already installed"
 else
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  echo >> "$HOME/.zprofile"
+  echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> "$HOME/.zprofile"
+  eval "$(/opt/homebrew/bin shellenv)"
 fi
 # Ensures 'brew' command is available
 eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -76,26 +79,14 @@ else
   git clone https://github.com/urban/dotfiles.git "$DOTFILES_DIR"
 fi
 
-sync_dot_files() {
+read -p "This may overwrite existing files in your home directory. Are you sure? (y/n) " REPLY_SYNC;
+echo "";
+if [[ "$REPLY_SYNC" =~ ^[Yy]$ ]]; then
   echo "Syncing dotfiles with rsync"
-  rsync --exclude ".git/" \
-    --exclude ".DS_Store" \
-    --exclude "Brewfile" \
-    --exclude "bootstrap.sh" \
-    --exclude "README.md" \
-    --exclude "LICENSE-MIT.txt" \
-    -avh --no-perms "$DOTFILES_DIR" "$HOME";
-}
-
-if [[ $1 == --force || $1 == -f ]]; then
-  sync_dot_files;
-else
-  read "REPLY_SYNC?This may overwrite existing files in your home directory. Are you sure? (y/n) ";
-  echo "";
-  if [[ "$REPLY_SYNC" =~ ^[Yy]$ ]]; then
-    sync_dot_files;
-  fi;
-fi;
+  rsync -avh --no-perms --no-owner --no-group \
+    --exclude={'.git/','.DS_Store','Brewfile','bootstrap.sh','README.md','LICENSE-MIT.txt'} \
+    "$DOTFILES_DIR" "$HOME";
+fi
 unset sync_dot_files;
 
 # ===== Install dependencies
@@ -131,7 +122,7 @@ fi
 # ===== Git
 echo ""
 echo_header "===== GIT config ====="
-read "REPLY_GIT?This may overwrite existing .gitconfig in your home directory. Are you sure? (y/n) ";
+read -p "This may overwrite existing .gitconfig in your home directory. Are you sure? (y/n) " REPLY_GIT;
 echo "";
 if [[ "$REPLY_GIT" =~ ^[Yy]$ ]]; then
   echo 'Enter your git user.name (e.g. "First Last" without quotes).'
@@ -160,7 +151,7 @@ if [[ "$REPLY_GIT" =~ ^[Yy]$ ]]; then
   # SSH key
   echo ""
   echo_header "===== Generating SSH Keys for Git ====="
-  read "REPLY_SSH?This may overwrite existing .gitconfig in your home directory. Are you sure? (y/n) ";
+  read -p "This may overwrite existing .gitconfig in your home directory. Are you sure? (y/n) " REPLY_SSH;
   echo "";
   if [[ "$REPLY_SSH" =~ ^[Yy]$ ]]; then
     SSH_KEY_NAME="id_ed25519" # Default key name, so that a config file is not necessary
