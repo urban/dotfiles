@@ -2,47 +2,23 @@
 
 This is my dotfiles repo and something I will continually be working on.
 
-Shown with [Solarized Dark colorscheme](http://ethanschoonover.com/solarized) and Powerline-patched [Fira Code](https://github.com/tonsky/FiraCode) 14pt in [iTerm 2](http://www.iterm2.com/).
-
-## Requirements
-
-Set `zsh` as your login shell:
-
-```
-chsh -s $(which zsh)
-```
-
 ## Installation
 
-Clone the repository onto your laptop:
+1. For a new mac, make sure you enable "Full Disk Access" for Terminal: 
+  1. Click on the Apple icon on the top left corner of your screen -> System Preferences -> Privacy & Security -> Full Disk Access.
+  2. Ensure that it is turned "on" for "Terminal".
 
-```
-git clone https://github.com/urban/dotfiles.git ~/dotfiles
-```
+2. Open up a Terminal
+3. Run the following command, and follow the prompts. If you mess up at any point for whatever reason, you can just run it again:
 
-Install the dotfiles by running the bootstrap script. This will pull the latest version and copy the files to your home folder excluding the `README.md`, `bootstrap.sh` and `LICENSE` files.
-
+```sh
+/bin/bash -c "$(curl -fsSL --noproxy '*' https://raw.githubusercontent.com/urban/dotfiles/refs/heads/master/bootstrap.sh)"
 ```
-source bootstrap.sh
-```
-
-To install Neovim plugins, by running the `:PlugInstall` command. Then run the `:UpdateRemotePlugins` command and restart Neovim.
 
 ## Update
 
-To update, `cd` into your local `dotfiles` repository, and run:
+To update, and run following in a Terminal:
 
+```sh
+source ~/dev/dotfiles/bootstrap.sh
 ```
-source bootstrap.sh
-```
-
-### Installing Homebrew formulae
-
-When setting up a new Mac, you will want to install [Homebrew](https://brew.sh/) and some formulae.
-
-After installing Homebrew, run the following from within your local `dotfiles` repository:
-
-```
-brew bundle
-```
-
