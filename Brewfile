@@ -1,8 +1,3 @@
-# Taps ########################################################################
-tap "homebrew/bundle"
-tap "homebrew/cask"
-tap "homebrew/cask-fonts"
-
 # Application Path ############################################################
 cask_args appdir: "/Applications"
 
