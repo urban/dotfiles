@@ -16,7 +16,6 @@ brew "rsync"
 
 # Utils #######################################################################
 brew "fnm"                                            # Node version manager built in Rust
-brew "youtube-dl"                                     # Youtube Download Cli
 brew "cloc"                                           # Statistics utility to count lines of code
 cask "keycastr"                                       # Keystroke visualizer
 
