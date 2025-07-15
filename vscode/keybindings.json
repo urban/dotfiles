@@ -35,5 +35,16 @@
     {
         "key": "ctrl+j",
         "command": "workbench.action.navigateDown"
+    },
+    // Navigate Terminal Splits
+    {
+        "key": "ctrl+l",
+        "command": "workbench.action.terminal.focusNextPane",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "ctrl+h",
+        "command": "workbench.action.terminal.focusPreviousPane",
+        "when": "terminalFocus"
     }
 ]
