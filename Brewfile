@@ -7,7 +7,7 @@ brew "git"
 brew "git-lfs"
 brew "git-extras"
 brew "oh-my-posh"
-brew "ollama"
+cask "ollama"
 brew "rsync"
 brew "zsh"
 

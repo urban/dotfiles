@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Exit immediately if any command or pipeline returns a non-zero exit status
+set -e
+
 # ===== Print utils
 HEADER_COLOR="\033[35m"
 EMPHASIS_COLOR="\033[32m"
@@ -65,7 +68,7 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # ===== Dotfiles
 echo ""
-echo_header "===== Dotfiles setup ====="
+echo_header "===== Config setup ====="
 
 if [ -d "$DOTFILES_DIR" ]; then
   echo "Updating dotfiles from repository"
@@ -74,27 +77,35 @@ else
   git clone https://github.com/urban/dotfiles.git "$DOTFILES_DIR"
 fi
 
-read -p "This may overwrite existing files in your home directory. Are you sure? (y/n) " REPLY_SYNC;
-echo "";
-if [[ "$REPLY_SYNC" =~ ^[Yy]$ ]]; then
-  echo "Syncing dotfiles with rsync."
-  rsync -avh --no-perms --no-owner --no-group \
-    --exclude ".git/" \
-    --exclude ".DS_Store" \
-    --exclude "Brewfile" \
-    --exclude "bootstrap.sh" \
-    --exclude "README.md" \
-    --exclude "LICENSE-MIT.txt" \
-    "$DOTFILES_DIR/" "$HOME/";
-else 
-  echo "Skipped syncing."
-fi
-unset REPLY_SYNC;
-
 # ===== Install dependencies
 echo ""
 echo_header "===== Install all dependencies with bundle (See Brewfile) ====="
 brew bundle --file="$DOTFILES_DIR/Brewfile"
+
+# read -p "This may overwrite existing files in your home directory. Are you sure? (y/n) " REPLY_SYNC_CONFIG
+read -p "This may overwrite existing files in your home directory. Are you sure? (y/n) " REPLY_SYNC;
+echo "";
+if [[ "$REPLY_SYNC" =~ ^[Yy]$ ]]; then
+  echo "Syncing with rsync."
+  # Sync config
+  echo "Syncing config"
+  rsync -avh --no-perms --no-owner --no-group \
+    "$DOTFILES_DIR/config/" "$HOME/";
+  # Sync shell
+  echo "Syncing shell"
+  rsync -avh --no-perms --no-owner --no-group \
+    "$DOTFILES_DIR/shell/" "$HOME/";
+  # Sync vscode
+  VSCODE_USER_PATH="$HOME/Library/Application Support/Code/User"
+  mkdir -p "$VSCODE_USER_PATH"
+  echo "Syncing vscode"
+  rsync -avh --no-perms --no-owner --no-group \
+    "$DOTFILES_DIR/vscode/" "$VSCODE_USER_PATH/";
+  unset VSCODE_USER_PATH
+else 
+  echo "Skipped syncing."
+fi
+unset REPLY_SYNC
 
 echo ""
 echo_emphasis "DONE"

@@ -29,5 +29,5 @@ git remote set-url origin git@github.com:urban/dotfiles.git
 To update, and run following in a Terminal:
 
 ```sh
-source ~/dev/dotfiles/bootstrap.sh
+sh ~/dev/dotfiles/bootstrap.sh
 ```
