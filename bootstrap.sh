@@ -82,11 +82,11 @@ echo ""
 echo_header "===== Install all dependencies with bundle (See Brewfile) ====="
 brew bundle --file="$DOTFILES_DIR/Brewfile"
 
-# read -p "This may overwrite existing files in your home directory. Are you sure? (y/n) " REPLY_SYNC_CONFIG
+echo ""
+echo_header "===== Sync config and shell files ====="
 read -p "This may overwrite existing files in your home directory. Are you sure? (y/n) " REPLY_SYNC;
-echo "";
 if [[ "$REPLY_SYNC" =~ ^[Yy]$ ]]; then
-  echo "Syncing with rsync."
+  echo "";
   # Sync config
   echo "Syncing config"
   rsync -avh --no-perms --no-owner --no-group \
@@ -95,6 +95,17 @@ if [[ "$REPLY_SYNC" =~ ^[Yy]$ ]]; then
   echo "Syncing shell"
   rsync -avh --no-perms --no-owner --no-group \
     "$DOTFILES_DIR/shell/" "$HOME/";
+else 
+  echo "Skipped syncing."
+fi
+unset REPLY_SYNC
+
+echo ""
+echo_header "===== Sync VSCode settings ====="
+read -p "This may overwrite existing files in your home directory. Are you sure? (y/n) " REPLY_SYNC_VSCODE;
+if [[ "$REPLY_SYNC_VSCODE" =~ ^[Yy]$ ]]; then
+  echo "";
+  echo "Syncing VSCode"
   # Sync vscode
   VSCODE_USER_PATH="$HOME/Library/Application Support/Code/User"
   mkdir -p "$VSCODE_USER_PATH"
@@ -103,9 +114,19 @@ if [[ "$REPLY_SYNC" =~ ^[Yy]$ ]]; then
     "$DOTFILES_DIR/vscode/" "$VSCODE_USER_PATH/";
   unset VSCODE_USER_PATH
 else 
-  echo "Skipped syncing."
+  echo "Skipped VSCode syncing."
 fi
-unset REPLY_SYNC
+unset REPLY_SYNC_VSCODE
+
+# ===== Install Nix
+if nix-env --version &> /dev/null; then
+  echo ""
+  echo "Nix is installed."
+else
+  echo ""
+  echo_header "===== Install Nix ====="
+fi
+
 
 echo ""
 echo_emphasis "DONE"
