@@ -1,6 +1,6 @@
 # dotfiles
 
-My dotfiles repo for my computers.
+My dotfiles repo.
 
 ## Structure
 
