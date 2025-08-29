@@ -2,35 +2,32 @@
 cask_args appdir: "/Applications"
 
 # Binaries/Libraries ##########################################################
-
-# tap "oven-sh/bun"
-# brew "bun"
 brew "git"
 brew "git-lfs"
 brew "git-extras"
 brew "oh-my-posh"
-cask "ollama"
-brew "pnpm"
+# brew "pnpm"
 brew "rsync"
 brew "zsh"
 
 # Language ####################################################################
-# brew "rust"                                           # Safe, concurrent, practical language
-# brew "oven-sh/bun/bun"                                # Incredibly fast JavaScript runtime, bundler, transpiler and package manager.
+# brew "rust"                                 # Safe, concurrent, practical language
+# brew "oven-sh/bun/bun"                      # JavaScript runtime, bundler, transpiler and package manager
 
 # Utils #######################################################################
-# brew "fnm"                                            # Node version manager built in Rust
-brew "cloc"                                           # Statistics utility to count lines of code
-cask "keycastr"                                       # Keystroke visualizer
+# brew "fnm"                                # Node version manager built in Rust
+brew "cloc"                                 # Statistics utility to count lines of code
+cask "keycastr"                             # Keystroke visualizer
 
-# Apps #############################################################################################
-cask "ghostty"
-cask "google-chrome"
-cask "little-snitch"                                    # Network Monitor
-cask "obsidian"
-cask "orbstack"                                         # Drop-in replacement for Docker Desktop
-cask "cursor"
-cask "visual-studio-code"
+# Apps ########################################################################
+cask "claudia"                              # GUI app and toolkit for Claude Code
+cask "ghostty"                              # Terminal emulator
+cask "google-chrome"                        # Web browser
+cask "little-snitch"                        # Network Monitor
+cask "obsidian"                             # Knowledge base that works on local Markdown files
+cask "ollama"                               # Run and manage LLMs locally
+cask "orbstack"                             # Drop-in replacement for Docker Desktop
+cask "visual-studio-code"                   # Code editor
 
 # Fonts #######################################################################
 cask "font-cascadia-code"
