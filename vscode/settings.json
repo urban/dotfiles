@@ -1,4 +1,6 @@
-{  "editor.fontSize": 14,
+{ 
+  "editor.tabSize": 2,
+  "editor.fontSize": 14,
   "debug.console.fontSize": 14,
   "terminal.integrated.fontSize": 14,
   // Vim
@@ -36,5 +38,9 @@
   // To improve performance
   "extensions.experimental.affinity": {
     "vscodevim.vim": 1
-  }
+  },
+  // Project Manager
+  "projectManager.git.baseFolders": [
+    "~/dev"
+  ]
 }
