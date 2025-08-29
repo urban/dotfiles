@@ -2,6 +2,7 @@
 cask_args appdir: "/Applications"
 
 # Binaries/Libraries ##########################################################
+brew "direnv"                               # Load/unload env variables per project
 brew "git"
 brew "git-lfs"
 brew "git-extras"
