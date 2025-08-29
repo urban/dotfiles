@@ -125,8 +125,8 @@ if nix-env --version &> /dev/null; then
 else
   echo ""
   echo_header "===== Install Nix ====="
+  sh <(curl -L https://nixos.org/nix/install) --daemon
 fi
-
 
 echo ""
 echo_emphasis "DONE"

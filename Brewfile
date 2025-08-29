@@ -3,8 +3,8 @@ cask_args appdir: "/Applications"
 
 # Binaries/Libraries ##########################################################
 
-tap "oven-sh/bun"
-brew "bun"
+# tap "oven-sh/bun"
+# brew "bun"
 brew "git"
 brew "git-lfs"
 brew "git-extras"
@@ -19,7 +19,7 @@ brew "zsh"
 # brew "oven-sh/bun/bun"                                # Incredibly fast JavaScript runtime, bundler, transpiler and package manager.
 
 # Utils #######################################################################
-brew "fnm"                                            # Node version manager built in Rust
+# brew "fnm"                                            # Node version manager built in Rust
 brew "cloc"                                           # Statistics utility to count lines of code
 cask "keycastr"                                       # Keystroke visualizer
 
