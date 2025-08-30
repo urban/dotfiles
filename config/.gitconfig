@@ -1,3 +1,5 @@
 [user]
 	email = urban.faubion@gmail.com
 	name = Urban Faubion
+[init]
+	defaultBranch = main
