@@ -22,6 +22,7 @@ cask "keycastr"                             # Keystroke visualizer
 
 # Apps ########################################################################
 cask "claudia"                              # GUI app and toolkit for Claude Code
+cask "discord"                              # Chat for communities and friends
 cask "ghostty"                              # Terminal emulator
 cask "google-chrome"                        # Web browser
 cask "little-snitch"                        # Network Monitor
