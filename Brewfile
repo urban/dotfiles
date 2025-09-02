@@ -28,6 +28,7 @@ cask "little-snitch"                        # Network Monitor
 cask "obsidian"                             # Knowledge base that works on local Markdown files
 cask "ollama"                               # Run and manage LLMs locally
 cask "orbstack"                             # Drop-in replacement for Docker Desktop
+cask "slack"                                # Team communication
 cask "visual-studio-code"                   # Code editor
 
 # Fonts #######################################################################
