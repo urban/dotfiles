@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Exit immediately if any command or pipeline returns a non-zero exit status
-set -e
+set -euo pipefail
 
 # ===== Print colors
 HEADER_COLOR="\033[35m"
