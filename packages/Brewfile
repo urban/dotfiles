@@ -16,11 +16,12 @@ brew "zsh"
 # brew "oven-sh/bun/bun"                      # JavaScript runtime, bundler, transpiler and package manager
 
 # Utils #######################################################################
-# brew "fnm"                                # Node version manager built in Rust
+brew "fnm"                                # Node version manager built in Rust
 brew "cloc"                                 # Statistics utility to count lines of code
 cask "keycastr"                             # Keystroke visualizer
 
 # Apps ########################################################################
+cask "arc"                                  # Chromium based Web browser
 cask "claudia"                              # GUI app and toolkit for Claude Code
 cask "discord"                              # Chat for communities and friends
 cask "ghostty"                              # Terminal emulator
