@@ -22,7 +22,8 @@ cask "keycastr"                             # Keystroke visualizer
 
 # Apps ########################################################################
 cask "arc"                                  # Chromium based Web browser
-cask "claudia"                              # GUI app and toolkit for Claude Code
+cask "claude"                               # AI assistant by Anthropic
+cask "claude-code"                          # Native macOS app for Claude AI
 cask "discord"                              # Chat for communities and friends
 cask "ghostty"                              # Terminal emulator
 cask "google-chrome"                        # Web browser
