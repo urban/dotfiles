@@ -1,6 +1,7 @@
-{ 
+{
   "editor.tabSize": 2,
   "editor.fontSize": 14,
+  "editor.minimap.enabled": false,
   "debug.console.fontSize": 14,
   "terminal.integrated.fontSize": 14,
   // Vim
@@ -39,8 +40,12 @@
   "extensions.experimental.affinity": {
     "vscodevim.vim": 1
   },
-  // Project Manager
-  "projectManager.git.baseFolders": [
-    "~/dev"
-  ]
+  "projectManager.git.baseFolders": ["~/dev"],
+  "chat.useAgentsMdFile": true,
+  "chat.mcp.discovery.enabled": {
+    "claude-desktop": true,
+    "windsurf": true,
+    "cursor-global": true,
+    "cursor-workspace": true
+  }
 }
