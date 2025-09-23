@@ -21,6 +21,7 @@ brew "cloc"                                 # Statistics utility to count lines 
 cask "keycastr"                             # Keystroke visualizer
 
 # Apps ########################################################################
+cask "chatgpt"                              # OpenAI's official ChatGPT desktop app
 cask "claude"                               # AI assistant by Anthropic
 cask "claude-code"                          # Native macOS app for Claude AI
 cask "discord"                              # Chat for communities and friends
