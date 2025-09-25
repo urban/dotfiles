@@ -2,7 +2,9 @@
 cask_args appdir: "/Applications"
 
 # Binaries/Libraries ##########################################################
+brew "codex"                                # OpenAI's coding agent that runs in your terminal
 brew "direnv"                               # Load/unload env variables per project
+brew "gemini-cli"                           # Interact with Google Gemini AI models from the command-line
 brew "git"
 brew "git-lfs"
 brew "git-extras"
@@ -34,6 +36,7 @@ cask "orbstack"                             # Drop-in replacement for Docker Des
 cask "reader"                               # Readwise Reader
 cask "slack"                                # Team communication
 cask "visual-studio-code"                   # Code editor
+cask "zed"                                  # Multiplayer code editor
 
 # Fonts #######################################################################
 cask "font-cascadia-code"
