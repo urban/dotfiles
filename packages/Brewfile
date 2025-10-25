@@ -5,17 +5,20 @@ cask_args appdir: "/Applications"
 brew "codex"                                # OpenAI's coding agent that runs in your terminal
 brew "direnv"                               # Load/unload env variables per project
 brew "gemini-cli"                           # Interact with Google Gemini AI models from the command-line
+brew "gh"                                   # GitHub CLI
 brew "git"
 brew "git-lfs"
 brew "git-extras"
 brew "oh-my-posh"
 # brew "pnpm"
 brew "rsync"
+brew "uv"                                   # Extremely fast Python package installer and resolver, written in Rust
 brew "zsh"
 
 # Language ####################################################################
 # brew "rust"                                 # Safe, concurrent, practical language
 # brew "oven-sh/bun/bun"                      # JavaScript runtime, bundler, transpiler and package manager
+brew "python"                               # Interpreted, interactive, object-oriented programming language
 
 # Utils #######################################################################
 # brew "fnm"                                # Node version manager built in Rust
@@ -31,11 +34,12 @@ cask "ghostty"                              # Terminal emulator
 cask "google-chrome"                        # Web browser
 cask "little-snitch"                        # Network Monitor
 cask "obsidian"                             # Knowledge base that works on local Markdown files
-cask "ollama"                               # Run and manage LLMs locally
+cask "ollama-app"                           # Run and manage LLMs locally
 cask "orbstack"                             # Drop-in replacement for Docker Desktop
 cask "reader"                               # Readwise Reader
 cask "slack"                                # Team communication
 cask "visual-studio-code"                   # Code editor
+cask "voiceink"                             # Voice to text
 cask "zed"                                  # Multiplayer code editor
 
 # Fonts #######################################################################

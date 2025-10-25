@@ -15,6 +15,3 @@ fi
 
 # Direnv
 eval "$(direnv hook zsh)"
-
-# FNM
-eval "$(fnm env --use-on-cd --shell zsh)"

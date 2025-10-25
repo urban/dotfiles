@@ -28,6 +28,10 @@ defaults write com.apple.dashboard mcx-disabled -bool true
 # Disable startup noise:
 sudo nvram SystemAudioVolume=%01
 
+# === WindowManager ===
+
+defaults write "com.apple.WindowManager" "EnableTilingByEdgeDrag" -boolean false
+defaults write "com.apple.WindowManager" "EnableTopTilingByEdgeDrag" -boolean false
 
 # === Dock ===
 

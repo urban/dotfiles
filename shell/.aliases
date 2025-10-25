@@ -38,3 +38,7 @@ alias clsym="find -L . -name . -o -type d -prune -o -type l -exec rm {} +"
 
 # File size
 alias fs="stat -f \"%z bytes\""
+
+# Python
+alias python="python3"
+alias pip="pip3"

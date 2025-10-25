@@ -1,0 +1,6 @@
+keybind = ctrl+h=goto_split:left
+keybind = ctrl+l=goto_split:right
+keybind = ctrl+k=goto_split:up
+keybind = ctrl+j=goto_split:down
+keybind = ctrl+tab=goto_split:next
+keybind = ctrl+shift+tab=goto_split:previous
