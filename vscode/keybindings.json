@@ -1,59 +1,30 @@
 [
-    {
-        "key": "up",
-        "command": "cursorUp",
-        "when": "editorTextFocus && vim.active && !inDebugRepl && !suggestWidgetMultipleSuggestions && !suggestWidgetVisible"
-    },
-    {
-        "key": "down",
-        "command": "cursorDown",
-        "when": "editorTextFocus && vim.active && !inDebugRepl && !suggestWidgetMultipleSuggestions && !suggestWidgetVisible"
-    },
-    {
-        "key": "k",
-        "command": "cursorUp",
-        "when": "editorTextFocus && vim.active && !inDebugRepl && vim.mode == 'Normal' && !suggestWidgetMultipleSuggestions && !suggestWidgetVisible"
-    },
-    {
-        "key": "j",
-        "command": "cursorDown",
-        "when": "editorTextFocus && vim.active && !inDebugRepl && vim.mode == 'Normal' && !suggestWidgetMultipleSuggestions && !suggestWidgetVisible"
-    },
-    // Navigate Splits
-    {
-        "key": "ctrl+h",
-        "command": "workbench.action.navigateLeft"
-    },
-    {
-        "key": "ctrl+l",
-        "command": "workbench.action.navigateRight"
-    },
-    {
-        "key": "ctrl+k",
-        "command": "workbench.action.navigateUp"
-    },
-    {
-        "key": "ctrl+j",
-        "command": "workbench.action.navigateDown"
-    },
-    // Navigate Terminal Splits
-    {
-        "key": "ctrl+l",
-        "command": "workbench.action.terminal.focusNextPane",
-        "when": "terminalFocus"
-    },
-    {
-        "key": "ctrl+h",
-        "command": "workbench.action.terminal.focusPreviousPane",
-        "when": "terminalFocus"
-    },
-    // AI terminal setup
-    {
-        "key": "shift+enter",
-        "command": "workbench.action.terminal.sendSequence",
-        "args": {
-            "text": "\\\r\n"
-        },
-        "when": "terminalFocus"
-    }
+  // Navigate Splits
+  {
+    "key": "ctrl+w h",
+    "command": "workbench.action.navigateLeft"
+  },
+  {
+    "key": "ctrl+w l",
+    "command": "workbench.action.navigateRight"
+  },
+  {
+    "key": "ctrl+w k",
+    "command": "workbench.action.navigateUp"
+  },
+  {
+    "key": "ctrl+w j",
+    "command": "workbench.action.navigateDown"
+  },
+  // Navigate Terminal Splits
+  {
+    "key": "ctrl+w l",
+    "command": "workbench.action.terminal.focusNextPane",
+    "when": "terminalFocus"
+  },
+  {
+    "key": "ctrl+w h",
+    "command": "workbench.action.terminal.focusPreviousPane",
+    "when": "terminalFocus"
+  }
 ]
