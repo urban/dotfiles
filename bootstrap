@@ -9,10 +9,10 @@ EMPHASIS_COLOR="\033[32m"
 END_COLOR="\033[0m"
 
 # ===== Configuration
-DEV_DIR="$HOME/dev"
-DOTFILES_DIR="$DEV_DIR/dotfiles"
+CODE_DIR="$HOME/Code"
+DOTFILES_DIR="$CODE_DIR/personal/dotfiles"
 PACKAGES_DIR="$DOTFILES_DIR/packages"
-# DEV_DIR and DOTFILES_DIR are unset at the end of the script
+# CODE_DIR and DOTFILES_DIR are unset at the end of the script
 
 print_header() {
   echo ""
@@ -24,27 +24,27 @@ print_emphasis() {
 }
 
 does_command_exist() {
-    command -v "$1" >/dev/null 2>&1
+    command -v "$1" >/Code/null 2>&1
 }
 
-initialize_dev_environment() {
-  # ===== ~/dev directory
-  if [ ! -d "$DEV_DIR" ]; then
-    echo "Make ~/dev directory"
-    mkdir -p "$DEV_DIR"
+initialize_code_environment() {
+  # ===== ~/Code directory
+  if [ ! -d "$CODE_DIR" ]; then
+    echo "Make ~/Code directory"
+    mkdir -p "$CODE_DIR"
 
     # ===== Spotlight
     echo ""
-    print_header "===== Exclude ~/dev from Spotlight indexing ====="
+    print_header "===== Exclude ~/Code from Spotlight indexing ====="
     echo "(Enter your password if prompted)"
     SPOTLIGHT_PLIST="/System/Volumes/Data/.Spotlight-V100/VolumeConfiguration.plist"
     IS_SPOTLIGHT_PLIST_MODIFIED=false
-    if ! (sudo /usr/libexec/PlistBuddy -c "Print :Exclusions" $SPOTLIGHT_PLIST | grep -Fq "$DEV_DIR"); then
-      echo "Excluding $DEV_DIR from Spotlight indexing..."
-      sudo /usr/libexec/PlistBuddy -c "Add :Exclusions: string $DEV_DIR" $SPOTLIGHT_PLIST
+    if ! (sudo /usr/libexec/PlistBuddy -c "Print :Exclusions" $SPOTLIGHT_PLIST | grep -Fq "$CODE_DIR"); then
+      echo "Excluding $CODE_DIR from Spotlight indexing..."
+      sudo /usr/libexec/PlistBuddy -c "Add :Exclusions: string $CODE_DIR" $SPOTLIGHT_PLIST
       IS_SPOTLIGHT_PLIST_MODIFIED=true
     else
-      echo "$DEV_DIR is already excluded"
+      echo "$CODE_DIR is already excluded"
     fi
 
     if [ "$IS_SPOTLIGHT_PLIST_MODIFIED" = true ]; then
@@ -57,7 +57,7 @@ initialize_dev_environment() {
   fi
 }
 
-# ===== Homebrew 
+# ===== Homebrew
 install_homebrew() {
   if ! does_command_exist brew; then
     print_header "===== Install Homebrew ====="
@@ -76,12 +76,12 @@ install_xcode_tools() {
   print_header "===== Install Xcode command line tools ====="
   echo "(Enter your password if prompted)"
   # Xcode command line tools
-  if ! xcode-select -p &> /dev/null; then
+  if ! xcode-select -p &> /Code/null; then
     echo "Installing Xcode command line tools..."
     xcode-select --install
     # Wait until the Xcode Command Line Tools are installed
     echo "Waiting for Xcode command line tools to be installed..."
-    until xcode-select -p &> /dev/null; do
+    until xcode-select -p &> /Code/null; do
       sleep 5
     done
     echo "Xcode command line tools installed."
@@ -104,7 +104,7 @@ install_config() {
     echo "Syncing shell"
     rsync -avh --no-perms --no-owner --no-group \
       "$DOTFILES_DIR/shell/" "$HOME/";
-  else 
+  else
     echo "Skipped syncing."
   fi
   unset REPLY_SYNC
@@ -141,7 +141,7 @@ install_vsCode_settings() {
     rsync -avh --no-perms --no-owner --no-group \
       "$DOTFILES_DIR/vscode/" "$VSCODE_USER_PATH/";
     unset VSCODE_USER_PATH
-  else 
+  else
     echo "Skipped VSCode syncing."
   fi
   unset REPLY_INSTALL_VSCODE
@@ -149,7 +149,7 @@ install_vsCode_settings() {
 
 # ===== Install Nix
 install_nix() {
-  if nix-env --version &> /dev/null; then
+  if nix-env --version &> /Code/null; then
     echo ""
     echo "Nix is installed."
   else
@@ -162,7 +162,7 @@ install_nix() {
 # ===== Cleanup
 cleanup() {
   unset DOTFILES_DIR
-  unset DEV_DIR
+  unset CODE_DIR
   unset PACKAGES_DIR
   unset HEADER_COLOR
   unset EMPHASIS_COLOR
@@ -175,7 +175,7 @@ cleanup() {
 
 # Command functions
 cmd_init() {
-  initialize_dev_environment
+  initialize_code_environment
   # update_dotfiles
   install_config
   install_xcode_tools
@@ -217,7 +217,7 @@ main() {
       exit 1
       ;;
   esac
-} 
+}
 
 # Run main function with all script arguments
 main "$@"
