@@ -17,7 +17,7 @@ brew "zsh"
 
 # Language ####################################################################
 # brew "rust"                                 # Safe, concurrent, practical language
-# brew "oven-sh/bun/bun"                      # JavaScript runtime, bundler, transpiler and package manager
+brew "oven-sh/bun/bun"                      # JavaScript runtime, bundler, transpiler and package manager
 brew "python"                               # Interpreted, interactive, object-oriented programming language
 
 # Utils #######################################################################

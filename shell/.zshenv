@@ -1,2 +1,4 @@
 # uv
-export PATH="/Users/urbanfaubion/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+# bun
+export PATH="$HOME/.bun/bin:$PATH"
