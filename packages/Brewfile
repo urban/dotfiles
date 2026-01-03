@@ -2,14 +2,15 @@
 cask_args appdir: "/Applications"
 
 # Binaries/Libraries ##########################################################
-brew "codex"                                # OpenAI's coding agent that runs in your terminal
 brew "direnv"                               # Load/unload env variables per project
 brew "gemini-cli"                           # Interact with Google Gemini AI models from the command-line
 brew "gh"                                   # GitHub CLI
-brew "git"
-brew "git-lfs"
-brew "git-extras"
+brew "git"                                  # Version control system
+brew "git-lfs"                              # Git extension for versioning large files
+brew "git-extras"                           # Additional commands for git
+brew "jj"                                   # Git alternative with a focus on speed and simplicity
 brew "oh-my-posh"
+brew "opencode"                             # Open source AI coding agent built for the terminal
 # brew "pnpm"
 brew "rsync"
 brew "uv"                                   # Extremely fast Python package installer and resolver, written in Rust
@@ -29,6 +30,7 @@ cask "keycastr"                             # Keystroke visualizer
 cask "chatgpt"                              # OpenAI's official ChatGPT desktop app
 cask "claude"                               # AI assistant by Anthropic
 cask "claude-code"                          # Native macOS app for Claude AI
+cask "codex"                                # OpenAI's coding agent that runs in your terminal
 cask "discord"                              # Chat for communities and friends
 cask "ghostty"                              # Terminal emulator
 cask "google-chrome"                        # Web browser

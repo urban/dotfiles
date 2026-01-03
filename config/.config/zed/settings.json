@@ -27,7 +27,7 @@
   "vim_mode": true,
   "icon_theme": {
     "mode": "system",
-    "light": "VSCode Icons (Dark)",
+    "light": "VSCode Icons for Zed (Dark)",
     "dark": "Zed (Default)"
   },
   "ui_font_size": 16,
