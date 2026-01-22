@@ -1,3 +1,4 @@
+
 // Zed settings
 //
 // For information on how to configure Zed, see the Zed
@@ -7,8 +8,9 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "format_on_save": "off",
   "inlay_hints": {
-    "enabled": true,
+    "enabled": false,
     "show_value_hints": true,
     "show_type_hints": true,
     "show_parameter_hints": true,
@@ -21,21 +23,21 @@
       "alt": false,
       "shift": false,
       "platform": false,
-      "function": false
-    }
+      "function": false,
+    },
   },
   "vim_mode": true,
   "icon_theme": {
     "mode": "system",
     "light": "VSCode Icons for Zed (Dark)",
-    "dark": "Zed (Default)"
+    "dark": "Zed (Default)",
   },
   "ui_font_size": 16,
   "buffer_font_size": 15,
   "theme": {
     "mode": "system",
     "light": "VSCode Dark Modern",
-    "dark": "One Dark"
+    "dark": "One Dark",
   },
   "lsp": {
     "typescript-language-server": {
@@ -48,9 +50,9 @@
           "includeInlayVariableTypeHintsWhenTypeMatchesName": true,
           "includeInlayPropertyDeclarationTypeHints": true,
           "includeInlayFunctionLikeReturnTypeHints": true,
-          "includeInlayEnumMemberValueHints": true
-        }
-      }
-    }
-  }
+          "includeInlayEnumMemberValueHints": true,
+        },
+      },
+    },
+  },
 }
