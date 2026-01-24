@@ -23,25 +23,25 @@ Personal dotfiles for macOS development setup.
 │   ├── settings.json       # VSCode settings
 │   ├── keybindings.json    # VSCode keybindings
 │   └── extensions.json     # VSCode extensions list
-├── bootstrap.sh            # Main setup script
+├── dotfiles.sh            # Main setup script
 └── sandbox.sh              # Run commands in sandbox container
 ```
 
 ## Installation
 
 1. Enable "Full Disk Access" for Terminal (System Settings -> Privacy & Security -> Full Disk Access).
-2. Clone this repo to the expected location (or update `CODE_DIR` and `DOTFILES_DIR` in `bootstrap.sh` and `sandbox.sh`).
+2. Clone this repo to the expected location (or update `CODE_DIR` and `DOTFILES_DIR` in `dotfiles.sh` and `sandbox.sh`).
 
 ```sh
 mkdir -p ~/Code/personal
 git clone https://github.com/urban/dotfiles.git ~/Code/personal/dotfiles
 ```
 
-3. Run the bootstrap script:
+3. Run the dotfiles script:
 
 ```sh
 cd ~/Code/personal/dotfiles
-./bootstrap.sh init
+./dotfiles.sh init
 ```
 
 Once setup, follow the instructions on [Generating a new SSH key and adding it to the ssh-agent](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) and [Adding a new SSH key to your GitHub account](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account) to gain access to your private GitHub repositories.
@@ -53,13 +53,13 @@ cd ~/Code/personal/dotfiles
 git remote set-url origin git@github.com:urban/dotfiles.git
 ```
 
-## `bootstrap.sh`
+## `dotfiles.sh`
 
-`bootstrap.sh` handles initialization for a new machine.
+`dotfiles.sh` handles initialization for a new machine.
 
 ```sh
-./bootstrap.sh init
-./bootstrap.sh help
+./dotfiles.sh init
+./dotfiles.sh help
 ```
 
 **What it does:**
