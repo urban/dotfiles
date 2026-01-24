@@ -1,4 +1,4 @@
-source $HOME/.aliases
+source .aliases
 
 # add /usr/local/sbin
 if [[ -d /usr/local/sbin ]]; then
