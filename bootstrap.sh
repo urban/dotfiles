@@ -132,7 +132,12 @@ update_dotfiles() {
   print_header "===== Update dotfiles ====="
   if [ -d "$DOTFILES_DIR" ]; then
     echo "Updating dotfiles from repository"
-    git -C "$DOTFILES_DIR" pull origin master;
+    local current_branch=""
+    if current_branch="$(git -C "$DOTFILES_DIR" symbolic-ref --short HEAD 2>/dev/null)"; then
+      git -C "$DOTFILES_DIR" pull --ff-only origin "$current_branch"
+    else
+      git -C "$DOTFILES_DIR" pull --ff-only
+    fi
   else
     echo "Dotfiles directory does not exist. Cloning repository."
     git clone https://github.com/urban/dotfiles.git "$DOTFILES_DIR"
