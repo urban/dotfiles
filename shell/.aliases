@@ -20,6 +20,7 @@ alias ll="ls -lFh ${colorflag}"
 alias lld="ls -l | grep ^d"
 alias rmf="rm -rf"
 
+alias dotfiles="~/Code/personal/dotfiles/dotfiles.sh"
 alias sandbox="~/Code/personal/dotfiles/sandbox.sh"
 
 # Helpers

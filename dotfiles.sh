@@ -3,16 +3,12 @@
 # Exit immediately if any command or pipeline returns a non-zero exit status
 set -euo pipefail
 
-# bootstrap.sh
-# Usage:
-#   ./bootstrap.sh <command>
-# Example:
-#   ./bootstrap.sh init
-
 # ===== Print colors
 readonly HEADER_COLOR="\033[35m"
 readonly EMPHASIS_COLOR="\033[32m"
 readonly END_COLOR="\033[0m"
+readonly RESET='\033[0m'
+readonly BOLD='\033[1m'
 
 # ===== Configuration
 readonly CODE_DIR="$HOME/Code"
@@ -20,9 +16,12 @@ readonly DOTFILES_DIR="$CODE_DIR/personal/dotfiles"
 readonly PACKAGES_DIR="$DOTFILES_DIR/packages"
 # CODE_DIR and DOTFILES_DIR are unset at the end of the script
 
+# Script metadata
+readonly SCRIPT_NAME="dotfiles"
+readonly VERSION="0.1.0"
+
 print_header() {
-  echo ""
-  echo -e "${HEADER_COLOR}$1${END_COLOR}"
+  echo -e "\n${BOLD}${HEADER_COLOR}$1${END_COLOR}${RESET}"
 }
 
 print_emphasis() {
@@ -40,7 +39,6 @@ initialize_code_environment() {
     mkdir -p "$CODE_DIR"
 
     # ===== Spotlight
-    echo ""
     print_header "===== Exclude ~/Code from Spotlight indexing ====="
     echo "(Enter your password if prompted)"
     SPOTLIGHT_PLIST="/System/Volumes/Data/.Spotlight-V100/VolumeConfiguration.plist"
@@ -179,61 +177,88 @@ install_vsCode_settings() {
 
 # ===== Install Nix
 install_nix() {
-  if nix-env --version &> /dev/null; then
-    echo ""
-    echo "Nix is installed."
-  else
-    echo ""
-    print_header "===== Install Nix ====="
-    bash <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install)
-  fi
+    if nix-env --version &> /dev/null; then
+        echo ""
+        echo "Nix is installed."
+    else
+        echo ""
+        print_header "===== Install Nix ====="
+        bash <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install)
+    fi
 }
 
 # Command functions
 cmd_init() {
-  print_emphasis "START BOOTSTRAP"
-  initialize_code_environment
-  # update_dotfiles
-  install_config
-  install_xcode_tools
-  install_homebrew
-  install_packages
-  install_nix
-  install_vsCode_settings
+    print_emphasis "START INIT"
+    initialize_code_environment
+    # update_dotfiles
+    install_config
+    install_xcode_tools
+    install_homebrew
+    install_packages
+    install_nix
+    install_vsCode_settings
 
-  print_emphasis "END BOOTSTRAP"
+    print_emphasis "END INIT"
 }
 
 cmd_help() {
-  print_header "===== This script sets up your new MacOS machine for development ====="
-  echo ""
-  echo "Usage: ./bootstrap [command]"
-  echo ""
-  echo "Commands:"
-  echo "  init      Initialize a new machine"
-  echo "  help      Show this help message (default)"
-  echo ""
-  echo "If no command is provided, 'help' will be executed."
+    echo -e "${BOLD}${SCRIPT_NAME}${RESET} - New machine management tool"
+    echo "Version: ${VERSION}"
+    echo ""
+
+    echo "Usage: ./dotfiles [command]"
+    echo ""
+
+    echo "Commands:"
+    echo "  init      Initialize a new machine"
+    echo "  help      Show this help message (default)"
+    echo ""
+
+    echo -e "${BOLD}OPTIONS:${RESET}"
+    echo "    --version       Show version information"
+    echo "    -h, --help      Show this help message"
+    echo ""
+
+    echo "If no command is provided, 'help' will be executed."
+    echo ""
 }
 
 # Main function
 main() {
-  # Get command from first argument, default to 'help'
-  local command="${1:-help}"
+    # Parse global options
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            --version)
+                echo "${SCRIPT_NAME} version ${VERSION}"
+                exit 0
+                ;;
+            -h|--help)
+                cmd_help
+                exit 0
+                ;;
+            *)
+                break
+                ;;
+        esac
+    done
 
-  case "$command" in
-    init)
-      cmd_init
-      ;;
-    help)
-      cmd_help
-      ;;
-    *)
-      echo "Unknown command: $command"
-      cmd_help
-      exit 1
-      ;;
-  esac
+    # Get command from first argument, default to 'help'
+    local command="${1:-help}"
+
+    case "$command" in
+        init)
+            cmd_init
+            ;;
+        help)
+            cmd_help
+            ;;
+        *)
+            echo "Unknown command: $command"
+            cmd_help
+            exit 1
+            ;;
+    esac
 }
 
 # Run main function with all script arguments
