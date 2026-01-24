@@ -4,10 +4,11 @@
 set -euo pipefail
 
 # ===== Print colors
-readonly HEADER_COLOR="\033[35m"
-readonly EMPHASIS_COLOR="\033[32m"
-readonly END_COLOR="\033[0m"
-readonly RESET='\033[0m'
+readonly RED='\033[0;31m'
+readonly GREEN="\033[32m"
+readonly BLUE="\033[35m"
+readonly CYAN='\033[0;36m'
+readonly RESET="\033[0m"
 readonly BOLD='\033[1m'
 
 # ===== Configuration
@@ -21,15 +22,49 @@ readonly SCRIPT_NAME="dotfiles"
 readonly VERSION="0.1.0"
 
 print_header() {
-  echo -e "\n${BOLD}${HEADER_COLOR}$1${END_COLOR}${RESET}"
+    echo -e "\n${BOLD}${BLUE}$1${RESET}${RESET}"
 }
 
-print_emphasis() {
-  echo -e "${EMPHASIS_COLOR}$1${END_COLOR}"
+print_success() {
+    echo -e "${GREEN}$1${RESET}"
 }
 
-does_command_exist() {
+print_error() {
+    echo -e "${RED}✗${RESET} $1" >&2
+}
+
+print_info() {
+    echo -e "${GREEN}$1${RESET}"
+}
+
+command_exist() {
     command -v "$1" >/dev/null 2>&1
+}
+
+confirm() {
+    local prompt="${1:-Continue?}"
+    local default="${2:-n}"
+
+    if [[ "$default" == "y" ]]; then
+        prompt="$prompt [Y/n]: "
+    else
+        prompt="$prompt [y/N]: "
+    fi
+
+    read -r -p "$prompt" response
+
+    case "$response" in
+        [yY][eE][sS]|[yY]) return 0 ;;
+        [nN][oO]|[nN]) return 1 ;;
+        "")
+            if [[ "$default" == "y" ]]; then
+                return 0
+            else
+                return 1
+            fi
+            ;;
+        *) return 1 ;;
+    esac
 }
 
 initialize_code_environment() {
@@ -48,11 +83,11 @@ initialize_code_environment() {
       sudo /usr/libexec/PlistBuddy -c "Add :Exclusions: string $CODE_DIR" $SPOTLIGHT_PLIST
       IS_SPOTLIGHT_PLIST_MODIFIED=true
     else
-      echo "$CODE_DIR is already excluded"
+      print_info "$CODE_DIR is already excluded"
     fi
 
     if [ "$IS_SPOTLIGHT_PLIST_MODIFIED" = true ]; then
-      echo "Restarting 'mds' process..."
+      print_info "Restarting 'mds' process..."
       # restart spotlight
       sudo launchctl stop com.apple.metadata.mds && sudo launchctl start com.apple.metadata.mds
     fi
@@ -63,7 +98,7 @@ initialize_code_environment() {
 
 # ===== Homebrew
 install_homebrew() {
-  if ! does_command_exist brew; then
+  if ! command_exist brew; then
     print_header "===== Install Homebrew ====="
     echo "(Enter your password if prompted)"
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -82,7 +117,7 @@ install_homebrew() {
     fi
     eval "$("$brew_path" shellenv)"
   else
-    echo "Homebrew is already installed"
+    print_info "Homebrew is already installed"
   fi
 }
 
@@ -99,17 +134,16 @@ install_xcode_tools() {
     until xcode-select -p &> /dev/null; do
       sleep 5
     done
-    echo "Xcode command line tools installed."
+    print_success "Xcode command line tools installed."
   else
-    echo "Xcode command line tools are already installed"
+    print_info "Xcode command line tools are already installed"
   fi
 }
 
 # ===== Install configs
 install_config() {
   print_header "===== Install config and shell files ====="
-  read -p "This may overwrite existing files in your home directory. Are you sure? (y/n) " REPLY_SYNC;
-  if [[ "$REPLY_SYNC" =~ ^[Yy]$ ]]; then
+  if confirm "This may overwrite existing files in your home directory. Are you sure?" "y"; then
     echo "";
     # Sync config
     echo "Syncing config"
@@ -122,7 +156,6 @@ install_config() {
   else
     echo "Skipped syncing."
   fi
-  unset REPLY_SYNC
 }
 
 # ===== Update dotfiles repo
@@ -137,7 +170,7 @@ update_dotfiles() {
       git -C "$DOTFILES_DIR" pull --ff-only
     fi
   else
-    echo "Dotfiles directory does not exist. Cloning repository."
+    print_info "Dotfiles directory does not exist. Cloning repository."
     git clone https://github.com/urban/dotfiles.git "$DOTFILES_DIR"
   fi
 }
@@ -145,12 +178,12 @@ update_dotfiles() {
 # ===== Install packages from Brewfile
 install_packages() {
   print_header "===== Install all dependencies with bundle (See Brewfile) ====="
-  if ! does_command_exist brew; then
+  if ! command_exist brew; then
     echo "Homebrew is not available. Run init or install_homebrew first."
     return 1
   fi
   if [ ! -f "$PACKAGES_DIR/Brewfile" ]; then
-    echo "Brewfile not found at $PACKAGES_DIR/Brewfile"
+    print_error "Brewfile not found at $PACKAGES_DIR/Brewfile"
     return 1
   fi
   brew bundle --file="$PACKAGES_DIR/Brewfile"
@@ -158,8 +191,7 @@ install_packages() {
 
 install_vsCode_settings() {
   print_header "===== Install VSCode settings ====="
-  read -p "This may overwrite existing files in your home directory. Are you sure? (y/n) " REPLY_SYNC_VSCODE;
-  if [[ "$REPLY_SYNC_VSCODE" =~ ^[Yy]$ ]]; then
+  if confirm "This may overwrite existing files in your home directory. Are you sure?" "y"; then
     echo "";
     echo "Install VSCode Settings"
     # Sync vscode
@@ -172,7 +204,6 @@ install_vsCode_settings() {
   else
     echo "Skipped VSCode syncing."
   fi
-  unset REPLY_SYNC_VSCODE
 }
 
 # ===== Install Nix
@@ -187,9 +218,21 @@ install_nix() {
     fi
 }
 
+update_packages() {
+    if confirm "Update Homebrew packages?" "y"; then
+        print_info "Updating Homebrew..."
+
+        brew update
+        brew upgrade
+
+        print_info "Packages updated"
+    fi
+}
+
 # Command functions
 cmd_init() {
-    print_emphasis "START INIT"
+    print_header "Initializing dotfiles"
+
     initialize_code_environment
     # update_dotfiles
     install_config
@@ -199,7 +242,14 @@ cmd_init() {
     install_nix
     install_vsCode_settings
 
-    print_emphasis "END INIT"
+    print_header "Initialization complete! 🎉"
+}
+
+cmd_update() {
+    print_header "Updating dotfiles"
+
+    # update_dotfiles
+    update_packages
 }
 
 cmd_help() {
@@ -211,8 +261,9 @@ cmd_help() {
     echo ""
 
     echo "Commands:"
-    echo "  init      Initialize a new machine"
     echo "  help      Show this help message (default)"
+    echo "  init      Initialize a new machine"
+    echo "  update    Update dotfiles and packages"
     echo ""
 
     echo -e "${BOLD}OPTIONS:${RESET}"
@@ -247,11 +298,14 @@ main() {
     local command="${1:-help}"
 
     case "$command" in
+        help)
+            cmd_help
+            ;;
         init)
             cmd_init
             ;;
-        help)
-            cmd_help
+        update)
+            cmd_update
             ;;
         *)
             echo "Unknown command: $command"
