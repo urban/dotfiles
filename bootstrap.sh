@@ -142,6 +142,14 @@ update_dotfiles() {
 # ===== Install packages from Brewfile
 install_packages() {
   print_header "===== Install all dependencies with bundle (See Brewfile) ====="
+  if ! does_command_exist brew; then
+    echo "Homebrew is not available. Run init or install_homebrew first."
+    return 1
+  fi
+  if [ ! -f "$PACKAGES_DIR/Brewfile" ]; then
+    echo "Brewfile not found at $PACKAGES_DIR/Brewfile"
+    return 1
+  fi
   brew bundle --file="$PACKAGES_DIR/Brewfile"
 }
 
