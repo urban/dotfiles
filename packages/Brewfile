@@ -13,6 +13,7 @@ brew "oh-my-posh"
 brew "opencode"                             # Open source AI coding agent built for the terminal
 # brew "pnpm"
 brew "rsync"
+brew "stow"                                 # Symlink manager for my dotfiles
 brew "uv"                                   # Extremely fast Python package installer and resolver, written in Rust
 brew "zsh"
 
