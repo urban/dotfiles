@@ -160,19 +160,16 @@ install_config() {
 
 # ===== Update dotfiles repo
 update_dotfiles() {
-  print_header "===== Update dotfiles ====="
-  if [ -d "$DOTFILES_DIR" ]; then
-    echo "Updating dotfiles from repository"
-    local current_branch=""
-    if current_branch="$(git -C "$DOTFILES_DIR" symbolic-ref --short HEAD 2>/dev/null)"; then
-      git -C "$DOTFILES_DIR" pull --ff-only origin "$current_branch"
-    else
-      git -C "$DOTFILES_DIR" pull --ff-only
+  print_header "Update dotfiles"
+
+    if confirm "Pull latest changes?" "y"; then
+        if git -C "$DOTFILES_DIR" pull; then
+            print_success "Repository updated"
+        else
+            print_error "Failed to update repository"
+            return 1
+        fi
     fi
-  else
-    print_info "Dotfiles directory does not exist. Cloning repository."
-    git clone https://github.com/urban/dotfiles.git "$DOTFILES_DIR"
-  fi
 }
 
 # ===== Install packages from Brewfile
@@ -227,20 +224,25 @@ update_packages() {
 
         print_info "Packages updated"
     fi
+
+    if confirm "Clean up old versions?" "y"; then
+        print_info "Cleaning up old package versions..."
+        brew cleanup
+        print_success "Cleanup completed"
+    fi
 }
 
 # Command functions
 cmd_init() {
     print_header "Initializing dotfiles"
 
-    initialize_code_environment
-    # update_dotfiles
-    install_config
-    install_xcode_tools
-    install_homebrew
-    install_packages
-    install_nix
-    install_vsCode_settings
+    initialize_code_environment || return 1
+    install_config || return 1
+    install_xcode_tools || return 1
+    install_homebrew || return 1
+    install_packages || return 1
+    install_nix || return 1
+    install_vsCode_settings || return 1
 
     print_header "Initialization complete! 🎉"
 }
@@ -248,8 +250,8 @@ cmd_init() {
 cmd_update() {
     print_header "Updating dotfiles"
 
-    # update_dotfiles
-    update_packages
+    update_dotfiles || return 1
+    update_packages || return 1
 }
 
 cmd_help() {
