@@ -69,9 +69,20 @@ install_homebrew() {
     print_header "===== Install Homebrew ====="
     echo "(Enter your password if prompted)"
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    echo >> "$HOME/.zprofile"
-    echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> "$HOME/.zprofile"
-    eval "$(/opt/homebrew/bin shellenv)"
+    local brew_path=""
+    if [[ -x /opt/homebrew/bin/brew ]]; then
+      brew_path="/opt/homebrew/bin/brew"
+    elif [[ -x /usr/local/bin/brew ]]; then
+      brew_path="/usr/local/bin/brew"
+    else
+      brew_path="$(command -v brew)"
+    fi
+
+    local shellenv_line="eval \"\$(${brew_path} shellenv)\""
+    if ! grep -Fqs "$shellenv_line" "$HOME/.zprofile"; then
+      printf '\n%s\n' "$shellenv_line" >> "$HOME/.zprofile"
+    fi
+    eval "$("$brew_path" shellenv)"
   else
     echo "Homebrew is already installed"
   fi
