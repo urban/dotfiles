@@ -3,6 +3,12 @@
 # Exit immediately if any command or pipeline returns a non-zero exit status
 set -euo pipefail
 
+# bootstrap.sh
+# Usage:
+#   ./bootstrap.sh <command>
+# Example:
+#   ./bootstrap.sh init
+
 # ===== Print colors
 HEADER_COLOR="\033[35m"
 EMPHASIS_COLOR="\033[32m"
