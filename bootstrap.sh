@@ -10,14 +10,14 @@ set -euo pipefail
 #   ./bootstrap.sh init
 
 # ===== Print colors
-HEADER_COLOR="\033[35m"
-EMPHASIS_COLOR="\033[32m"
-END_COLOR="\033[0m"
+readonly HEADER_COLOR="\033[35m"
+readonly EMPHASIS_COLOR="\033[32m"
+readonly END_COLOR="\033[0m"
 
 # ===== Configuration
-CODE_DIR="$HOME/Code"
-DOTFILES_DIR="$CODE_DIR/personal/dotfiles"
-PACKAGES_DIR="$DOTFILES_DIR/packages"
+readonly CODE_DIR="$HOME/Code"
+readonly DOTFILES_DIR="$CODE_DIR/personal/dotfiles"
+readonly PACKAGES_DIR="$DOTFILES_DIR/packages"
 # CODE_DIR and DOTFILES_DIR are unset at the end of the script
 
 print_header() {
@@ -189,18 +189,6 @@ install_nix() {
   fi
 }
 
-# ===== Cleanup
-cleanup() {
-  unset DOTFILES_DIR
-  unset CODE_DIR
-  unset PACKAGES_DIR
-  unset HEADER_COLOR
-  unset EMPHASIS_COLOR
-  unset END_COLOR
-  unset print_header
-  unset print_emphasis
-}
-
 # Command functions
 cmd_init() {
   print_emphasis "START BOOTSTRAP"
@@ -232,7 +220,6 @@ cmd_help() {
 main() {
   # Get command from first argument, default to 'help'
   local command="${1:-help}"
-  trap cleanup EXIT
 
   case "$command" in
     init)
