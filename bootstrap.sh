@@ -209,7 +209,6 @@ cmd_init() {
   install_vsCode_settings
 
   print_emphasis "END BOOTSTRAP"
-  cleanup
 }
 
 cmd_help() {
@@ -228,6 +227,7 @@ cmd_help() {
 main() {
   # Get command from first argument, default to 'help'
   local command="${1:-help}"
+  trap cleanup EXIT
 
   case "$command" in
     init)
