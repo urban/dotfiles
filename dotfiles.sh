@@ -13,7 +13,7 @@ readonly RESET="\033[0m"
 readonly BOLD='\033[1m'
 
 # ===== Configuration
-readonly CODE_DIR="${HOME}/Code"
+readonly CODE_DIR="/Volumes/Code"
 readonly DOTFILES_DIR="${CODE_DIR}/personal/dotfiles"
 readonly HOME_DIR="${DOTFILES_DIR}/home"
 readonly PACKAGES_DIR="${DOTFILES_DIR}/packages"
@@ -75,29 +75,24 @@ confirm() {
 initialize_code_environment() {
     # ===== ~/Code directory
     if [ ! -d "$CODE_DIR" ]; then
-        echo "Make ~/Code directory"
-        mkdir -p "$CODE_DIR"
-
         # ===== Spotlight
-        print_header "===== Exclude ~/Code from Spotlight indexing ====="
-        echo "(Enter your password if prompted)"
-        SPOTLIGHT_PLIST="/System/Volumes/Data/.Spotlight-V100/VolumeConfiguration.plist"
-        IS_SPOTLIGHT_PLIST_MODIFIED=false
-        if ! (sudo /usr/libexec/PlistBuddy -c "Print :Exclusions" $SPOTLIGHT_PLIST | grep -Fq "$CODE_DIR"); then
-            echo "Excluding $CODE_DIR from Spotlight indexing..."
-            sudo /usr/libexec/PlistBuddy -c "Add :Exclusions: string $CODE_DIR" $SPOTLIGHT_PLIST
-            IS_SPOTLIGHT_PLIST_MODIFIED=true
+        print_header "===== Exclude ${CODE_DIR} from Spotlight indexing ====="
+        print_info "(Enter your password if prompted)"
+        local spotlight_plist="/System/Volumes/Data/.Spotlight-V100/VolumeConfiguration.plist"
+        local is_spotlight_plist_modified=false
+        if ! (sudo /usr/libexec/PlistBuddy -c "Print :Exclusions" $spotlight_plist | grep -Fq "${CODE_DIR}"); then
+            print_info "Excluding ${CODE_DIR} from Spotlight indexing..."
+            sudo /usr/libexec/PlistBuddy -c "Add :Exclusions: string ${CODE_DIR}" $spotlight_plist
+            is_spotlight_plist_modified=true
         else
-            print_info "$CODE_DIR is already excluded"
+            print_info "${CODE_DIR} is already excluded"
         fi
 
-        if [ "$IS_SPOTLIGHT_PLIST_MODIFIED" = true ]; then
+        if [ "$is_spotlight_plist_modified" = true ]; then
             print_info "Restarting 'mds' process..."
             # restart spotlight
             sudo launchctl stop com.apple.metadata.mds && sudo launchctl start com.apple.metadata.mds
         fi
-        unset IS_SPOTLIGHT_PLIST_MODIFIED
-        unset SPOTLIGHT_PLIST
     fi
 }
 
@@ -145,24 +140,7 @@ install_xcode_tools() {
     fi
 }
 
-# ===== Install configs
-install_config() {
-    print_header "===== Install config and shell files ====="
-    if confirm "This may overwrite existing files in your home directory. Are you sure?" "y"; then
-        echo "";
-        # Sync config
-        echo "Syncing config"
-        rsync -avh --no-perms --no-owner --no-group \
-            "$DOTFILES_DIR/config/" "$HOME/";
-        # Sync shell
-        echo "Syncing shell"
-        rsync -avh --no-perms --no-owner --no-group \
-            "$DOTFILES_DIR/shell/" "$HOME/";
-    else
-        echo "Skipped syncing."
-    fi
-}
-
+# FIXME: Use GNU Stow
 install_vsCode_settings() {
     print_header "===== Install VSCode settings ====="
     if confirm "This may overwrite existing files in your home directory. Are you sure?" "y"; then
@@ -170,12 +148,12 @@ install_vsCode_settings() {
         # Sync vscode
         VSCODE_USER_PATH="$HOME/Library/Application Support/Code/User"
         mkdir -p "$VSCODE_USER_PATH"
-        echo "Syncing vscode"
+        print_info "Syncing vscode"
         rsync -avh --no-perms --no-owner --no-group \
             "$DOTFILES_DIR/vscode/" "$VSCODE_USER_PATH/";
         unset VSCODE_USER_PATH
     else
-        echo "Skipped VSCode syncing."
+        print_info "Skipped VSCode syncing."
     fi
 }
 
@@ -296,7 +274,6 @@ cmd_init() {
 
     initialize_code_environment || return 1
     symlink_dotfiles || return 1
-    # install_config || return 1
     install_xcode_tools || return 1
     install_homebrew || return 1
     install_packages || return 1

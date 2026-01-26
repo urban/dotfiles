@@ -12,7 +12,7 @@ set -euo pipefail
 #   ./sandbox.sh node -v
 
 # ===== Configuration
-CODE_DIR="$HOME/Code"
+CODE_DIR="/Volumes/Code"
 DOTFILES_DIR="$CODE_DIR/personal/dotfiles"
 DOCKERFILE_PATH="$DOTFILES_DIR/sandbox/Dockerfile"
 STATE_DIR=".sandbox"
