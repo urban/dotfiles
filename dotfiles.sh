@@ -16,6 +16,7 @@ readonly BOLD='\033[1m'
 readonly CODE_DIR="/Volumes/Code"
 readonly DOTFILES_DIR="${CODE_DIR}/personal/dotfiles"
 readonly HOME_DIR="${DOTFILES_DIR}/home"
+readonly VSCODE_DIR="${DOTFILES_DIR}/vscode"
 readonly PACKAGES_DIR="${DOTFILES_DIR}/packages"
 
 # =====  Script metadata
@@ -124,13 +125,13 @@ install_homebrew() {
 # ===== Xcode command line tools
 install_xcode_tools() {
     print_header "===== Install Xcode command line tools ====="
-    echo "(Enter your password if prompted)"
+    print_info "(Enter your password if prompted)"
     # Xcode command line tools
     if ! xcode-select -p &> /dev/null; then
-        echo "Installing Xcode command line tools..."
+        print_info "Installing Xcode command line tools..."
         xcode-select --install
         # Wait until the Xcode Command Line Tools are installed
-        echo "Waiting for Xcode command line tools to be installed..."
+        print_info "Waiting for Xcode command line tools to be installed..."
         until xcode-select -p &> /dev/null; do
             sleep 5
         done
@@ -140,35 +141,42 @@ install_xcode_tools() {
     fi
 }
 
-# FIXME: Use GNU Stow
-install_vsCode_settings() {
-    print_header "===== Install VSCode settings ====="
-    if confirm "This may overwrite existing files in your home directory. Are you sure?" "y"; then
-        print_info "Install VSCode Settings"
-        # Sync vscode
-        VSCODE_USER_PATH="$HOME/Library/Application Support/Code/User"
-        mkdir -p "$VSCODE_USER_PATH"
-        print_info "Syncing vscode"
-        rsync -avh --no-perms --no-owner --no-group \
-            "$DOTFILES_DIR/vscode/" "$VSCODE_USER_PATH/";
-        unset VSCODE_USER_PATH
+stow_exists() {
+    if ! command_exist stow; then
+        print_error "GNU Stow is not installed"
+        print_info "Please install stow via Homebrew: brew install stow"
+        return 1
+    fi
+}
+
+symlink_vscode() {
+    print_header "Symlinking VSCode configs"
+
+    stow_exists || return 1
+
+    local vscode_user_path="$HOME/Library/Application Support/Code/User"
+    mkdir -p "$vscode_user_path"
+
+    backup_files "${VSCODE_DIR}" "${vscode_user_path}"
+
+    print_info "Symlinking files from ${VSCODE_DIR} to ${vscode_user_path}..."
+
+    if stow -R -v -d "${DOTFILES_DIR}" -t "${vscode_user_path}" vscode; then
+       print_success "VSCode configs symlinked successfully"
     else
-        print_info "Skipped VSCode syncing."
+        print_error "Failed to symlink VSCode configs"
+        return 1
     fi
 }
 
 symlink_dotfiles() {
     print_header "Symlink dotfiles"
 
-    if ! command_exist stow; then
-        print_error "GNU Stow is not installed"
-        print_info "Please install stow via Homebrew: brew install stow"
-        return 1
-    fi
+    stow_exists || return 1
 
     print_info "Symlinking files from ${HOME_DIR} to ${HOME}..."
 
-    backup_files "${HOME}"
+    backup_files "${HOME_DIR}" "${HOME}"
 
     if stow -R -v -d "${DOTFILES_DIR}" -t "${HOME}" home; then
        print_success "Dotfiles symlinked successfully"
@@ -179,21 +187,22 @@ symlink_dotfiles() {
 }
 
 backup_files() {
-    local dir="$1"
-    print_info "Backing up files from ${dir}"
+    local from_dir="$1"
+    local to_dir="$2"
+    print_info "Backing up files from ${from_dir} to ${to_dir}"
     local backup_dir
     backup_dir="${DOTFILES_DIR}/backups/$(date +%Y%m%d_%H%M%S)"
     local files_to_backup=()
 
     # Check for existing files that would be overwritten
     while IFS= read -r -d '' file; do
-        local relative_path="${file#"${HOME_DIR}"/}"
-        local target_path="${dir}/${relative_path}"
+        local relative_path="${file#"${from_dir}"/}"
+        local target_path="${to_dir}/${relative_path}"
 
         if [[ -e "$target_path" && ! -L "$target_path" ]]; then
             files_to_backup+=("$relative_path")
         fi
-    done < <(find "${HOME_DIR}" -type f -print0)
+    done < <(find "${from_dir}" -type f -print0)
 
     if [[ ${#files_to_backup[@]} -gt 0 ]]; then
         print_warning "The following files will be replaced:"
@@ -202,7 +211,7 @@ backup_files() {
         if confirm "Create backups of existing files?" "y"; then
             mkdir -p "$backup_dir"
             for file in "${files_to_backup[@]}"; do
-                local src="${dir}/${file}"
+                local src="${to_dir}/${file}"
                 local dst="${backup_dir}/${file}"
                 mkdir -p "$(dirname "$dst")"
                 if ! cp -p "$src" "$dst"; then
@@ -231,7 +240,7 @@ update_dotfiles() {
 install_packages() {
     print_header "===== Install all dependencies with bundle (See Brewfile) ====="
     if ! command_exist brew; then
-        print_error "Homebrew is not available. Run init or install_homebrew first."
+        print_error "Homebrew is not available. Run init first."
         return 1
     fi
     if [ ! -f "$PACKAGES_DIR/Brewfile" ]; then
@@ -243,13 +252,10 @@ install_packages() {
 
 # ===== Install Nix
 install_nix() {
-    if nix-env --version &> /dev/null; then
-        echo ""
-        echo "Nix is installed."
-    else
-        echo ""
+    if ! nix-env --version &> /dev/null; then
         print_header "===== Install Nix ====="
         bash <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install)
+        print_success "Nix is installed."
     fi
 }
 
@@ -274,11 +280,11 @@ cmd_init() {
 
     initialize_code_environment || return 1
     symlink_dotfiles || return 1
+    symlink_vscode || return 1
     install_xcode_tools || return 1
     install_homebrew || return 1
     install_packages || return 1
     install_nix || return 1
-    install_vsCode_settings || return 1
 
     print_header "Initialization complete! 🎉"
 }
@@ -286,16 +292,20 @@ cmd_init() {
 cmd_update() {
     print_header "Updating dotfiles"
 
-    if confirm "Update dotfile symlinks?" "y"; then
-        symlink_dotfiles
+    if confirm "Pull latest changes?" "y"; then
+        update_dotfiles || return 1
     fi
 
-    if confirm "Pull latest changes?" "y"; then
-        update_dotfiles
+    if confirm "Update dotfile symlinks?" "y"; then
+        symlink_dotfiles || return 1
+    fi
+
+    if confirm "Update VSCode symlinks?" "y"; then
+        symlink_vscode || return 1
     fi
 
     if confirm "Update Homebrew packages?" "y"; then
-        update_packages
+        update_packages || return 1
     fi
 }
 
