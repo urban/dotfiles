@@ -56,8 +56,9 @@ git remote set-url origin git@github.com:urban/dotfiles.git
 `dotfiles.sh` handles initialization for a new machine.
 
 ```sh
+./dotfiles.sh --help
 ./dotfiles.sh init
-./dotfiles.sh help
+./dotfiles.sh update
 ```
 
 **What it does:**
