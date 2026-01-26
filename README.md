@@ -9,8 +9,6 @@ Personal dotfiles for macOS development setup.
 ├── config/                 # Synced to $HOME (dotfiles, .config/)
 ├── macos/
 │   └── settings.sh         # macOS system preferences (requires sudo)
-├── packages/
-│   └── Brewfile            # Homebrew packages and apps
 ├── sandbox/
 │   ├── Dockerfile          # Sandbox image
 │   └── entrypoint.sh       # Sandbox entry point
@@ -40,7 +38,7 @@ git clone https://github.com/urban/dotfiles.git ~/Code/personal/dotfiles
 3. Run the dotfiles script:
 
 ```sh
-cd ~/Code/personal/dotfiles
+cd /Volumes/Code/personal/dotfiles
 ./dotfiles.sh init
 ```
 
@@ -49,7 +47,7 @@ Once setup, follow the instructions on [Generating a new SSH key and adding it t
 Then change the dotfiles repo remote from HTTPS to SSH.
 
 ```bash
-cd ~/Code/personal/dotfiles
+cd /Volumes/Code/personal/dotfiles
 git remote set-url origin git@github.com:urban/dotfiles.git
 ```
 
@@ -64,11 +62,10 @@ git remote set-url origin git@github.com:urban/dotfiles.git
 
 **What it does:**
 
-1. Creates `~/Code` if missing and excludes it from Spotlight indexing
-2. Syncs `config/` and `shell/` into `$HOME`
+1. Creates `/Volumes/Code` partition if missing and excludes it from Spotlight indexing
+2. Syncs `home/` into `$HOME`
 3. Installs Xcode command line tools
 4. Installs Homebrew
-5. Installs packages from `packages/Brewfile`
 6. Installs Nix
 7. Syncs VSCode settings, keybindings, and extension list
 
@@ -85,7 +82,7 @@ Requires sudo.
 ### Homebrew Packages
 
 ```sh
-brew bundle --file="packages/Brewfile"
+brew bundle
 ```
 
 ### Sandbox

@@ -1,3 +1,4 @@
 backups/
 tmp/
 .DS_STORE
+home/.config/zsh/.zsh_history

@@ -97,31 +97,6 @@ initialize_code_environment() {
     fi
 }
 
-# ===== Homebrew
-install_homebrew() {
-    if ! command_exist brew; then
-        print_header "===== Install Homebrew ====="
-        echo "(Enter your password if prompted)"
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-        local brew_path=""
-        if [[ -x /opt/homebrew/bin/brew ]]; then
-            brew_path="/opt/homebrew/bin/brew"
-        elif [[ -x /usr/local/bin/brew ]]; then
-            brew_path="/usr/local/bin/brew"
-        else
-            brew_path="$(command -v brew)"
-        fi
-
-        local shellenv_line="eval \"\$(${brew_path} shellenv)\""
-        if ! grep -Fqs "$shellenv_line" "$HOME/.zprofile"; then
-            printf '\n%s\n' "$shellenv_line" >> "$HOME/.zprofile"
-        fi
-        eval "$("$brew_path" shellenv)"
-    else
-        print_info "Homebrew is already installed"
-    fi
-}
-
 # ===== Xcode command line tools
 install_xcode_tools() {
     print_header "===== Install Xcode command line tools ====="
@@ -190,6 +165,7 @@ backup_files() {
     local from_dir="$1"
     local to_dir="$2"
     print_info "Backing up files from ${from_dir} to ${to_dir}"
+
     local backup_dir
     backup_dir="${DOTFILES_DIR}/backups/$(date +%Y%m%d_%H%M%S)"
     local files_to_backup=()
@@ -236,27 +212,54 @@ update_dotfiles() {
     fi
 }
 
-# ===== Install packages from Brewfile
-install_packages() {
-    print_header "===== Install all dependencies with bundle (See Brewfile) ====="
-    if ! command_exist brew; then
-        print_error "Homebrew is not available. Run init first."
-        return 1
-    fi
-    if [ ! -f "$PACKAGES_DIR/Brewfile" ]; then
-        print_error "Brewfile not found at $PACKAGES_DIR/Brewfile"
-        return 1
-    fi
-    brew bundle --file="$PACKAGES_DIR/Brewfile"
-}
-
 # ===== Install Nix
 install_nix() {
+    print_header "Installing Nix..."
+
     if ! nix-env --version &> /dev/null; then
-        print_header "===== Install Nix ====="
         bash <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install)
         print_success "Nix is installed."
     fi
+}
+
+# ===== Homebrew
+install_homebrew() {
+    print_header "Installing Homebrew..."
+
+    if ! command_exist brew; then
+        print_info "(Enter your password if prompted)"
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        local brew_path=""
+        if [[ -x /opt/homebrew/bin/brew ]]; then
+            brew_path="/opt/homebrew/bin/brew"
+        elif [[ -x /usr/local/bin/brew ]]; then
+            brew_path="/usr/local/bin/brew"
+        else
+            brew_path="$(command -v brew)"
+        fi
+
+        local shellenv_line="eval \"\$(${brew_path} shellenv)\""
+        if ! grep -Fqs "$shellenv_line" "$HOME/.zprofile"; then
+            printf '\n%s\n' "$shellenv_line" >> "$HOME/.zprofile"
+        fi
+        eval "$("$brew_path" shellenv)"
+        print_success "Homebrew is installed."
+    else
+        print_info "Homebrew is already installed"
+    fi
+}
+
+
+# ===== Install packages from Brewfile
+install_packages() {
+    print_header "Installing packages..."
+
+    if ! command_exist brew; then
+        print_error "Homebrew is not available."
+        return 1
+    fi
+
+    brew bundle install
 }
 
 update_packages() {
