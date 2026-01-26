@@ -1,0 +1,57 @@
+tap "jandedobbeleer/oh-my-posh"
+tap "oven-sh/bun"
+
+brew "cloc"
+brew "direnv"
+brew "gemini-cli"
+brew "gh"
+brew "git"
+brew "git-extras"
+brew "git-lfs"
+brew "jj"
+brew "opencode"
+brew "python@3.14"
+brew "stow"
+brew "uv"
+brew "zsh"
+brew "jandedobbeleer/oh-my-posh/oh-my-posh"
+brew "oven-sh/bun/bun"
+
+cask "chatgpt", args: { appdir: "/Applications" }
+cask "claude", args: { appdir: "/Applications" }
+cask "claude-code", args: { appdir: "/Applications" }
+cask "codex"
+cask "discord", args: { appdir: "/Applications" }
+cask "font-cascadia-code", args: { appdir: "/Applications" }
+cask "font-fira-code", args: { appdir: "/Applications" }
+cask "font-fira-code-nerd-font", args: { appdir: "/Applications" }
+cask "font-fira-mono", args: { appdir: "/Applications" }
+cask "font-fira-sans", args: { appdir: "/Applications" }
+cask "font-jetbrains-mono", args: { appdir: "/Applications" }
+cask "font-powerline-symbols", args: { appdir: "/Applications" }
+cask "font-sf-mono"
+cask "ghostty", args: { appdir: "/Applications" }
+cask "google-chrome", args: { appdir: "/Applications" }
+cask "keycastr", args: { appdir: "/Applications" }
+cask "little-snitch", args: { appdir: "/Applications" }
+cask "obsidian", args: { appdir: "/Applications" }
+cask "ollama-app", args: { appdir: "/Applications" }
+cask "opcode", args: { appdir: "/Applications" }
+cask "orbstack", args: { appdir: "/Applications" }
+cask "reader", args: { appdir: "/Applications" }
+cask "slack", args: { appdir: "/Applications" }
+cask "visual-studio-code", args: { appdir: "/Applications" }
+cask "zed", args: { appdir: "/Applications" }
+
+vscode "alefragnani.project-manager"
+vscode "anthropic.claude-code"
+vscode "bierner.markdown-mermaid"
+vscode "effectful-tech.effect-vscode"
+vscode "github.copilot"
+vscode "github.copilot-chat"
+vscode "google.gemini-cli-vscode-ide-companion"
+vscode "google.geminicodeassist"
+vscode "mkhl.direnv"
+vscode "ms-playwright.playwright"
+vscode "vitest.explorer"
+vscode "vscodevim.vim"
