@@ -69,27 +69,16 @@ git remote set-url origin git@github.com:urban/dotfiles.git
 6. Installs Nix
 7. Syncs VSCode settings, keybindings, and extension list
 
-## Other Commands
+## `sandbox.sh`
 
-### macOS Settings
-
-Requires sudo.
-
-```sh
-./macos/settings.sh
-```
-
-### Homebrew Packages
-
-```sh
-brew bundle
-```
-
-### Sandbox
-
-Run a command inside the Docker-based sandbox (requires Docker):
+`sandbox.sh` handles running a command inside a Docker-based sandbox (requires Docker):
 
 ```sh
 ./sandbox.sh bash
 ./sandbox.sh node -v
 ```
+
+**What it does:**
+
+1. Runs a command inside a Docker container with the same environment as the host machine.
+2. Provides a sandboxed environment for testing and development.
