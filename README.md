@@ -62,12 +62,13 @@ git remote set-url origin git@github.com:urban/dotfiles.git
 
 **What it does:**
 
-1. Creates `/Volumes/Code` partition if missing and excludes it from Spotlight indexing
-2. Syncs `home/` into `$HOME`
-3. Installs Xcode command line tools
-4. Installs Homebrew
-6. Installs Nix
-7. Syncs VSCode settings, keybindings, and extension list
+1. If `/Volumes/Code` is missing, adds it to Spotlight exclusions and restarts `mds`
+2. Symlinks `home/` into `$HOME` via GNU Stow (with optional backups of conflicting files)
+3. Symlinks VSCode settings, keybindings, and extensions list into `~/Library/Application Support/Code/User` via GNU Stow (with optional backups)
+4. Installs Xcode Command Line Tools if missing
+5. Installs Homebrew if missing and ensures `brew shellenv` is in `~/.zprofile`
+6. Installs packages from the Brewfile via `brew bundle install`
+7. Installs Nix if missing via the `nixos.org` install script
 
 ## `sandbox.sh`
 
@@ -80,5 +81,9 @@ git remote set-url origin git@github.com:urban/dotfiles.git
 
 **What it does:**
 
-1. Runs a command inside a Docker container with the same environment as the host machine.
-2. Provides a sandboxed environment for testing and development.
+1. Validates paths, creates a per-project `.sandbox` state directory, and ensures it is in `.gitignore`
+2. Captures Git author info and creates state dirs for bun, pnpm, gh, and codex
+3. Creates a persistent `sandbox-nix-store` Docker volume for the Nix store
+4. Builds the sandbox image from `sandbox/Dockerfile`
+5. Runs an interactive container mounting the project, state dirs, and Nix store, and passes Git author env vars
+6. Entry point installs Nix/tools, installs latest npm and `@openai/codex`, prompts for Codex/GitHub auth if missing, configures git, runs `direnv allow`, then runs the provided command (or starts `/bin/bash` if none was given)

@@ -327,7 +327,7 @@ cmd_help() {
     echo ""
 
     echo -e "${BOLD}OPTIONS:${RESET}"
-    echo "    --version       Show version information"
+    echo "    -v, --version   Show version information"
     echo "    -h, --help      Show this help message"
     echo ""
 
@@ -335,13 +335,17 @@ cmd_help() {
     echo ""
 }
 
+cmd_version() {
+    echo "${SCRIPT_NAME} version ${VERSION}"
+}
+
 # Main function
 main() {
     # Parse global options
     while [[ $# -gt 0 ]]; do
         case "$1" in
-            --version)
-                echo "${SCRIPT_NAME} version ${VERSION}"
+            -v|--version)
+                cmd_version
                 exit 0
                 ;;
             -h|--help)
