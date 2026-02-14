@@ -7,7 +7,7 @@ set -euo pipefail
 readonly RED='\033[0;31m'
 readonly GREEN="\033[0;32m"
 readonly BLUE="\033[0;35m"
-readonly YELLOW="033[0;33m"
+readonly YELLOW="\033[0;33m"
 readonly CYAN='\033[0;36m'
 readonly RESET="\033[0m"
 readonly BOLD='\033[1m'
@@ -40,30 +40,30 @@ log_warning() {
 }
 
 log_info() {
-    echo -e "${GREEN}$1${RESET}"
+    echo -e "$1${RESET}"
 }
 
 command_exist() {
     command -v "$1" >/dev/null 2>&1
 }
 
-confirm() {
+confirm_action() {
     local prompt="${1:-Continue?}"
     local default="${2:-n}"
 
     if [[ "$default" == "y" ]]; then
-        prompt="$prompt [Y/n]: "
+        prompt="${prompt} [Y/n]: "
     else
-        prompt="$prompt [y/N]: "
+        prompt="${prompt} [y/N]: "
     fi
 
-    read -r -p "$prompt" response
+    read -r -p "${prompt}" response
 
-    case "$response" in
+    case "${response}" in
         [yY][eE][sS]|[yY]) return 0 ;;
         [nN][oO]|[nN]) return 1 ;;
         "")
-            if [[ "$default" == "y" ]]; then
+            if [[ "${default}" == "y" ]]; then
                 return 0
             else
                 return 1
@@ -75,21 +75,21 @@ confirm() {
 
 initialize_code_environment() {
     # ===== ~/Code directory
-    if [ ! -d "$CODE_DIR" ]; then
+    if [ ! -d "${CODE_DIR}" ]; then
         # ===== Spotlight
         log_title "===== Exclude ${CODE_DIR} from Spotlight indexing ====="
         log_info "(Enter your password if prompted)"
         local spotlight_plist="/System/Volumes/Data/.Spotlight-V100/VolumeConfiguration.plist"
         local is_spotlight_plist_modified=false
-        if ! (sudo /usr/libexec/PlistBuddy -c "Print :Exclusions" $spotlight_plist | grep -Fq "${CODE_DIR}"); then
+        if ! (sudo /usr/libexec/PlistBuddy -c "Print :Exclusions" ${spotlight_plist} | grep -Fq "${CODE_DIR}"); then
             log_info "Excluding ${CODE_DIR} from Spotlight indexing..."
-            sudo /usr/libexec/PlistBuddy -c "Add :Exclusions: string ${CODE_DIR}" $spotlight_plist
+            sudo /usr/libexec/PlistBuddy -c "Add :Exclusions: string ${CODE_DIR}" ${spotlight_plist}
             is_spotlight_plist_modified=true
         else
             log_info "${CODE_DIR} is already excluded"
         fi
 
-        if [ "$is_spotlight_plist_modified" = true ]; then
+        if [ "${is_spotlight_plist_modified}" = true ]; then
             log_info "Restarting 'mds' process..."
             # restart spotlight
             sudo launchctl stop com.apple.metadata.mds && sudo launchctl start com.apple.metadata.mds
@@ -130,7 +130,7 @@ symlink_vscode() {
     stow_exists || return 1
 
     local vscode_user_path="$HOME/Library/Application Support/Code/User"
-    mkdir -p "$vscode_user_path"
+    mkdir -p "${vscode_user_path}"
 
     backup_files "${VSCODE_DIR}" "${vscode_user_path}"
 
@@ -175,8 +175,8 @@ backup_files() {
         local relative_path="${file#"${from_dir}"/}"
         local target_path="${to_dir}/${relative_path}"
 
-        if [[ -e "$target_path" && ! -L "$target_path" ]]; then
-            files_to_backup+=("$relative_path")
+        if [[ -e "${target_path}" && ! -L "${target_path}" ]]; then
+            files_to_backup+=("${relative_path}")
         fi
     done < <(find "${from_dir}" -type f -print0)
 
@@ -184,14 +184,14 @@ backup_files() {
         log_warning "The following files will be replaced:"
         printf "  %s\n" "${files_to_backup[@]}"
 
-        if confirm "Create backups of existing files?" "y"; then
-            mkdir -p "$backup_dir"
+        if confirm_action "Create backups of existing files?" "y"; then
+            mkdir -p "${backup_dir}"
             for file in "${files_to_backup[@]}"; do
                 local src="${to_dir}/${file}"
                 local dst="${backup_dir}/${file}"
-                mkdir -p "$(dirname "$dst")"
-                if ! cp -p "$src" "$dst"; then
-                    log_error "Failed to backup: $src"
+                mkdir -p "$(dirname "${dst}")"
+                if ! cp -p "${src}" "${dst}"; then
+                    log_error "Failed to backup: ${src}"
                     return 1
                 fi
             done
@@ -204,7 +204,7 @@ backup_files() {
 update_dotfiles() {
     log_title "Update dotfiles"
 
-    if git -C "$DOTFILES_DIR" pull; then
+    if git -C "${DOTFILES_DIR}" pull; then
         log_success "Repository updated"
     else
         log_error "Failed to update repository"
@@ -239,8 +239,8 @@ install_homebrew() {
         fi
 
         local shellenv_line="eval \"\$(${brew_path} shellenv)\""
-        if ! grep -Fqs "$shellenv_line" "$HOME/.zprofile"; then
-            printf '\n%s\n' "$shellenv_line" >> "$HOME/.zprofile"
+        if ! grep -Fqs "${shellenv_line}" "${HOME}/.zprofile"; then
+            printf '\n%s\n' "${shellenv_line}" >> "${HOME}/.zprofile"
         fi
         eval "$("$brew_path" shellenv)"
         log_success "Homebrew is installed."
@@ -270,7 +270,7 @@ update_packages() {
 
     log_info "Packages updated"
 
-    if confirm "Clean up old versions?" "y"; then
+    if confirm_action "Clean up old versions?" "y"; then
         log_info "Cleaning up old package versions..."
         brew cleanup
         log_success "Cleanup completed"
@@ -295,19 +295,19 @@ cmd_init() {
 cmd_update() {
     log_title "Updating dotfiles"
 
-    if confirm "Pull latest changes?" "y"; then
+    if confirm_action "Pull latest changes?" "y"; then
         update_dotfiles || return 1
     fi
 
-    if confirm "Update dotfile symlinks?" "y"; then
+    if confirm_action "Update dotfile symlinks?" "y"; then
         symlink_dotfiles || return 1
     fi
 
-    if confirm "Update VSCode symlinks?" "y"; then
+    if confirm_action "Update VSCode symlinks?" "y"; then
         symlink_vscode || return 1
     fi
 
-    if confirm "Update Homebrew packages?" "y"; then
+    if confirm_action "Update Homebrew packages?" "y"; then
         update_packages || return 1
     fi
 }
@@ -343,7 +343,7 @@ cmd_version() {
 main() {
     # Parse global options
     while [[ $# -gt 0 ]]; do
-        case "$1" in
+        case "${1}" in
             -v|--version)
                 cmd_version
                 exit 0
@@ -361,7 +361,7 @@ main() {
     # Get command from first argument, default to 'help'
     local command="${1:-help}"
 
-    case "$command" in
+    case "${command}" in
         help)
             cmd_help
             ;;
@@ -372,7 +372,7 @@ main() {
             cmd_update
             ;;
         *)
-            echo "Unknown command: $command"
+            echo "Unknown command: ${command}"
             cmd_help
             exit 1
             ;;
@@ -380,4 +380,4 @@ main() {
 }
 
 # Run main function with all script arguments
-main "$@"
+main "${@}"
