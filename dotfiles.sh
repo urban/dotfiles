@@ -23,23 +23,23 @@ readonly PACKAGES_DIR="${DOTFILES_DIR}/packages"
 readonly SCRIPT_NAME="dotfiles"
 readonly VERSION="0.1.0"
 
-print_header() {
+log_title() {
     echo -e "\n${BOLD}${BLUE}$1${RESET}${RESET}"
 }
 
-print_success() {
+log_success() {
     echo -e "${GREEN}$1${RESET}"
 }
 
-print_error() {
+log_error() {
     echo -e "${RED}✗${RESET} $1" >&2
 }
 
-print_warning() {
+log_warning() {
     echo -e "${YELLOW}⚠${RESET} $1"
 }
 
-print_info() {
+log_info() {
     echo -e "${GREEN}$1${RESET}"
 }
 
@@ -77,20 +77,20 @@ initialize_code_environment() {
     # ===== ~/Code directory
     if [ ! -d "$CODE_DIR" ]; then
         # ===== Spotlight
-        print_header "===== Exclude ${CODE_DIR} from Spotlight indexing ====="
-        print_info "(Enter your password if prompted)"
+        log_title "===== Exclude ${CODE_DIR} from Spotlight indexing ====="
+        log_info "(Enter your password if prompted)"
         local spotlight_plist="/System/Volumes/Data/.Spotlight-V100/VolumeConfiguration.plist"
         local is_spotlight_plist_modified=false
         if ! (sudo /usr/libexec/PlistBuddy -c "Print :Exclusions" $spotlight_plist | grep -Fq "${CODE_DIR}"); then
-            print_info "Excluding ${CODE_DIR} from Spotlight indexing..."
+            log_info "Excluding ${CODE_DIR} from Spotlight indexing..."
             sudo /usr/libexec/PlistBuddy -c "Add :Exclusions: string ${CODE_DIR}" $spotlight_plist
             is_spotlight_plist_modified=true
         else
-            print_info "${CODE_DIR} is already excluded"
+            log_info "${CODE_DIR} is already excluded"
         fi
 
         if [ "$is_spotlight_plist_modified" = true ]; then
-            print_info "Restarting 'mds' process..."
+            log_info "Restarting 'mds' process..."
             # restart spotlight
             sudo launchctl stop com.apple.metadata.mds && sudo launchctl start com.apple.metadata.mds
         fi
@@ -99,33 +99,33 @@ initialize_code_environment() {
 
 # ===== Xcode command line tools
 install_xcode_tools() {
-    print_header "===== Install Xcode command line tools ====="
-    print_info "(Enter your password if prompted)"
+    log_title "===== Install Xcode command line tools ====="
+    log_info "(Enter your password if prompted)"
     # Xcode command line tools
     if ! xcode-select -p &> /dev/null; then
-        print_info "Installing Xcode command line tools..."
+        log_info "Installing Xcode command line tools..."
         xcode-select --install
         # Wait until the Xcode Command Line Tools are installed
-        print_info "Waiting for Xcode command line tools to be installed..."
+        log_info "Waiting for Xcode command line tools to be installed..."
         until xcode-select -p &> /dev/null; do
             sleep 5
         done
-        print_success "Xcode command line tools installed."
+        log_success "Xcode command line tools installed."
     else
-        print_info "Xcode command line tools are already installed"
+        log_info "Xcode command line tools are already installed"
     fi
 }
 
 stow_exists() {
     if ! command_exist stow; then
-        print_error "GNU Stow is not installed"
-        print_info "Please install stow via Homebrew: brew install stow"
+        log_error "GNU Stow is not installed"
+        log_info "Please install stow via Homebrew: brew install stow"
         return 1
     fi
 }
 
 symlink_vscode() {
-    print_header "Symlinking VSCode configs"
+    log_title "Symlinking VSCode configs"
 
     stow_exists || return 1
 
@@ -134,29 +134,29 @@ symlink_vscode() {
 
     backup_files "${VSCODE_DIR}" "${vscode_user_path}"
 
-    print_info "Symlinking files from ${VSCODE_DIR} to ${vscode_user_path}..."
+    log_info "Symlinking files from ${VSCODE_DIR} to ${vscode_user_path}..."
 
     if stow -R -v -d "${DOTFILES_DIR}" -t "${vscode_user_path}" vscode; then
-       print_success "VSCode configs symlinked successfully"
+       log_success "VSCode configs symlinked successfully"
     else
-        print_error "Failed to symlink VSCode configs"
+        log_error "Failed to symlink VSCode configs"
         return 1
     fi
 }
 
 symlink_dotfiles() {
-    print_header "Symlink dotfiles"
+    log_title "Symlink dotfiles"
 
     stow_exists || return 1
 
-    print_info "Symlinking files from ${HOME_DIR} to ${HOME}..."
+    log_info "Symlinking files from ${HOME_DIR} to ${HOME}..."
 
     backup_files "${HOME_DIR}" "${HOME}"
 
     if stow -R -v -d "${DOTFILES_DIR}" -t "${HOME}" home; then
-       print_success "Dotfiles symlinked successfully"
+       log_success "Dotfiles symlinked successfully"
     else
-        print_error "Failed to symlink dotfiles"
+        log_error "Failed to symlink dotfiles"
         return 1
     fi
 }
@@ -164,7 +164,7 @@ symlink_dotfiles() {
 backup_files() {
     local from_dir="$1"
     local to_dir="$2"
-    print_info "Backing up files from ${from_dir} to ${to_dir}"
+    log_info "Backing up files from ${from_dir} to ${to_dir}"
 
     local backup_dir
     backup_dir="${DOTFILES_DIR}/backups/$(date +%Y%m%d_%H%M%S)"
@@ -181,7 +181,7 @@ backup_files() {
     done < <(find "${from_dir}" -type f -print0)
 
     if [[ ${#files_to_backup[@]} -gt 0 ]]; then
-        print_warning "The following files will be replaced:"
+        log_warning "The following files will be replaced:"
         printf "  %s\n" "${files_to_backup[@]}"
 
         if confirm "Create backups of existing files?" "y"; then
@@ -191,43 +191,43 @@ backup_files() {
                 local dst="${backup_dir}/${file}"
                 mkdir -p "$(dirname "$dst")"
                 if ! cp -p "$src" "$dst"; then
-                    print_error "Failed to backup: $src"
+                    log_error "Failed to backup: $src"
                     return 1
                 fi
             done
-            print_success "Backups created in ${backup_dir}"
+            log_success "Backups created in ${backup_dir}"
         fi
     fi
 }
 
 # ===== Update dotfiles repo
 update_dotfiles() {
-    print_header "Update dotfiles"
+    log_title "Update dotfiles"
 
     if git -C "$DOTFILES_DIR" pull; then
-        print_success "Repository updated"
+        log_success "Repository updated"
     else
-        print_error "Failed to update repository"
+        log_error "Failed to update repository"
         return 1
     fi
 }
 
 # ===== Install Nix
 install_nix() {
-    print_header "Installing Nix..."
+    log_title "Installing Nix..."
 
     if ! nix-env --version &> /dev/null; then
         bash <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install)
-        print_success "Nix is installed."
+        log_success "Nix is installed."
     fi
 }
 
 # ===== Homebrew
 install_homebrew() {
-    print_header "Installing Homebrew..."
+    log_title "Installing Homebrew..."
 
     if ! command_exist brew; then
-        print_info "(Enter your password if prompted)"
+        log_info "(Enter your password if prompted)"
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         local brew_path=""
         if [[ -x /opt/homebrew/bin/brew ]]; then
@@ -243,19 +243,19 @@ install_homebrew() {
             printf '\n%s\n' "$shellenv_line" >> "$HOME/.zprofile"
         fi
         eval "$("$brew_path" shellenv)"
-        print_success "Homebrew is installed."
+        log_success "Homebrew is installed."
     else
-        print_info "Homebrew is already installed"
+        log_info "Homebrew is already installed"
     fi
 }
 
 
 # ===== Install packages from Brewfile
 install_packages() {
-    print_header "Installing packages..."
+    log_title "Installing packages..."
 
     if ! command_exist brew; then
-        print_error "Homebrew is not available."
+        log_error "Homebrew is not available."
         return 1
     fi
 
@@ -263,23 +263,23 @@ install_packages() {
 }
 
 update_packages() {
-    print_info "Updating Homebrew..."
+    log_info "Updating Homebrew..."
 
     brew update
     brew upgrade
 
-    print_info "Packages updated"
+    log_info "Packages updated"
 
     if confirm "Clean up old versions?" "y"; then
-        print_info "Cleaning up old package versions..."
+        log_info "Cleaning up old package versions..."
         brew cleanup
-        print_success "Cleanup completed"
+        log_success "Cleanup completed"
     fi
 }
 
 # Command functions
 cmd_init() {
-    print_header "Initializing dotfiles"
+    log_title "Initializing dotfiles"
 
     initialize_code_environment || return 1
     symlink_dotfiles || return 1
@@ -289,11 +289,11 @@ cmd_init() {
     install_packages || return 1
     install_nix || return 1
 
-    print_header "Initialization complete! 🎉"
+    log_title "Initialization complete! 🎉"
 }
 
 cmd_update() {
-    print_header "Updating dotfiles"
+    log_title "Updating dotfiles"
 
     if confirm "Pull latest changes?" "y"; then
         update_dotfiles || return 1
