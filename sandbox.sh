@@ -8,23 +8,23 @@ readonly BOLD='\033[1m'
 
 # =====  Script metadata
 readonly SCRIPT_NAME="sandbox"
-readonly VERSION="0.0.1"
+readonly VERSION="0.1.0"
 
 # ===== Configuration
 CODE_DIR="/Volumes/Code"
-DOTFILES_DIR="$CODE_DIR/personal/dotfiles"
-DOCKERFILE_PATH="$DOTFILES_DIR/sandbox/Dockerfile"
+DOTFILES_DIR="${CODE_DIR}/personal/dotfiles"
+DOCKERFILE_PATH="${DOTFILES_DIR}/sandbox/Dockerfile"
 STATE_DIR=".sandbox"
 
 verify_dependencies() {
-    if [[ ! -d "$DOTFILES_DIR" ]]; then
-      echo "ERROR: Expected dotfiles repo at: $DOTFILES_DIR" >&2
+    if [[ ! -d "${DOTFILES_DIR}" ]]; then
+      echo "ERROR: Expected dotfiles repo at: ${DOTFILES_DIR}" >&2
       echo "Edit DOTFILES_DIR in this script to point at your local checkout." >&2
       exit 1
     fi
 
-    if [[ ! -f "$DOCKERFILE_PATH" ]]; then
-      echo "ERROR: Expected Dockerfile at: $DOCKERFILE_PATH" >&2
+    if [[ ! -f "${DOCKERFILE_PATH}" ]]; then
+      echo "ERROR: Expected Dockerfile at: ${DOCKERFILE_PATH}" >&2
       echo "Edit DOCKERFILE_PATH in this script to point at the Dockerfile." >&2
       exit 1
     fi
@@ -65,11 +65,11 @@ cmd_version() {
 
 cmd_default() {
     # Store the command and its args as an array.
-    args=("$@")
+    args=("${@}")
 
     # Per-project sandbox state directory.
     state_dir="${PWD}/${STATE_DIR}"
-    mkdir -p "$state_dir"
+    mkdir -p "${state_dir}"
     if ! grep -qF "/${STATE_DIR}/" ".gitignore"; then
       {
         echo ""
@@ -84,16 +84,16 @@ cmd_default() {
 
     # Persistent tool state directories (created under .agent/sandbox).
     mkdir -p \
-      "$state_dir/bun" \
-      "$state_dir/pnpm" \
-      "$state_dir/gh" \
-      "$state_dir/codex"
+      "${state_dir}/bun" \
+      "${state_dir}/pnpm" \
+      "${state_dir}/gh" \
+      "${state_dir}/codex"
 
     # Ensure the nix store volume exists (docker will create it if missing).
     docker volume create sandbox-nix-store >/dev/null
 
     # Build the sandbox image and capture the image id.
-    image_id="$(docker build -q "$DOTFILES_DIR" -f "$DOCKERFILE_PATH")"
+    image_id="$(docker build -q "${DOTFILES_DIR}" -f "${DOCKERFILE_PATH}")"
 
     # Run the container.
     exec docker run --rm -it \
@@ -105,7 +105,7 @@ cmd_default() {
       --volume "${state_dir}/codex:/root/.codex" \
       --env "GIT_AUTHOR_NAME=${git_author_name}" \
       --env "GIT_AUTHOR_EMAIL=${git_author_email}" \
-      "$image_id" \
+      "${image_id}" \
       "${args[@]}"
 }
 
@@ -132,8 +132,8 @@ main() {
         exit 2
     fi
 
-    cmd_default "$@"
+    cmd_default "${@}"
 }
 
 # Run main function with all script arguments
-main "$@"
+main "${@}"
