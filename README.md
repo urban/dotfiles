@@ -1,59 +1,94 @@
 # dotfiles
 
-Personal dotfiles for macOS development setup.
+Personal macOS dotfiles and bootstrap scripts.
 
-## Repository Structure
+## Repository layout
 
-```
-~/Code/personal/dotfiles/
-├── config/                 # Synced to $HOME (dotfiles, .config/)
+```text
+dotfiles/
+├── home/                   # stowed into $HOME
+│   ├── .aliases
+│   ├── .zshenv
+│   ├── Brewfile
+│   └── .config/
+│       ├── direnv/
+│       ├── ghostty/
+│       ├── git/
+│       ├── nix/
+│       ├── zed/
+│       └── zsh/
 ├── macos/
-│   └── settings.sh         # macOS system preferences (requires sudo)
+│   └── settings.sh         # optional macOS defaults script
 ├── sandbox/
-│   ├── Dockerfile          # Sandbox image
-│   └── entrypoint.sh       # Sandbox entry point
-├── shell/
-│   ├── .aliases            # Shell aliases
-│   ├── .zshenv             # Zsh environment
-│   ├── .zprofile           # Zsh profile
-│   └── .zshrc              # Zsh config
-├── vscode/
-│   ├── settings.json       # VSCode settings
-│   ├── keybindings.json    # VSCode keybindings
-│   └── extensions.json     # VSCode extensions list
-├── dotfiles.sh            # Main setup script
-└── sandbox.sh              # Run commands in sandbox container
+│   ├── Dockerfile
+│   └── entrypoint.sh
+├── vscode/                 # stowed into VS Code's user config dir
+│   ├── extensions.json
+│   ├── keybindings.json
+│   ├── mcp.json
+│   └── settings.json
+├── dotfiles.sh             # bootstrap and update script
+└── sandbox.sh              # Docker-based project sandbox
 ```
 
-## Installation
+## Before you start
 
-1. Enable "Full Disk Access" for Terminal (System Settings -> Privacy & Security -> Full Disk Access).
-2. Clone this repo to the expected location (or update `CODE_DIR` and `DOTFILES_DIR` in `dotfiles.sh` and `sandbox.sh`).
+- macOS only
+- Admin access is helpful; some steps use `sudo`
+- Give your terminal app Full Disk Access in System Settings -> Privacy & Security -> Full Disk Access
+- If `git` is not available yet, run `xcode-select --install` first or let `git` trigger Apple's Command Line Tools prompt
+
+## New machine setup
+
+Clone the repo wherever you want. Both scripts resolve their own location, so they do not require a fixed path.
 
 ```sh
 mkdir -p ~/Code/personal
 git clone https://github.com/urban/dotfiles.git ~/Code/personal/dotfiles
-```
-
-3. Run the dotfiles script:
-
-```sh
-cd /Volumes/Code/personal/dotfiles
+cd ~/Code/personal/dotfiles
 ./dotfiles.sh init
 ```
 
-Once setup, follow the instructions on [Generating a new SSH key and adding it to the ssh-agent](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) and [Adding a new SSH key to your GitHub account](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account) to gain access to your private GitHub repositories.
+`init` installs the bootstrap tools first, then stows the dotfiles. On a clean machine it will:
 
-Then change the dotfiles repo remote from HTTPS to SSH.
+1. install Xcode Command Line Tools if needed
+2. install Homebrew if needed
+3. install packages from `home/Brewfile`
+4. symlink `home/` into `$HOME` with GNU Stow
+5. symlink `vscode/` into `~/Library/Application Support/Code/User`
+6. install Nix if needed
+7. optionally run `macos/settings.sh`
 
-```bash
-cd /Volumes/Code/personal/dotfiles
+The script may prompt you to:
+
+- back up files that would be replaced
+- confirm system changes
+- enter your password for `sudo`
+
+When it finishes, start a new shell so the stowed zsh config is loaded:
+
+```sh
+exec zsh
+```
+
+After that, `dotfiles` and `sandbox` are available as shell functions.
+
+## Post-install
+
+If you cloned over HTTPS, create an SSH key, add it to GitHub, then switch the repo remote to SSH.
+
+- [Generating a new SSH key and adding it to the ssh-agent](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
+- [Adding a new SSH key to your GitHub account](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account)
+
+From the repo root:
+
+```sh
 git remote set-url origin git@github.com:urban/dotfiles.git
 ```
 
-## `dotfiles.sh`
+If you use services that need personal credentials, add them after setup. For example, `vscode/mcp.json` ships with blank values and needs your own API key.
 
-`dotfiles.sh` handles initialization for a new machine.
+## dotfiles.sh
 
 ```sh
 ./dotfiles.sh --help
@@ -61,30 +96,30 @@ git remote set-url origin git@github.com:urban/dotfiles.git
 ./dotfiles.sh update
 ```
 
-**What it does:**
+`update` is interactive. It can:
 
-1. If `/Volumes/Code` is missing, adds it to Spotlight exclusions and restarts `mds`
-2. Symlinks `home/` into `$HOME` via GNU Stow (with optional backups of conflicting files)
-3. Symlinks VSCode settings, keybindings, and extensions list into `~/Library/Application Support/Code/User` via GNU Stow (with optional backups)
-4. Installs Xcode Command Line Tools if missing
-5. Installs Homebrew if missing and ensures `brew shellenv` is in `~/.zprofile`
-6. Installs packages from the Brewfile via `brew bundle install`
-7. Installs Nix if missing via the `nixos.org` install script
+- pull the latest changes
+- re-stow `home/`
+- re-stow `vscode/`
+- update Homebrew packages
 
-## `sandbox.sh`
+## sandbox.sh
 
-`sandbox.sh` handles running a command inside a Docker-based sandbox (requires Docker):
+`sandbox.sh` runs a command in a Docker-based sandbox. Start Docker or OrbStack first.
 
 ```sh
+./sandbox.sh
 ./sandbox.sh bash
 ./sandbox.sh node -v
 ```
 
-**What it does:**
+What it does:
 
-1. Validates paths, creates a per-project `.sandbox` state directory, and ensures it is in `.gitignore`
-2. Captures Git author info and creates state dirs for bun, pnpm, gh, and codex
-3. Creates a persistent `sandbox-nix-store` Docker volume for the Nix store
-4. Builds the sandbox image from `sandbox/Dockerfile`
-5. Runs an interactive container mounting the project, state dirs, and Nix store, and passes Git author env vars
-6. Entry point installs Nix/tools, installs latest npm and `@openai/codex`, prompts for Codex/GitHub auth if missing, configures git, runs `direnv allow`, then runs the provided command (or starts `/bin/bash` if none was given)
+1. creates a per-project `.sandbox/` state directory
+2. adds `/.sandbox/` to the current project's `.gitignore`
+3. creates persistent state dirs for bun, pnpm, GitHub CLI, and Codex
+4. creates a `sandbox-nix-store` Docker volume
+5. builds the image from `sandbox/Dockerfile`
+6. runs the container with the current project mounted at `/app`
+
+On first run, the container entrypoint installs Nix and a few CLI tools, installs the latest `npm` and `@openai/codex`, prompts for Codex and GitHub auth if needed, configures Git author info, runs `direnv allow` when `.envrc` exists, then executes your command. With no command, it starts `bash`.
