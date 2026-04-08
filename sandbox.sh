@@ -10,22 +10,32 @@ readonly BOLD='\033[1m'
 readonly SCRIPT_NAME="sandbox"
 readonly VERSION="0.1.0"
 
+resolve_script_dir() {
+    local source="${BASH_SOURCE[0]}"
+
+    while [[ -L "${source}" ]]; do
+        local dir
+        dir="$(cd -P "$(dirname "${source}")" && pwd)"
+        source="$(readlink "${source}")"
+        [[ "${source}" != /* ]] && source="${dir}/${source}"
+    done
+
+    cd -P "$(dirname "${source}")" && pwd
+}
+
 # ===== Configuration
-CODE_DIR="/Volumes/Code"
-DOTFILES_DIR="${CODE_DIR}/personal/dotfiles"
-DOCKERFILE_PATH="${DOTFILES_DIR}/sandbox/Dockerfile"
-STATE_DIR=".sandbox"
+readonly DOTFILES_DIR="$(resolve_script_dir)"
+readonly DOCKERFILE_PATH="${DOTFILES_DIR}/sandbox/Dockerfile"
+readonly STATE_DIR=".sandbox"
 
 verify_dependencies() {
     if [[ ! -d "${DOTFILES_DIR}" ]]; then
-      echo "ERROR: Expected dotfiles repo at: ${DOTFILES_DIR}" >&2
-      echo "Edit DOTFILES_DIR in this script to point at your local checkout." >&2
+      echo "ERROR: Could not resolve the dotfiles repo path: ${DOTFILES_DIR}" >&2
       exit 1
     fi
 
     if [[ ! -f "${DOCKERFILE_PATH}" ]]; then
       echo "ERROR: Expected Dockerfile at: ${DOCKERFILE_PATH}" >&2
-      echo "Edit DOCKERFILE_PATH in this script to point at the Dockerfile." >&2
       exit 1
     fi
 
@@ -41,7 +51,7 @@ cmd_help() {
     echo ""
 
     echo "Usage:"
-    echo "  ./sandbox.sh <command> [args...]"
+    echo "  ./sandbox.sh [command] [args...]"
     echo ""
 
     echo "Example:"
@@ -55,7 +65,7 @@ cmd_help() {
     echo "    -h, --help      Show this help message"
     echo ""
 
-    echo "If no command is provided, 'create' will be executed."
+    echo "If no command is provided, 'bash' will be executed."
     echo ""
 }
 
@@ -64,12 +74,16 @@ cmd_version() {
 }
 
 cmd_default() {
-    # Store the command and its args as an array.
-    args=("${@}")
+    verify_dependencies
 
-    # Per-project sandbox state directory.
-    state_dir="${PWD}/${STATE_DIR}"
+    local args=("${@}")
+    local state_dir="${PWD}/${STATE_DIR}"
+    local git_author_name
+    local git_author_email
+    local image_id
+
     mkdir -p "${state_dir}"
+    touch ".gitignore"
     if ! grep -qF "/${STATE_DIR}/" ".gitignore"; then
       {
         echo ""
@@ -78,24 +92,18 @@ cmd_default() {
       } >> ".gitignore"
     fi
 
-    # Git author info from the current repo (empty if not in a git repo or not set).
     git_author_name="$(git config user.name 2>/dev/null || true)"
     git_author_email="$(git config user.email 2>/dev/null || true)"
 
-    # Persistent tool state directories (created under .agent/sandbox).
     mkdir -p \
       "${state_dir}/bun" \
       "${state_dir}/pnpm" \
       "${state_dir}/gh" \
       "${state_dir}/codex"
 
-    # Ensure the nix store volume exists (docker will create it if missing).
     docker volume create sandbox-nix-store >/dev/null
-
-    # Build the sandbox image and capture the image id.
     image_id="$(docker build -q "${DOTFILES_DIR}" -f "${DOCKERFILE_PATH}")"
 
-    # Run the container.
     exec docker run --rm -it \
       --volume sandbox-nix-store:/nix \
       --volume "${PWD}:/app" \
@@ -128,12 +136,15 @@ main() {
     done
 
     if [[ $# -lt 1 ]]; then
-        cmd_help
-        exit 2
+        cmd_default bash
+        return 0
     fi
 
     cmd_default "${@}"
 }
 
-# Run main function with all script arguments
-main "${@}"
+# Check if script is being sourced or executed
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    # Run main function with all script arguments
+    main "${@}"
+fi

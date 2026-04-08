@@ -12,12 +12,25 @@ readonly CYAN='\033[0;36m'
 readonly RESET="\033[0m"
 readonly BOLD='\033[1m'
 
+resolve_script_dir() {
+    local source="${BASH_SOURCE[0]}"
+
+    while [[ -L "${source}" ]]; do
+        local dir
+        dir="$(cd -P "$(dirname "${source}")" && pwd)"
+        source="$(readlink "${source}")"
+        [[ "${source}" != /* ]] && source="${dir}/${source}"
+    done
+
+    cd -P "$(dirname "${source}")" && pwd
+}
+
 # ===== Configuration
 readonly CODE_DIR="/Volumes/Code"
-readonly DOTFILES_DIR="${CODE_DIR}/personal/dotfiles"
+readonly DOTFILES_DIR="$(resolve_script_dir)"
 readonly HOME_DIR="${DOTFILES_DIR}/home"
 readonly VSCODE_DIR="${DOTFILES_DIR}/vscode"
-readonly PACKAGES_DIR="${DOTFILES_DIR}/packages"
+readonly MACOS_DIR="${DOTFILES_DIR}/macos"
 
 # =====  Script metadata
 readonly SCRIPT_NAME="dotfiles"
@@ -47,6 +60,24 @@ command_exist() {
     command -v "$1" >/dev/null 2>&1
 }
 
+resolve_brew_path() {
+    if command_exist brew; then
+        command -v brew
+    elif [[ -x /opt/homebrew/bin/brew ]]; then
+        echo "/opt/homebrew/bin/brew"
+    elif [[ -x /usr/local/bin/brew ]]; then
+        echo "/usr/local/bin/brew"
+    else
+        return 1
+    fi
+}
+
+ensure_homebrew_shellenv() {
+    local brew_path
+    brew_path="$(resolve_brew_path)" || return 1
+    eval "$("${brew_path}" shellenv)"
+}
+
 confirm_action() {
     local prompt="${1:-Continue?}"
     local default="${2:-n}"
@@ -74,16 +105,19 @@ confirm_action() {
 }
 
 initialize_code_environment() {
-    # ===== ~/Code directory
+    if [[ "${DOTFILES_DIR}" != "${CODE_DIR}"/* ]]; then
+        log_info "Skipping ${CODE_DIR} Spotlight config (repo is at ${DOTFILES_DIR})"
+        return 0
+    fi
+
     if [ ! -d "${CODE_DIR}" ]; then
-        # ===== Spotlight
         log_title "===== Exclude ${CODE_DIR} from Spotlight indexing ====="
         log_info "(Enter your password if prompted)"
         local spotlight_plist="/System/Volumes/Data/.Spotlight-V100/VolumeConfiguration.plist"
         local is_spotlight_plist_modified=false
-        if ! (sudo /usr/libexec/PlistBuddy -c "Print :Exclusions" ${spotlight_plist} | grep -Fq "${CODE_DIR}"); then
+        if ! (sudo /usr/libexec/PlistBuddy -c "Print :Exclusions" "${spotlight_plist}" | grep -Fq "${CODE_DIR}"); then
             log_info "Excluding ${CODE_DIR} from Spotlight indexing..."
-            sudo /usr/libexec/PlistBuddy -c "Add :Exclusions: string ${CODE_DIR}" ${spotlight_plist}
+            sudo /usr/libexec/PlistBuddy -c "Add :Exclusions: string ${CODE_DIR}" "${spotlight_plist}"
             is_spotlight_plist_modified=true
         else
             log_info "${CODE_DIR} is already excluded"
@@ -91,7 +125,6 @@ initialize_code_environment() {
 
         if [ "${is_spotlight_plist_modified}" = true ]; then
             log_info "Restarting 'mds' process..."
-            # restart spotlight
             sudo launchctl stop com.apple.metadata.mds && sudo launchctl start com.apple.metadata.mds
         fi
     fi
@@ -202,7 +235,7 @@ backup_files() {
 
 # ===== Update dotfiles repo
 update_dotfiles() {
-    log_title "Update dotfiles"
+    log_title "Updating dotfiles"
 
     if git -C "${DOTFILES_DIR}" pull; then
         log_success "Repository updated"
@@ -226,25 +259,13 @@ install_nix() {
 install_homebrew() {
     log_title "Installing Homebrew..."
 
-    if ! command_exist brew; then
+    if ! resolve_brew_path >/dev/null 2>&1; then
         log_info "(Enter your password if prompted)"
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-        local brew_path=""
-        if [[ -x /opt/homebrew/bin/brew ]]; then
-            brew_path="/opt/homebrew/bin/brew"
-        elif [[ -x /usr/local/bin/brew ]]; then
-            brew_path="/usr/local/bin/brew"
-        else
-            brew_path="$(command -v brew)"
-        fi
-
-        local shellenv_line="eval \"\$(${brew_path} shellenv)\""
-        if ! grep -Fqs "${shellenv_line}" "${HOME}/.zprofile"; then
-            printf '\n%s\n' "${shellenv_line}" >> "${HOME}/.zprofile"
-        fi
-        eval "$("$brew_path" shellenv)"
+        ensure_homebrew_shellenv || return 1
         log_success "Homebrew is installed."
     else
+        ensure_homebrew_shellenv || return 1
         log_info "Homebrew is already installed"
     fi
 }
@@ -254,15 +275,20 @@ install_homebrew() {
 install_packages() {
     log_title "Installing packages..."
 
-    if ! command_exist brew; then
+    if ! ensure_homebrew_shellenv; then
         log_error "Homebrew is not available."
         return 1
     fi
 
-    brew bundle install
+    brew bundle install --file "${HOME_DIR}/Brewfile"
 }
 
 update_packages() {
+    if ! ensure_homebrew_shellenv; then
+        log_error "Homebrew is not available."
+        return 1
+    fi
+
     log_info "Updating Homebrew..."
 
     brew update
@@ -277,23 +303,35 @@ update_packages() {
     fi
 }
 
+apply_macos_settings() {
+    if [[ "$(uname)" != "Darwin" ]]; then
+        return 0
+    fi
+
+    if ! confirm_action "Apply macOS settings?" "n"; then
+        return 0
+    fi
+
+    "${MACOS_DIR}/settings.sh"
+}
+
 # Command functions
 cmd_init() {
     log_title "Initializing dotfiles"
 
     initialize_code_environment || return 1
-    symlink_dotfiles || return 1
-    symlink_vscode || return 1
     install_xcode_tools || return 1
     install_homebrew || return 1
     install_packages || return 1
+    symlink_dotfiles || return 1
+    symlink_vscode || return 1
     install_nix || return 1
+    apply_macos_settings || return 1
 
     log_title "Initialization complete! 🎉"
 }
 
 cmd_update() {
-    log_title "Updating dotfiles"
 
     if confirm_action "Pull latest changes?" "y"; then
         update_dotfiles || return 1
@@ -317,7 +355,7 @@ cmd_help() {
     echo "Version: ${VERSION}"
     echo ""
 
-    echo "Usage: ./dotfiles [command]"
+    echo "Usage: ./dotfiles.sh [command]"
     echo ""
 
     echo "Commands:"
@@ -379,5 +417,8 @@ main() {
     esac
 }
 
-# Run main function with all script arguments
-main "${@}"
+# Check if script is being sourced or executed
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    # Run main function with all script arguments
+    main "${@}"
+fi

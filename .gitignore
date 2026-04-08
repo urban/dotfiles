@@ -1,6 +1,6 @@
 backups/
 tmp/
-.DS_STORE
+.DS_Store
 home/.config/zsh/.zsh_history
 
 # Sandbox state dir

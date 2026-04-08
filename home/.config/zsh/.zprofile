@@ -1,11 +1,14 @@
 # Homebrew on macOS
-if [[ -f "/opt/homebrew/bin/brew" ]] then
+if [[ -x "/opt/homebrew/bin/brew" ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [[ -x "/usr/local/bin/brew" ]]; then
+  eval "$(/usr/local/bin/brew shellenv)"
 fi
 
 # Set editors
 export EDITOR='vim'
 export GIT_EDITOR='vim'
 
-# Amend path
-export PATH=/usr/local/bin:$PATH
+if [[ -d "/usr/local/bin" && ":$PATH:" != *":/usr/local/bin:"* ]]; then
+  export PATH="$PATH:/usr/local/bin"
+fi

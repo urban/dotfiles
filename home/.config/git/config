@@ -3,3 +3,5 @@
 	name = Urban Faubion
 [init]
 	defaultBranch = main
+[alias]
+	wdiff = diff --color-words
