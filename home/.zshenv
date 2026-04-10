@@ -11,7 +11,8 @@ if [[ -z "${DOTFILES_DIR:-}" && -L "$HOME/.zshenv" ]]; then
 fi
 
 export HOMEBREW_BUNDLE_FILE="$HOME/Brewfile"
-# uv
-export PATH="$HOME/.local/bin:$PATH"
-# bun
-export PATH="$HOME/.bun/bin:$PATH"
+
+# Load shared PATH setup for every zsh shell.
+if [[ -f "$ZDOTDIR/path.zsh" ]]; then
+  source "$ZDOTDIR/path.zsh"
+fi

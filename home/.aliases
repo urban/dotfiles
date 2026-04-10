@@ -1,5 +1,5 @@
 # reload zsh config
-alias reload!='RELOAD=1 source ~/.zshrc'
+alias reload!='RELOAD=1 source "${ZDOTDIR:-$HOME/.config/zsh}/.zshrc"'
 
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
