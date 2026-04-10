@@ -3,7 +3,6 @@ tap "oven-sh/bun"
 
 brew "cloc"
 brew "direnv"
-brew "gemini-cli"
 brew "gh"
 brew "git"
 brew "git-extras"
@@ -36,7 +35,6 @@ cask "keycastr", args: { appdir: "/Applications" }
 cask "little-snitch", args: { appdir: "/Applications" }
 cask "obsidian", args: { appdir: "/Applications" }
 cask "ollama-app", args: { appdir: "/Applications" }
-cask "opcode", args: { appdir: "/Applications" }
 cask "orbstack", args: { appdir: "/Applications" }
 cask "reader", args: { appdir: "/Applications" }
 cask "slack", args: { appdir: "/Applications" }

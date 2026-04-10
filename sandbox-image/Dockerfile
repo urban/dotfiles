@@ -7,7 +7,7 @@ RUN echo 'eval "$(direnv hook bash)" || true' >> /root/.bashrc
 
 WORKDIR /app
 
-COPY sandbox/entrypoint.sh /entrypoint.sh
+COPY sandbox-image/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]

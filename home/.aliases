@@ -20,24 +20,6 @@ alias ll="ls -lFh ${colorflag}"
 alias lld="ls -l | grep ^d"
 alias rmf="rm -rf"
 
-dotfiles() {
-    if [[ -z "${DOTFILES_DIR:-}" ]]; then
-        echo "DOTFILES_DIR is not set" >&2
-        return 1
-    fi
-
-    "${DOTFILES_DIR}/dotfiles.sh" "$@"
-}
-
-sandbox() {
-    if [[ -z "${DOTFILES_DIR:-}" ]]; then
-        echo "DOTFILES_DIR is not set" >&2
-        return 1
-    fi
-
-    "${DOTFILES_DIR}/sandbox.sh" "$@"
-}
-
 # Helpers
 alias grep='grep --color=auto'
 

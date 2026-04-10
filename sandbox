@@ -9,6 +9,7 @@ readonly BOLD='\033[1m'
 # =====  Script metadata
 readonly SCRIPT_NAME="sandbox"
 readonly VERSION="0.1.0"
+readonly INVOCATION_NAME="$(basename "${BASH_SOURCE[0]}")"
 
 resolve_script_dir() {
     local source="${BASH_SOURCE[0]}"
@@ -25,7 +26,7 @@ resolve_script_dir() {
 
 # ===== Configuration
 readonly DOTFILES_DIR="$(resolve_script_dir)"
-readonly DOCKERFILE_PATH="${DOTFILES_DIR}/sandbox/Dockerfile"
+readonly DOCKERFILE_PATH="${DOTFILES_DIR}/sandbox-image/Dockerfile"
 readonly STATE_DIR=".sandbox"
 
 verify_dependencies() {
@@ -36,6 +37,7 @@ verify_dependencies() {
 
     if [[ ! -f "${DOCKERFILE_PATH}" ]]; then
       echo "ERROR: Expected Dockerfile at: ${DOCKERFILE_PATH}" >&2
+      echo "HINT: Keep the whole repo together. The sandbox command expects sandbox-image/ next to it." >&2
       exit 1
     fi
 
@@ -51,13 +53,13 @@ cmd_help() {
     echo ""
 
     echo "Usage:"
-    echo "  ./sandbox.sh [command] [args...]"
+    echo "  ${INVOCATION_NAME} [command] [args...]"
     echo ""
 
     echo "Example:"
-    echo "  ./sandbox.sh bash"
-    echo "  ./sandbox.sh pnpm install"
-    echo "  ./sandbox.sh node -v"
+    echo "  ${INVOCATION_NAME} bash"
+    echo "  ${INVOCATION_NAME} pnpm install"
+    echo "  ${INVOCATION_NAME} node -v"
     echo ""
 
     echo -e "${BOLD}OPTIONS:${RESET}"

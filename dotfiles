@@ -35,6 +35,7 @@ readonly MACOS_DIR="${DOTFILES_DIR}/macos"
 # =====  Script metadata
 readonly SCRIPT_NAME="dotfiles"
 readonly VERSION="0.1.0"
+readonly INVOCATION_NAME="$(basename "${BASH_SOURCE[0]}")"
 
 log_title() {
     echo -e "\n${BOLD}${BLUE}$1${RESET}${RESET}"
@@ -355,7 +356,7 @@ cmd_help() {
     echo "Version: ${VERSION}"
     echo ""
 
-    echo "Usage: ./dotfiles.sh [command]"
+    echo "Usage: ${INVOCATION_NAME} [command]"
     echo ""
 
     echo "Commands:"

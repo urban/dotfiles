@@ -19,7 +19,7 @@ dotfiles/
 │       └── zsh/
 ├── macos/
 │   └── settings.sh         # optional macOS defaults script
-├── sandbox/
+├── sandbox-image/
 │   ├── Dockerfile
 │   └── entrypoint.sh
 ├── vscode/                 # stowed into VS Code's user config dir
@@ -27,8 +27,8 @@ dotfiles/
 │   ├── keybindings.json
 │   ├── mcp.json
 │   └── settings.json
-├── dotfiles.sh             # bootstrap and update script
-└── sandbox.sh              # Docker-based project sandbox
+├── dotfiles                # bootstrap and update script
+└── sandbox                 # Docker-based project sandbox
 ```
 
 ## Before you start
@@ -40,13 +40,13 @@ dotfiles/
 
 ## New machine setup
 
-Clone the repo wherever you want. Both scripts resolve their own location, so they do not require a fixed path.
+Clone the repo wherever you want. Both commands resolve their own location, so they do not require a fixed path.
 
 ```sh
 mkdir -p ~/Code/personal
 git clone https://github.com/urban/dotfiles.git ~/Code/personal/dotfiles
 cd ~/Code/personal/dotfiles
-./dotfiles.sh init
+./dotfiles init
 ```
 
 `init` installs the bootstrap tools first, then stows the dotfiles. On a clean machine it will:
@@ -71,7 +71,7 @@ When it finishes, start a new shell so the stowed zsh config is loaded:
 exec zsh
 ```
 
-After that, `dotfiles` and `sandbox` are available as shell functions.
+After that, `dotfiles` and `sandbox` are available as commands. `home/.config/zsh/.zprofile` adds the repo root to `PATH` when the dotfiles are stowed.
 
 ## Post-install
 
@@ -88,13 +88,15 @@ git remote set-url origin git@github.com:urban/dotfiles.git
 
 If you use services that need personal credentials, add them after setup. For example, `vscode/mcp.json` ships with blank values and needs your own API key.
 
-## dotfiles.sh
+## dotfiles
 
 ```sh
-./dotfiles.sh --help
-./dotfiles.sh init
-./dotfiles.sh update
+dotfiles --help
+dotfiles init
+dotfiles update
 ```
+
+`./dotfiles` works from the repo root, and `dotfiles` works anywhere once the repo root is on `PATH`.
 
 `update` is interactive. It can:
 
@@ -103,15 +105,17 @@ If you use services that need personal credentials, add them after setup. For ex
 - re-stow `vscode/`
 - update Homebrew packages
 
-## sandbox.sh
+## sandbox
 
-`sandbox.sh` runs a command in a Docker-based sandbox. Start Docker or OrbStack first.
+`sandbox` runs a command in a Docker-based sandbox. Start Docker or OrbStack first.
 
 ```sh
-./sandbox.sh
-./sandbox.sh bash
-./sandbox.sh node -v
+sandbox
+sandbox bash
+sandbox node -v
 ```
+
+`./sandbox` works from the repo root, and `sandbox` works anywhere once the repo root is on `PATH`. Do not copy the script by itself; it expects `sandbox-image/Dockerfile` and `sandbox-image/entrypoint.sh` to live next to it in the repo.
 
 What it does:
 
@@ -119,7 +123,7 @@ What it does:
 2. adds `/.sandbox/` to the current project's `.gitignore`
 3. creates persistent state dirs for bun, pnpm, GitHub CLI, and Codex
 4. creates a `sandbox-nix-store` Docker volume
-5. builds the image from `sandbox/Dockerfile`
+5. builds the image from `sandbox-image/Dockerfile`
 6. runs the container with the current project mounted at `/app`
 
 On first run, the container entrypoint installs Nix and a few CLI tools, installs the latest `npm` and `@openai/codex`, prompts for Codex and GitHub auth if needed, configures Git author info, runs `direnv allow` when `.envrc` exists, then executes your command. With no command, it starts `bash`.
