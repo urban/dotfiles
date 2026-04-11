@@ -17,8 +17,6 @@ brew "jandedobbeleer/oh-my-posh/oh-my-posh"
 brew "oven-sh/bun/bun"
 
 cask "chatgpt", args: { appdir: "/Applications" }
-cask "claude", args: { appdir: "/Applications" }
-cask "claude-code", args: { appdir: "/Applications" }
 cask "codex"
 cask "discord", args: { appdir: "/Applications" }
 cask "font-cascadia-code", args: { appdir: "/Applications" }
