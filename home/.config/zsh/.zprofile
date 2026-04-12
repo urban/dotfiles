@@ -8,3 +8,4 @@ fi
 # Set editors
 export EDITOR='vim'
 export GIT_EDITOR='vim'
+export PATH="/Volumes/Code/personal/ralph:$PATH"

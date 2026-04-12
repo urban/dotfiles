@@ -272,7 +272,7 @@ install_homebrew() {
 }
 
 
-# ===== Install packages from Brewfile
+# ===== Install packages from ~/.config/Brewfile
 install_packages() {
     log_title "Installing packages..."
 
@@ -281,7 +281,7 @@ install_packages() {
         return 1
     fi
 
-    brew bundle install --file "${HOME_DIR}/Brewfile"
+    brew bundle install --file "${HOME_DIR}/.config/Brewfile"
 }
 
 update_packages() {
