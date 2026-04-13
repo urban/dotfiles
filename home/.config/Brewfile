@@ -36,6 +36,7 @@ cask "ollama-app", args: { appdir: "/Applications" }
 cask "orbstack", args: { appdir: "/Applications" }
 cask "reader", args: { appdir: "/Applications" }
 cask "slack", args: { appdir: "/Applications" }
+cask "supacode", args: { appdir: "/Applications" }
 cask "visual-studio-code", args: { appdir: "/Applications" }
 cask "zed", args: { appdir: "/Applications" }
 
@@ -43,10 +44,6 @@ vscode "alefragnani.project-manager"
 vscode "anthropic.claude-code"
 vscode "bierner.markdown-mermaid"
 vscode "effectful-tech.effect-vscode"
-vscode "github.copilot"
-vscode "github.copilot-chat"
-vscode "google.gemini-cli-vscode-ide-companion"
-vscode "google.geminicodeassist"
 vscode "mkhl.direnv"
 vscode "ms-playwright.playwright"
 vscode "vitest.explorer"
