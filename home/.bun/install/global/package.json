@@ -1,0 +1,8 @@
+{
+  "name": "bun-global",
+  "private": true,
+  "version": "0.0.0",
+  "dependencies": {
+    "@mariozechner/pi-coding-agent": "0.67.1"
+  }
+}
