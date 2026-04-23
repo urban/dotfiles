@@ -18,29 +18,30 @@ brew "zsh"
 brew "jandedobbeleer/oh-my-posh/oh-my-posh"
 brew "oven-sh/bun/bun"
 
-cask "chatgpt", args: { appdir: "/Applications" }
+cask "chatgpt"
 cask "codex"
-cask "discord", args: { appdir: "/Applications" }
-cask "font-cascadia-code", args: { appdir: "/Applications" }
-cask "font-fira-code", args: { appdir: "/Applications" }
-cask "font-fira-code-nerd-font", args: { appdir: "/Applications" }
-cask "font-fira-mono", args: { appdir: "/Applications" }
-cask "font-fira-sans", args: { appdir: "/Applications" }
-cask "font-jetbrains-mono", args: { appdir: "/Applications" }
-cask "font-powerline-symbols", args: { appdir: "/Applications" }
+cask "discord"
+cask "ghostty"
+cask "google-chrome"
+cask "keycastr"
+cask "little-snitch"
+cask "obsidian"
+cask "ollama-app"
+cask "orbstack"
+cask "reader"
+cask "slack"
+cask "supacode"
+cask "visual-studio-code"
+cask "zed"
+
+cask "font-cascadia-code"
+cask "font-fira-code"
+cask "font-fira-code-nerd-font"
+cask "font-fira-mono"
+cask "font-fira-sans"
+cask "font-jetbrains-mono"
+cask "font-powerline-symbols"
 cask "font-sf-mono"
-cask "ghostty", args: { appdir: "/Applications" }
-cask "google-chrome", args: { appdir: "/Applications" }
-cask "keycastr", args: { appdir: "/Applications" }
-cask "little-snitch", args: { appdir: "/Applications" }
-cask "obsidian", args: { appdir: "/Applications" }
-cask "ollama-app", args: { appdir: "/Applications" }
-cask "orbstack", args: { appdir: "/Applications" }
-cask "reader", args: { appdir: "/Applications" }
-cask "slack", args: { appdir: "/Applications" }
-cask "supacode", args: { appdir: "/Applications" }
-cask "visual-studio-code", args: { appdir: "/Applications" }
-cask "zed", args: { appdir: "/Applications" }
 
 vscode "alefragnani.project-manager"
 vscode "anthropic.claude-code"

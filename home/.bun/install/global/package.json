@@ -3,6 +3,6 @@
   "private": true,
   "version": "0.0.0",
   "dependencies": {
-    "@mariozechner/pi-coding-agent": "0.67.6"
+    "@mariozechner/pi-coding-agent": "0.69.0"
   }
 }
