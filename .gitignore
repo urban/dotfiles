@@ -5,3 +5,6 @@ home/.config/zsh/.zsh_history
 
 # Sandbox state dir
 /.sandbox/
+
+# Zsh state dir
+/home/.config/zsh/.zsh_sessions

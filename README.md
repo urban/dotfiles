@@ -54,10 +54,11 @@ cd ~/Code/personal/dotfiles
 1. install Xcode Command Line Tools if needed
 2. install Homebrew if needed
 3. install packages from `home/.config/Brewfile`
-4. symlink `home/` into `$HOME` with GNU Stow
-5. symlink `vscode/` into `~/Library/Application Support/Code/User`
-6. install Nix if needed
-7. optionally run `macos/settings.sh`
+4. install Python CLI tools with `uv`
+5. symlink `home/` into `$HOME` with GNU Stow
+6. symlink `vscode/` into `~/Library/Application Support/Code/User`
+7. install Nix if needed
+8. optionally run `macos/settings.sh`
 
 The script may prompt you to:
 

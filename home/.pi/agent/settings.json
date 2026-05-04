@@ -1,7 +1,9 @@
 {
-  "lastChangelogVersion": "0.67.6",
+  "lastChangelogVersion": "0.72.1",
   "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-5.4",
-  "defaultThinkingLevel": "xhigh",
-  "packages": []
+  "defaultModel": "gpt-5.5",
+  "defaultThinkingLevel": "high",
+  "packages": [
+    "npm:pi-web-access"
+  ]
 }
