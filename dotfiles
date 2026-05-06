@@ -29,7 +29,6 @@ resolve_script_dir() {
 readonly CODE_DIR="/Volumes/Code"
 readonly DOTFILES_DIR="$(resolve_script_dir)"
 readonly HOME_DIR="${DOTFILES_DIR}/home"
-readonly VSCODE_DIR="${DOTFILES_DIR}/vscode"
 readonly MACOS_DIR="${DOTFILES_DIR}/macos"
 
 # =====  Script metadata
@@ -154,26 +153,6 @@ stow_exists() {
     if ! command_exist stow; then
         log_error "GNU Stow is not installed"
         log_info "Please install stow via Homebrew: brew install stow"
-        return 1
-    fi
-}
-
-symlink_vscode() {
-    log_title "Symlinking VSCode configs"
-
-    stow_exists || return 1
-
-    local vscode_user_path="$HOME/Library/Application Support/Code/User"
-    mkdir -p "${vscode_user_path}"
-
-    backup_files "${VSCODE_DIR}" "${vscode_user_path}"
-
-    log_info "Symlinking files from ${VSCODE_DIR} to ${vscode_user_path}..."
-
-    if stow -R -v -d "${DOTFILES_DIR}" -t "${vscode_user_path}" vscode; then
-       log_success "VSCode configs symlinked successfully"
-    else
-        log_error "Failed to symlink VSCode configs"
         return 1
     fi
 }
@@ -338,7 +317,6 @@ cmd_init() {
     install_packages || return 1
     install_python_tools || return 1
     symlink_dotfiles || return 1
-    symlink_vscode || return 1
     install_nix || return 1
     apply_macos_settings || return 1
 
@@ -353,10 +331,6 @@ cmd_update() {
 
     if confirm_action "Update dotfile symlinks?" "y"; then
         symlink_dotfiles || return 1
-    fi
-
-    if confirm_action "Update VSCode symlinks?" "y"; then
-        symlink_vscode || return 1
     fi
 
     if confirm_action "Update Homebrew packages?" "y"; then
