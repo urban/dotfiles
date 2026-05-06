@@ -272,7 +272,7 @@ install_python_tools() {
         return 1
     fi
 
-    uv tool install --force --python 3.13 'markitdown[pdf,docx,pptx,xlsx]'
+    uv tool install --force --python 3.13 'markitdown[pdf,docx,pptx,xlsx,audio-transcription,youtube-transcription]'
 }
 
 update_packages() {
