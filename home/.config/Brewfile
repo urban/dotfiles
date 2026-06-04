@@ -34,3 +34,5 @@ cask "reader"
 cask "slack"
 cask "supacode"
 cask "zed"
+
+cask "font-meslo-lg-nerd-font"
