@@ -157,6 +157,41 @@ stow_exists() {
     fi
 }
 
+symlink_repo_commands() {
+    log_title "Symlink repo commands"
+
+    local bin_dir="${HOME}/.local/bin"
+    local backup_dir
+    backup_dir="${DOTFILES_DIR}/backups/$(date +%Y%m%d_%H%M%S)/local-bin"
+    local command_name
+
+    mkdir -p "${bin_dir}"
+
+    for command_name in dotfiles sandbox; do
+        local source_path="${DOTFILES_DIR}/${command_name}"
+        local target_path="${bin_dir}/${command_name}"
+
+        if [[ ! -x "${source_path}" ]]; then
+            log_error "Expected executable at ${source_path}"
+            return 1
+        fi
+
+        if [[ -e "${target_path}" || -L "${target_path}" ]]; then
+            if [[ -L "${target_path}" ]] && [[ "$(readlink "${target_path}")" == "${source_path}" ]]; then
+                log_info "${target_path} already points to ${source_path}"
+                continue
+            fi
+
+            mkdir -p "${backup_dir}"
+            mv "${target_path}" "${backup_dir}/${command_name}"
+            log_warning "Moved existing ${target_path} to ${backup_dir}/${command_name}"
+        fi
+
+        ln -s "${source_path}" "${target_path}"
+        log_success "Symlinked ${target_path} -> ${source_path}"
+    done
+}
+
 symlink_dotfiles() {
     log_title "Symlink dotfiles"
 
@@ -317,6 +352,7 @@ cmd_init() {
     install_packages || return 1
     install_python_tools || return 1
     symlink_dotfiles || return 1
+    symlink_repo_commands || return 1
     install_nix || return 1
     apply_macos_settings || return 1
 
@@ -331,6 +367,7 @@ cmd_update() {
 
     if confirm_action "Update dotfile symlinks?" "y"; then
         symlink_dotfiles || return 1
+        symlink_repo_commands || return 1
     fi
 
     if confirm_action "Update Homebrew packages?" "y"; then

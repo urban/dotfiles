@@ -13,10 +13,12 @@
  *   SUPACODE_SURFACE_ID   — terminal surface UUID
  *
  * Hook event mapping:
- *   Pi agent_start      → busy = 1       (UserPromptSubmit equivalent)
- *   Pi agent_end        → busy = 0       (Stop equivalent)
+ *   extension load      → session_start  (agent presence badge)
+ *   Pi agent_start      → busy           (UserPromptSubmit equivalent)
+ *   Pi agent_end        → idle           (Stop equivalent — resets activity)
  *                       → notification with last_assistant_message
- *   Pi session_shutdown → busy = 0       (SessionEnd equivalent)
+ *   Pi session_shutdown → session_end    (SessionEnd equivalent)
+ *                       → idle           (defensive activity reset)
  */
 
 import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
@@ -83,16 +85,26 @@ function sendToSocket(socketPath: string, data: Buffer): Promise<void> {
   });
 }
 
-function sendBusy(env: SupacodeEnv, active: boolean): Promise<void> {
-  const flag = active ? "1" : "0";
-  const message = `${env.worktreeId} ${env.tabId} ${env.surfaceId} ${flag}\n`;
-  return sendToSocket(env.socketPath, Buffer.from(message, "utf8"));
-}
-
 function sendNotification(env: SupacodeEnv, payload: HookPayload): Promise<void> {
   const header = `${env.worktreeId} ${env.tabId} ${env.surfaceId} pi\n`;
   const body = JSON.stringify(payload) + "\n";
   return sendToSocket(env.socketPath, Buffer.from(header + body, "utf8"));
+}
+
+/**
+ * Sends a hook event (session lifecycle or per-turn activity) using
+ * the same JSON envelope every other agent emits.
+ */
+function sendEvent(env: SupacodeEnv, eventName: string): Promise<void> {
+  const envelope = {
+    event: eventName,
+    v: 1,
+    agent: "pi",
+    surface_id: env.surfaceId,
+    pid: process.pid,
+  };
+  const body = JSON.stringify(envelope) + "\n";
+  return sendToSocket(env.socketPath, Buffer.from(body, "utf8"));
 }
 
 function lastAssistantText(ctx: { sessionManager: { getEntries(): any[] } }): string | undefined {
@@ -122,12 +134,18 @@ export default function (pi: ExtensionAPI) {
   // Not running under Supacode — skip lifecycle hooks.
   if (!env) return;
 
+  // Extension load = agent process running. Pi has no equivalent of
+  // Claude's SessionStart hook, so we fire it ourselves.
+  void sendEvent(env, "session_start");
+
   pi.on("agent_start", async (_event, _ctx) => {
-    await sendBusy(env, true);
+    await sendEvent(env, "busy");
   });
 
   pi.on("agent_end", async (_event, ctx) => {
-    await sendBusy(env, false);
+    // Atomic state-set: `idle` overwrites whatever was running on the
+    // Supacode side — turn-level Stop equivalent.
+    await sendEvent(env, "idle");
 
     const lastMessage = lastAssistantText(ctx);
     await sendNotification(env, {
@@ -137,6 +155,7 @@ export default function (pi: ExtensionAPI) {
   });
 
   pi.on("session_shutdown", async (_event, _ctx) => {
-    await sendBusy(env, false);
+    await sendEvent(env, "session_end");
+    await sendEvent(env, "idle");
   });
 }

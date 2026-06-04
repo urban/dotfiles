@@ -56,9 +56,10 @@ cd ~/Code/personal/dotfiles
 3. install packages from `home/.config/Brewfile`
 4. install Python CLI tools with `uv`
 5. symlink `home/` into `$HOME` with GNU Stow
-6. symlink `vscode/` into `~/Library/Application Support/Code/User`
-7. install Nix if needed
-8. optionally run `macos/settings.sh`
+6. symlink `dotfiles` and `sandbox` into `~/.local/bin`
+7. symlink `vscode/` into `~/Library/Application Support/Code/User`
+8. install Nix if needed
+9. optionally run `macos/settings.sh`
 
 The script may prompt you to:
 
@@ -72,7 +73,7 @@ When it finishes, start a new shell so the stowed zsh config is loaded:
 exec zsh
 ```
 
-After that, `dotfiles` and `sandbox` are available as commands. `home/.config/zsh/.zprofile` adds the repo root to `PATH` when the dotfiles are stowed.
+After that, `dotfiles` and `sandbox` are available as commands through the symlinks `init` creates in `~/.local/bin`.
 
 ## Post-install
 
@@ -97,7 +98,7 @@ dotfiles init
 dotfiles update
 ```
 
-`./dotfiles` works from the repo root, and `dotfiles` works anywhere once the repo root is on `PATH`.
+`./dotfiles` works from the repo root, and `dotfiles` works anywhere after `init` creates `~/.local/bin/dotfiles`.
 
 `update` is interactive. It can:
 
@@ -116,7 +117,7 @@ sandbox bash
 sandbox node -v
 ```
 
-`./sandbox` works from the repo root, and `sandbox` works anywhere once the repo root is on `PATH`. Do not copy the script by itself; it expects `sandbox-image/Dockerfile` and `sandbox-image/entrypoint.sh` to live next to it in the repo.
+`./sandbox` works from the repo root, and `sandbox` works anywhere after `init` creates `~/.local/bin/sandbox`. Do not copy the script by itself; it expects `sandbox-image/Dockerfile` and `sandbox-image/entrypoint.sh` to live next to it in the repo.
 
 What it does:
 

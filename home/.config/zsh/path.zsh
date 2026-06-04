@@ -30,11 +30,6 @@ elif [[ -d "/usr/local/bin" ]]; then
   path_prepend "/usr/local/bin"
 fi
 
-# Repo commands when the dotfiles are stowed into $HOME.
-if [[ -n "${DOTFILES_DIR:-}" && -d "${DOTFILES_DIR}" ]]; then
-  path_prepend "${DOTFILES_DIR}"
-fi
-
 # Some tools still install here on macOS.
 path_prepend "/usr/local/sbin"
 path_append "/usr/local/bin"
