@@ -38,3 +38,5 @@ cask "supacode"
 cask "zed"
 
 cask "font-meslo-lg-nerd-font"
+cask "font-fira-code"
+cask "font-fira-mono"
