@@ -73,7 +73,7 @@
     "shell": {
       "program": "/opt/homebrew/bin/zsh"
     },
-    "font_family": "Fira Mono",
+    "font_family": ".ZedMono",
     "line_height": "standard"
   },
   "theme": {
