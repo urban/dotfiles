@@ -1,0 +1,10 @@
+onboarding = false
+
+[worktrees]
+directory = "/Volumes/Code/herdr-worktrees"
+
+[ui.sidebar.agents]
+rows = [
+  ["state_icon", "workspace", "tab"],
+  ["agent", "state_text"],
+]

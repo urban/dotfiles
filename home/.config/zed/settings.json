@@ -233,7 +233,8 @@
             "name": "oxfmt"
           }
         }
-      ]
+      ],
+      "language_servers": ["effect-tsgo", "!vtsls", "!typescript-language-server"]
     },
     "TSX": {
       "format_on_save": "on",
@@ -246,7 +247,8 @@
             "name": "oxfmt"
           }
         }
-      ]
+      ],
+      "language_servers": ["effect-tsgo", "!vtsls", "!typescript-language-server"]
     },
     "YAML": {
       "format_on_save": "on",

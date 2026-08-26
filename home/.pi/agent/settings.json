@@ -1,10 +1,17 @@
 {
-  "lastChangelogVersion": "0.82.1",
+  "lastChangelogVersion": "0.84.3",
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-5.6-sol",
   "defaultThinkingLevel": "high",
   "packages": [
-    "npm:pi-web-access"
+    "npm:pi-web-access",
+    "npm:@ryan_nookpi/pi-extension-codex-fast-mode",
+    "npm:pi-subagents",
+    "npm:pi-intercom",
+    "npm:@plannotator/pi-extension"
   ],
-  "theme": "dark"
+  "theme": "dark",
+  "modelThinkingLevels": {
+    "openai-codex/gpt-5.6-sol": "medium"
+  }
 }
