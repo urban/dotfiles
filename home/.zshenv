@@ -3,6 +3,10 @@ export ZDOTDIR="$HOME/.config/zsh"
 
 export HOMEBREW_BUNDLE_FILE="$HOME/Brewfile"
 
+export EDITOR="zed --wait"
+export VISUAL="$EDITOR"
+export GIT_EDITOR="$EDITOR"
+
 # Repair zsh's function search path when a stale FPATH is inherited.
 typeset -gaU fpath
 if [[ -d "/opt/homebrew/share/zsh/functions" ]]; then

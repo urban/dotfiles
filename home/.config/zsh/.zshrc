@@ -10,3 +10,6 @@ fi
 
 # Direnv
 eval "$(direnv hook zsh)"
+
+# bun completions
+[ -s "/Users/urbanfaubion/.bun/_bun" ] && source "/Users/urbanfaubion/.bun/_bun"

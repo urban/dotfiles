@@ -22,11 +22,6 @@ dotfiles/
 ├── sandbox-image/
 │   ├── Dockerfile
 │   └── entrypoint.sh
-├── vscode/                 # stowed into VS Code's user config dir
-│   ├── extensions.json
-│   ├── keybindings.json
-│   ├── mcp.json
-│   └── settings.json
 ├── dotfiles                # bootstrap and update script
 └── sandbox                 # Docker-based project sandbox
 ```
@@ -57,9 +52,8 @@ cd ~/Code/personal/dotfiles
 4. install Python CLI tools with `uv`
 5. symlink `home/` into `$HOME` with GNU Stow
 6. symlink `dotfiles` and `sandbox` into `~/.local/bin`
-7. symlink `vscode/` into `~/Library/Application Support/Code/User`
-8. install Nix if needed
-9. optionally run `macos/settings.sh`
+7. install Nix if needed
+8. optionally run `macos/settings.sh`
 
 The script may prompt you to:
 
@@ -88,8 +82,6 @@ From the repo root:
 git remote set-url origin git@github.com:urban/dotfiles.git
 ```
 
-If you use services that need personal credentials, add them after setup. For example, `vscode/mcp.json` ships with blank values and needs your own API key.
-
 ## dotfiles
 
 ```sh
@@ -104,7 +96,6 @@ dotfiles update
 
 - pull the latest changes
 - re-stow `home/`
-- re-stow `vscode/`
 - update Homebrew packages
 
 ## sandbox
