@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "@earendil-works/pi-coding-agent": "0.84.4",
-    "@kitlangton/motel": "0.2.6"
+    "@earendil-works/pi-coding-agent": "1.0.4",
+    "@kitlangton/motel": "0.2.6",
+    "@tobilu/qmd": "2.8.3"
   }
 }

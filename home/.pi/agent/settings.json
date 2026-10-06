@@ -1,17 +1,13 @@
 {
-  "lastChangelogVersion": "0.84.4",
+  "lastChangelogVersion": "1.0.4",
   "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-5.6-sol",
+  "defaultModel": "gpt-6-luna",
   "defaultThinkingLevel": "high",
-  "packages": [
-    "npm:pi-web-access",
-    "npm:@ryan_nookpi/pi-extension-codex-fast-mode",
-    "npm:pi-subagents",
-    "npm:pi-intercom",
-    "npm:@plannotator/pi-extension"
-  ],
+  "packages": ["npm:pi-subagents", "npm:pi-intercom", "npm:@plannotator/pi-extension"],
   "theme": "dark",
   "modelThinkingLevels": {
-    "openai-codex/gpt-5.6-sol": "medium"
-  }
+    "openai-codex/gpt-6-luna": "high"
+  },
+  "hideThinkingBlock": true,
+  "defaultTools": ["+codemode"]
 }

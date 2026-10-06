@@ -1,5 +1,7 @@
 # Urban's agent instructions
 
+Always respond to the user in plain language and write using ISO 24495-1:2023.
+
 ## General Guidelines
 
 - In all interaction and commit messages, be extremely concise and sacrifice grammar for the sake of concision.
