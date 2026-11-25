@@ -13,3 +13,11 @@ eval "$(direnv hook zsh)"
 
 # bun completions
 [ -s "/Users/urbanfaubion/.bun/_bun" ] && source "/Users/urbanfaubion/.bun/_bun"
+
+# pnpm
+export PNPM_HOME='/Users/urbanfaubion/Library/pnpm'
+case ":$PATH:" in
+  ":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
+esac
+# pnpm end

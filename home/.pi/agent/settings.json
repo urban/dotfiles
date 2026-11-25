@@ -1,13 +1,26 @@
 {
-  "lastChangelogVersion": "1.0.4",
+  "lastChangelogVersion": "1.6.0",
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-6-luna",
   "defaultThinkingLevel": "high",
-  "packages": ["npm:pi-subagents", "npm:pi-intercom", "npm:@plannotator/pi-extension"],
+  "packages": [
+    "npm:pi-subagents",
+    "npm:pi-intercom",
+    "npm:@plannotator/pi-extension",
+    "../../Work/code/annotate/packages/pi-extension"
+  ],
   "theme": "dark",
   "modelThinkingLevels": {
     "openai-codex/gpt-6-luna": "high"
   },
-  "hideThinkingBlock": true,
-  "defaultTools": ["+codemode"]
+  "hideThinkingBlock": false,
+  "defaultTools": [
+    "+codemode"
+  ],
+  "extensionChangelogVersions": {
+    "{\"source\":\"npm:pi-subagents\",\"scope\":\"user\"}": "0.90.0"
+  },
+  "compaction": {
+    "enabled": true
+  }
 }
